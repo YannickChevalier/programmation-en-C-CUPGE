@@ -3,3 +3,7 @@ comment.cut
 tmp.log
 tp.aux
 tp.log
+*.tex
+tp-solutions*.pdf
+images/**
+
