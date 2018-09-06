@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-=======
 *.tex
 texmf/**
->>>>>>> fichiers Latex enlevés
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
