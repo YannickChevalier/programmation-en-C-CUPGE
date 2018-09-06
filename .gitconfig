@@ -3,9 +3,13 @@
 	repository = cours-public
 	dependants = enseignants
 	dependants = enonces
+	dependants = solutions
 
 [branch "enseignants"]
 	repository = cours
 [branch "enonces"]
+	repository = cours
+	repository = cours-public
+[branch "solutions"]
 	repository = cours
 	repository = cours-public
