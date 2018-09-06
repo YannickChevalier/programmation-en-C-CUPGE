@@ -2,6 +2,10 @@
         repository = cours
 	repository = cours-public
 	dependants = enseignants
+	dependants = enonces
 
 [branch "enseignants"]
 	repository = cours
+[branch "enonces"]
+	repository = cours
+	repository = cours-public
