@@ -157,7 +157,6 @@ diffuser_correction_enseignants/%:
 
 
 
-
 nouvelle_branche::
 	@printf "Donnez le nom d'une branche à créer:\n" ; \
 	read branch ; \
@@ -180,5 +179,6 @@ nouvelle_branche::
 
 nouvelle_branche:: commit
 	git checkout configuration
+
 
 
