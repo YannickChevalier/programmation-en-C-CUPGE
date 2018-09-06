@@ -1,4 +1,7 @@
 [branch "configuration"]
         repository = cours
 	repository = cours-public
+	dependants = enseignants
 
+[branch "enseignants"]
+	repository = cours
