@@ -1,0 +1,4 @@
+[branch "configuration"]
+        repository = cours
+	repository = cours-public
+
