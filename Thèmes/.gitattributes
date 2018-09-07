@@ -1,0 +1,7 @@
+tp-enonces-* merge=theirs
+tp-solutions-* merge=theirs
+compile.sh   merge=ours
+*.tex merge=ours
+tp.* merge=ours
+tmp.log merge=ours
+
