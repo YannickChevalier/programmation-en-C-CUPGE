@@ -188,3 +188,5 @@ init:
 	git config --local merge.theirs.name "always import new version"
 	git config --local merge.theirs.driver "./bin/theirs"
 
+etudiants:
+	@echo "Bonjour les amis !"
