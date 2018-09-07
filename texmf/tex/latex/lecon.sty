@@ -1,0 +1,236 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{lecon}
+\RequirePackage{color}
+\RequirePackage{kvoptions}
+\SetupKeyvalOptions{%
+  family=lecon,
+  prefix=lecon@,
+}
+\DeclareStringOption[ups]{univ}
+\DeclareStringOption[td]{type}
+\DeclareStringOption[1]{num}
+\DeclareStringOption[french]{lang}
+\DeclareStringOption{formation}
+\ProcessKeyvalOptions*
+
+% Option lang
+\PassOptionsToPackage{\lecon@lang}{babel}
+\RequirePackage{babel}
+
+
+
+
+\def\univ@ups{ups}
+\def\univ@utoulouse{utoulouse}
+\def\univ@mirail{mirail}
+\def\univ@plg{plg}
+\def\univ@esial{esial}
+\def\univ@uhp{uhp}
+\ifx\univ@ups\lecon@univ
+  \def\etablissement{Universit\'e Paul Sabatier}
+\fi
+\ifx\univ@utoulouse\lecon@univ
+  \def\etablissement{Universit\'e de Toulouse}
+\fi
+\ifx\lecon@univ\univ@mirail
+  \def\etablissement{Universit\'e Toulouse 2}
+\fi
+\ifx\lecon@univ\univ@plg
+  \def\etablissement{Pôle de Gestion}
+\fi
+\ifx\lecon@univ\univ@esial
+  \def\etablissement{\'ESIAL}
+\fi
+\ifx\lecon@univ\univ@uhp
+  \def\etablissement{Universit\'e Henri Poincar\'e}
+\fi
+
+
+
+\def\type@cours{cours}
+\def\type@td{td}
+\def\type@tp{tp}
+\def\type@qcm{qcm}
+\def\type@devoir{devoir}
+\ifx\lecon@type\type@cours
+  \AtBeginDocument{
+    \null\vfill
+\begin{center}
+  {\Huge \m@dule}\\[1cm]
+  {\Large \form@tion}\\[0.75cm]
+  {\Large \cetteannee}\\[1cm]
+  {\large \@author}
+\end{center}
+\vfill\vfill\vfill
+
+\newpage
+\null\vfill
+\newpage}
+\fi
+\ifx\lecon@type\type@td
+\AtBeginDocument{
+  \begin{center}
+    \textbf{\Large Travaux Dirig\'es \lecon@num}\\
+    \textbf{\large \form@tion}\\
+    \textbf{\cetteannee}\\
+  \end{center}
+}
+\fi
+\ifx\lecon@type\type@tp
+\AtBeginDocument{
+  \begin{center}
+    \textbf{\Large Travaux Pratiques \lecon@num}\\
+    \textbf{\large \form@tion}\\
+    \textbf{\cetteannee}\\
+  \end{center}
+}
+\fi
+\ifx\lecon@type\type@qcm
+\AtBeginDocument{
+  \begin{center}
+    \textbf{\Large Test de Connaissances \lecon@num}\\
+    \textbf{\large \form@tion}\\
+    \textbf{\cetteannee}\\
+  \end{center}
+}
+\fi
+\ifx\lecon@type\type@devoir
+\AtBeginDocument{
+  \begin{center}
+    \textbf{\Large Devoir \lecon@num}\\
+    \textbf{\large \form@tion}\\
+    \textbf{\cetteannee}\\
+  \end{center}
+}
+\fi
+
+
+
+% Fontes
+\RequirePackage[T1]{fontenc}
+\RequirePackage{avant}
+\RequirePackage{amsfonts,amsmath,amssymb}
+\DeclareMathAlphabet{\mathsl}{T1}{cmr}{m}{sl}
+\DeclareMathAlphabet{\mathsf}{T1}{cmr}{m}{sf}
+
+
+
+\RequirePackage{ifvtex}
+\RequirePackage{ifpdf}
+\RequirePackage{eurosym}
+\RequirePackage{comment}
+\RequirePackage[french]{varioref}
+
+\renewcommand{\topfraction}{1} % max fraction of floats at top
+\renewcommand{\bottomfraction}{1} % max fraction of floats at bottom
+% Parameters for TEXT pages (not float pages):
+\setcounter{topnumber}{4} \setcounter{bottomnumber}{4}
+\setcounter{totalnumber}{8} % 2 may work better
+\setcounter{dbltopnumber}{4} % for 2-column pages
+\renewcommand{\dbltopfraction}{1} % fit big float above 2-col. text
+\renewcommand{\textfraction}{0} % allow minimal text w. figs
+% Parameters for FLOAT pages (not text pages):
+\renewcommand{\floatpagefraction}{1} % require fuller float pages
+% N.B.: floatpagefraction MUST be less than topfraction !!
+\renewcommand{\dblfloatpagefraction}{1} % require fuller float pages
+% remember to use [htp] or [htpb] for placement
+\fboxsep=0.5cm
+
+
+\RequirePackage{graphicx}            % for including graphics
+\RequirePackage{geometry}
+%\RequirePackage{bookmark}
+%\DeclareGraphicsExtensions{.jpg,.jpeg,.eps,.pdf,.png,.mps,.ps}
+\RequirePackage[chapter]{algorithm} % environnement algorithme
+\RequirePackage[chapter]{exemple} % environnement pour les exemples
+
+\renewcommand{\ALG@name}{Programme}
+\renewcommand{\listalgorithmname}{Liste des \ALG@name s}
+\newcommand{\mref}[1]{\ref{#1}~\vpageref{#1}}
+
+% Gestion de l'année
+
+\newcounter{startyear}
+\newcounter{finishyear}
+\setcounter{startyear}{\the\year}
+\setcounter{finishyear}{\the\year}
+%\ifnum8<{\the\month}\relax%
+\addtocounter{startyear}{-1}
+%\else
+%\stepcounter{finishyear}
+%\fi
+\newcommand{\cetteannee}{Ann\'ee \arabic{startyear}--\arabic{finishyear}}
+
+\def\form@tion{}
+\def\m@dule{}
+\def\formation#1{\gdef\form@tion{L3 MMESI}}
+\def\module#1{\gdef\m@dule{#1}}
+
+
+\AtBeginDocument{\title{\m@dule} \author{\form@tion} \date{\cetteannee}}
+% Style de page
+\RequirePackage{vmargin}
+\setpapersize{A4}
+% \setmargins{leftmargin}{topmargin}{textwidth}{textheight}
+%{headheight}{headsep}{footheight}{footskip}
+\setmargins{1.5cm}{2cm}{18cm}{22.2cm}{1cm}{1.5cm}{1cm}{2cm}
+
+\pagestyle{myheadings}
+\AtBeginDocument{
+% \markboth{\sc \chaptermark{Chap. \thechapter: \chaptername} -- 
+%   \sectionmark{Sec.~\thesection: \sectionname}}%
+% {\sc \chaptermark{Chap. \thechapter: \chaptername} -- 
+%   \sectionmark{Sec.~\thesection: \sectionname}}
+}
+
+
+% Ecriture d'énoncés, titres
+
+\newcommand{\cours}{%
+\null\vfill
+\begin{center}
+  {\Huge \m@dule}\\[1cm]
+  {\Large \form@tion}\\[0.75cm]
+  {\Large \cetteannee}\\[1cm]
+  {\large Yannick Chevalier\footnotemark}
+\end{center}
+\footnotetext{\texttt{Yannick.Chevalier@irit.fr, bureau A314}}
+\vfill\vfill\vfill
+
+\newpage
+\null\vfill
+\newpage}
+
+\newcommand{\td}[1]{%
+\begin{center}
+\textbf{\Large Travaux Dirig\'es #1}\\
+\textbf{\large \form@tion}\\
+\textbf{\cetteannee}\\
+\end{center}
+}
+\newcommand{\tp}[1]{%
+\begin{center}
+\textbf{\Large Travaux Pratiques #1}\\
+\textbf{\large \form@tion}\\
+\textbf{\cetteannee}\\
+\end{center}
+}
+\newcommand{\devoir}[1]{%
+\begin{center}
+\textbf{\Large #1}\\
+\textbf{\large \form@tion}\\
+\textbf{\cetteannee}\\
+\end{center}
+}
+
+\newcommand{\qcm}[1]{%
+\begin{center}
+\textbf{\Large Test de Connaissances #1}\\
+\textbf{\large \form@tion}\\
+\textbf{\cetteannee}\\
+\end{center}
+}
+
+
+
+

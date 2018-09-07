@@ -1,0 +1,83 @@
+% EXAMPLE STYLE -- Released 29 January 2003
+% For LaTeX-2e
+% Copyright -- 2003 Yannick Chevalier
+% E-mail Yannick.Chevalier@ens-lyon.org
+% Based on ALGO STYLE -- Released 8 April 1996
+%    for LaTeX-2e
+% Copyright -- 1994 Peter Williams
+% E-mail Peter.Williams@dsto.defence.gov.au
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{exemple}
+\typeout{Document Style `exemple' - floating environment}
+
+\RequirePackage{float}
+\RequirePackage{ifthen}
+\newcommand{\XMP@within}{chapter}
+\newboolean{XMP@within}
+\setboolean{XMP@within}{false}
+\newcommand{\XMP@floatstyle}{ruled}
+\newcommand{\XMP@name}{Exemple}
+\newcommand{\listexemplename}{Liste des \XMP@name s}
+
+% Declare Options
+% first appearance
+\DeclareOption{plain}{
+  \renewcommand{\XMP@floatstyle}{plain}
+}
+\DeclareOption{ruled}{
+  \renewcommand{\XMP@floatstyle}{ruled}
+}
+\DeclareOption{boxed}{
+  \renewcommand{\XMP@floatstyle}{boxed}
+}
+% then numbering convention
+\DeclareOption{part}{
+  \renewcommand{\XMP@within}{part}
+  \setboolean{XMP@within}{true}
+}
+\DeclareOption{chapter}{
+  \renewcommand{\XMP@within}{chapter}
+  \setboolean{XMP@within}{true}
+}
+\DeclareOption{section}{
+  \renewcommand{\XMP@within}{section}
+  \setboolean{XMP@within}{true}
+}
+\DeclareOption{subsection}{
+  \renewcommand{\XMP@within}{subsection}
+  \setboolean{XMP@within}{true}
+}
+\DeclareOption{subsubsection}{
+  \renewcommand{\XMP@within}{subsubsection}
+  \setboolean{XMP@within}{true}
+}
+\DeclareOption{nothing}{
+  \renewcommand{\XMP@within}{nothing}
+  \setboolean{XMP@within}{true}
+}
+\DeclareOption*{\edef\XMP@name{\CurrentOption}}
+
+% EXAMPLE
+%
+\ProcessOptions
+\floatstyle{\XMP@floatstyle}
+\ifthenelse{\boolean{XMP@within}}{
+  \ifthenelse{\equal{\XMP@within}{part}}
+     {\newfloat{exemple}{htbp}{loe}[part]}{}
+  \ifthenelse{\equal{\XMP@within}{chapter}}
+     {\newfloat{exemple}{htbp}{loe}[chapter]}{}
+  \ifthenelse{\equal{\XMP@within}{section}}
+     {\newfloat{exemple}{htbp}{loe}[section]}{}
+  \ifthenelse{\equal{\XMP@within}{subsection}}
+     {\newfloat{exemple}{htbp}{loe}[subsection]}{}
+  \ifthenelse{\equal{\XMP@within}{subsubsection}}
+     {\newfloat{exemple}{htbp}{loe}[subsubsection]}{}
+  \ifthenelse{\equal{\XMP@within}{nothing}}
+     {\newfloat{exemple}{htbp}{loe}}{}
+}{
+  \newfloat{exemple}{htbp}{loe}
+}
+\floatname{exemple}{\XMP@name}
+
+\newcommand{\listofexemples}{\listof{exemple}{\listexemplename}}
+

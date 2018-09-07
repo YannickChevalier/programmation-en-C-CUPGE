@@ -1,0 +1,159 @@
+\usepackage[utf8]{inputenc}
+
+\newenvironment{frame}{\@open{section}{}}{\@close{section}}
+\newcommand{\frametitle}[1]{%
+\@open{div}{class="frametitle"}
+\@open{h2}{class="frametitle"}#1%
+\@close{h2}
+\@close{div}}
+\newcommand{\framesubtitle}[1]{%
+\@open{div}{class="framesubtitle"}
+\@open{h3}{class="framesubtitle"}#1%
+\@close{h3}
+\@close{div}}
+\newcommand{\institute}[1]{#1}
+\newenvironment{block}[1]{%
+\@open{div}{class="block"}
+\@open{div}{class="entete"}
+\@open{h3}{class="blocktitle"}#1\@close{h3}
+\@close{div}% en-tête
+\@open{div}{class="corps"}
+}{%
+\@close{div}% corps
+\@close{div}% block
+}
+
+\newcommand{\parbox}[2]{%
+\@print{<div class="parbox" style="width:90%">}%
+#2%
+\@print{</div>}%
+}
+
+%\newcommand{\pause}[1]{\@open{p}{class="fragment"}#1\@close{p}}
+\newcommand{\pause}{}
+
+\newcommand{\gitem}{\pause\item}
+\newenvironment{gitemize}{\begin{itemize}}{\end{itemize}}
+\newcommand{\text}[1]{\@open{span}{class="texte"}#1\@close{span}}
+\newcommand{\alert}[1]{\@open{span}{class="texte"}\color{red}#1\@close{span}}
+
+\input{urlhref.hva}
+\newcommand{\hypersetup}[1]{}
+\newcommand{\xspace}{}
+\let\LaTeXitem=\item
+\usepackage{color}
+\newcommand{\call}[1]{\@open{span}{style="font-effect: outline"}#1\@close{span}}
+\newcommand{\lbrace}{\@print{&#123;}}
+\newcommand{\rbrace}{\@print{&#125;}}
+\newcommand{\set}[1]{\lbrace #1\rbrace}
+
+\newenvironment{theorem}{\@open{div}{class="block theorem"}\@open{h3}{class="blocktitle"}Théorème\@close{h3}}{\@close{div}}
+\newenvironment{example}{\@open{div}{class="block example"}\@open{h3}{class="blocktitle"}Exemple\@close{h3}}{\@close{div}}
+
+
+\newenvironment{columns}{%
+\@open{table}{class="columns" width="100%"}
+\@open{tr}{class="columns"}
+}{%
+\@close{tr}{class="columns"}
+\@close{table}{class="columns"}
+}
+\newenvironment{column}[1]{%
+\@open{td}{class="column"}
+}{%
+\@close{td}
+}
+
+\newenvironment{reveals} {%
+\@open{div}{class="reveal"}
+\@open{div}{class="slides"}
+}{%
+\@close{div}
+\@close{div}
+\begin{rawhtml}
+
+		<script src="/js/lib/head.min.js"></script>
+		<script src="/js/reveal/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: '/js/lib/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '/js/lib/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '/js/lib/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '/js/lib/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '/js/lib/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: '/js/lib/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: '/js/lib/search.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: '/js/lib/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+\end{rawhtml}
+}
+
+\renewcommand{\section}[1]{\addcontentsline{toc}{section}{#1}}
+\renewcommand{\subsection}[1]{\addcontentsline{toc}{subsection}{#1}}
+\renewcommand{\subsubsection}[1]{\addcontentsline{toc}{subsubsection}{#1}}
+
+\renewcommand{\maketitle}{%
+\@open{section}{}
+\@open{center}{}
+\@open{h2}{}\Title\@close{h2}
+\@print{<br/>}
+\@open{h3}{}\Author\@close{h3}
+\@print{<br/>}
+\@open{h4}{}\Institute\@close{h4}
+\@print{<br/>}
+\@open{h4}{}\Date\@close{h4}
+\@close{center}
+\@close{section}
+}
+
+\renewcommand{\@meta}{%
+\begin{rawhtml}
+		<meta charset="utf-8">
+		<meta name="description" content="Cours M2 ICE">
+\end{rawhtml}
+	\@print{<meta name="author" content="}\@author\@print{">}
+\begin{rawhtml}
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" 
+                      content="black-translucent" />
+		<meta name="viewport" 
+		      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<link rel="stylesheet" href="/css/reveal/reveal.min.css">
+		<link rel="stylesheet" href="/css/reveal/theme/irit.css">
+		<link rel="stylesheet" href="/css/lib/zenburn.css">
+		<link rel="stylesheet" href="/css/latex.css">
+		<!--[if lt IE 9]>
+		<script src="/js/lib/html5shiv.js"></script>
+		<![endif]-->
+\end{rawhtml}}
+
+% \makeatletter
+% \renewcommand{\beamer@sectionintoc}[5]{%
+% % sect #, title, slide #, part #, sec #
+% \@print{tableofcontents["slides"]}
+% \end{rawhtml
+% }
+% \renewcommand{\beamer@subsectionintoc}[6]{%
+% % sect #, subsec #, title, slide #, part #, sec #
+% \begin{rawhtml}
+% \end{rawhtml}
+% }
+% 
+% \makeatother

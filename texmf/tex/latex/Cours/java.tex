@@ -1,0 +1,148 @@
+\usepackage{color}
+
+%
+% accolades
+%
+\newlength{\tablength}
+\setlength{\tablength}{0em}
+\def\jtab{\mbox{\hspace{1em} }\null\makebox[\tablength]{\hfill}}
+
+\def\jlb{\ensuremath{\lbrace}\addtolength{\tablength}{2em}}
+\def\jrb{%\null\hspace{-2em}%
+\jtab\ensuremath{\rbrace}\addtolength{\tablength}{-2em}}
+
+%
+% environnement pour les programmes Java
+%
+
+
+\def\pjava{\setlength{\tablength}{0em}\par\psep%
+\begin{center}
+\begin{tabular}{|p{0.9\linewidth}|}%
+\hline
+\makebox[0.8\linewidth][c]{\hfill}\\[-3mm]}
+\def\endpjava{\hline\end{tabular}%
+\end{center}%
+\par\psep%
+\setlength{\tablength}{0em}%
+}
+
+
+
+%
+% Commandes pour ecrire du Java
+%
+\definecolor{commandcolor}{rgb}{0,0,1}
+\definecolor{chainecolor}{rgb}{0,0.4,0}
+\newfont{\KeywordFont}{cmss12}
+\def\fup#1{\raisebox{1ex}{\tiny #1}}
+\def\java{\mbox{\KeywordFont Java}}
+\def\var#1{\textcolor{commandcolor}{\KeywordFont #1}}
+\def\tab{\hspace{1em}}
+\def\psep{\vspace{0.8em}}
+\def\ee{\fup{e}\,}
+
+
+%
+% op\'erateurs
+%
+\definecolor{commandcolor}{rgb}{0,0.6,1}
+\def\jop#1{\textcolor{commandcolor}{\KeywordFont #1}}
+\def\jreturn{\jop{return }}
+\def\jsuper{\jop{super}}
+\def\jthrow{\jop{throw }}
+\def\jnew{\jop{ new }}
+\def\jif{\jop{if }}
+\def\jelse{\jop{else }}
+\def\jwhile{\jop{while }}
+\def\jcatch{\jop{catch }}
+\def\jtry{\jop{try }}
+\def\jfor{\jop{for }}
+\def\jthis{\jop{this}}
+
+
+%
+% commentaires
+%
+\definecolor{commentcolor}{rgb}{0.2,0.7,0.1}
+
+\def\jcl{\textcolor{commentcolor}{/*}}
+\def\jc#1{\textcolor{commentcolor}{#1}}
+\def\jcr{\textcolor{commentcolor}{*/}}
+\def\jcomment#1{\textcolor{commentcolor}{\sl // #1}\\}
+
+
+
+%
+% classes et autres
+%
+\definecolor{deepblue}{rgb}{0,0,0.4}
+\definecolor{classcolor}{rgb}{0.8,0,0.2}
+\def\jcolor#1{\textcolor{classcolor}{#1}}
+\def\jimport{\textcolor{red}{import }}
+\def\jclassj#1{\jcolor{class }\textcolor{deepblue}{\textbf{#1}} }
+\def\jobjet#1{\textcolor{deepblue}{\textbf{#1}}}
+\def\jpublic{\jcolor{public }}
+\def\jstatic{\jcolor{static }}
+\def\jprivate{\jcolor{private }}
+\def\jextends{\jcolor{ extends }}
+\def\jimplements{\jcolor{ implements }}
+\def\jthrows{\jcolor{ throws }}
+\def\jclasse#1{\jcolor{#1}}
+\def\jkw#1{\textcolor{deepblue}{#1}}
+
+
+
+%
+% types
+%
+\definecolor{typescolor}{rgb}{0.6,0,0.6}
+\def\jtype#1{\textcolor{typescolor}{#1}}
+\def\jfloat{\jtype{float }}
+\def\jbool{\jtype{boolean }}
+\def\jString{\jtype{String }}
+\def\jint{\jtype{int }}
+\def\jvoid{\jtype{void }}
+\def\jdouble{\jtype{double }}
+\def\jGraphics{\jtype{Graphics }}
+
+%
+% constantes
+%
+\definecolor{constantecolor}{rgb}{0.6,0,0.4}
+\def\const#1{\textcolor{constantecolor}{\KeywordFont #1}}
+\def\jtrue{\const{true}}
+\def\jfalse{\const{false}}
+
+%
+% variables
+%
+
+\definecolor{variablecolor}{rgb}{0,0,1}
+\def\var#1{\textcolor{variablecolor}{\KeywordFont #1}}
+\def\methode#1{\textcolor{variablecolor}{#1} }
+\def\jmain{\methode{main}}
+\def\jprint#1{\methode{System.out.println}(\textcolor{chainecolor}{"#1"});\\}
+
+\def\shellcommand#1{{\tt dendron} & #1 \\}
+\def\pshell{\begin{center}\begin{tabular}{|l@{\%}l|}
+\hline
+\multicolumn{2}{|c|}{\makebox[330pt][c]{\hfill}}\\[-3mm]}
+\def\endpshell{%\multicolumn{2}{|l|}{\makebox[330pt][c]{\hfill}}\\ %
+\hline\end{tabular}\end{center}}
+
+
+%
+% Mise en page
+%
+\def\tab{\hspace{1em}}
+\def\psep{\vspace{0.8em}}
+\def\ee{\fup{e}\,}
+
+
+
+
+
+\def\exercice{\hfill\hrule \vspace{0.5em} \underline{\bf Exercice :}\newline}
+\def\endexercice{\hfill\hrule \vspace{0.5em}}
+
