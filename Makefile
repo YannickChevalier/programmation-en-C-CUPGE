@@ -66,7 +66,7 @@ commit::
 	branch=$$(git branch | grep \* | cut -d ' ' -f2) ; \
 	dependants=( $$(git config --file .gitconfig --get-all branch.$${branch}.dependants) ) ; \
 	for dep in $${dependants[@]} ; do \
-		git merge $${dep} $${branch} ; \
+		git merge $${branch} $${dep}  ; \
 		make commit ; \
 	done ; \
 	git checkout $${branch}
