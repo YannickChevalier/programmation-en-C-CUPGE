@@ -66,7 +66,8 @@ commit::
 	branch=$$(git branch | grep \* | cut -d ' ' -f2) ; \
 	dependants=( $$(git config --file .gitconfig --get-all branch.$${branch}.dependants) ) ; \
 	for dep in $${dependants[@]} ; do \
-		git rebase $${branch} $${dep} ; \
+		git checkout $${dep} ; \
+		git merge $${branch}  ; \
 		make commit ; \
 	done ; \
 	git checkout $${branch}
@@ -181,4 +182,9 @@ nouvelle_branche:: commit
 	git checkout configuration
 
 
+init:
+	git config --local merge.ours.name "keep branch version"
+	git config --local merge.ours.driver "./bin/ours"
+	git config --local merge.theirs.name "always import new version"
+	git config --local merge.theirs.driver "./bin/theirs"
 

@@ -1,0 +1,3 @@
+Makefile merge=theirs
+**/.gitignore merge=ours 
+.gitconfig merge=theirs

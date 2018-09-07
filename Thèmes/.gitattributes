@@ -1,0 +1,3 @@
+tp-enonces-* merge=theirs
+compile.sh   merge=ours
+
