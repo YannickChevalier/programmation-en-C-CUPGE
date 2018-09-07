@@ -190,3 +190,4 @@ init:
 
 etudiants:
 	@echo "Bonjour les amis !"
+	@echo "Vous allez bien ?"
