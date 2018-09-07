@@ -1,0 +1,15 @@
+\ProvidesPackage{yearcomputation}
+
+\newcount\compute@year@first
+\newcount\compute@year@second 
+\compute@year@first = \year
+\compute@year@second  = \year
+
+\ifnum \month < 8
+\advance\compute@year@first by -1
+\else
+\advance\compute@year@second by 1
+\fi
+\xdef\cetteannee{\the\compute@year@first--\the\compute@year@second}
+
+\endinput

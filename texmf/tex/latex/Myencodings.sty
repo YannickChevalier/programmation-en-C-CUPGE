@@ -1,0 +1,54 @@
+\ProvidesPackage{Myencodings}
+
+\newif\ifuseunicode
+
+\DeclareOption{utf8}{%
+	\useunicodetrue
+}
+
+\ProcessOptions*
+
+
+\ifuseunicode
+     \DeclareTextCommandDefault{\nobreakspace}{\leavevmode\nobreak\ } 
+   \ifxetex
+      \RequirePackage{amsfonts,amsmath,amssymb}
+%      \RequirePackage{libertineotf}
+%      \defaultfontfeatures{Mapping=tex-text,Ligatures=TeX,Scale=MatchLowercase}
+%      \RequirePackage[libertine]{newtxmath}
+      \RequirePackage{mathtools}
+%      \RequirePackage{unicode-math}
+      \RequirePackage{xunicode}
+      \RequirePackage{textcomp}
+      \RequirePackage{fontspec}
+%      \setmainfont{Linux Libertine O}
+      \RequirePackage{xltxtra}
+%      \setmainfont{CMU Serif}
+%     \setmathfont{}
+%     \setromanfont[Ligatures=TeX]{CMU Serif}
+%      \setsansfont[Ligatures=TeX]{CMU Sans Serif}
+%      \setmonofont{CMU Typewriter Text}
+      \DeclareMathAlphabet{\mathsl}{T1}{cmr}{m}{sl}
+      \DeclareMathAlphabet{\mathsf}{T1}{cmr}{m}{sf}
+   \else
+      \RequirePackage[T1]{fontenc}
+      \RequirePackage{eurosym}
+      \RequirePackage{amsfonts,amsmath,amssymb}
+      \DeclareMathAlphabet{\mathsl}{T1}{cmr}{m}{sl}
+      \DeclareMathAlphabet{\mathsf}{T1}{cmr}{m}{sf}
+      \RequirePackage[utf8]{inputenc} %pdflatex
+   \fi
+\else
+   \RequirePackage[T1]{fontenc}
+   \RequirePackage{eurosym}
+   \RequirePackage{amsfonts,amsmath,amssymb}
+   \DeclareMathAlphabet{\mathsl}{T1}{cmr}{m}{sl}
+   \DeclareMathAlphabet{\mathsf}{T1}{cmr}{m}{sf}
+   \RequirePackage[latin1]{inputenc}
+\fi
+\RequirePackage[T1]{fontenc}
+
+\RequirePackage{eurosym}
+
+
+\endinput

@@ -1,0 +1,129 @@
+\ProvidesPackage{maketable}
+\RequirePackage{rotating}
+\RequirePackage{pdflscape}
+\RequirePackage{longtable}
+\newcount\c@j
+\newcount\c@i
+
+\newcount\c@linenum
+\c@linenum 0 \relax
+
+\newcount\c@nbfields
+\c@nbfields 0 \relax
+
+
+\newtoks\tableaudescription
+\tableaudescription={|}
+
+
+% Redefinition des loops
+\long\def\loop#1\repeat{\iterate\gobbleone{#1}}
+\long\def\iterate\gobbleone#1{#1\expandafter\iterate\fi\gobbleone{#1}}
+\long\def\gobbleone#1{}
+
+% \newfield{Name}{description}
+% where description is the standard LaTeX table format description for
+% the column
+
+\def\newfield #1#2{%
+  \advance\c@nbfields 1\relax
+  \tableaudescription=\expandafter{\the\tableaudescription #2|}
+  \expandafter\gdef\csname nbfield\romannumeral\c@nbfields\endcsname{#1}
+  \expandafter\gdef\csname #1\endcsname##1{%
+    \expandafter\gdef\csname #1\romannumeral\c@linenum\endcsname{##1}%
+  }%
+}
+
+\def\startline{\advance\c@linenum 1\relax}
+
+
+
+
+\def\showonetableline#1{\item \csname Nom#1\endcsname (\csname Laboratoire#1\endcsname) }
+
+\def\showtablelinebody{
+\ifnum \c@i < \c@linenum
+  \global\advance\c@i 1\relax
+  \showonetableline{\romannumeral\c@i}
+  \showtablelinebody
+\fi
+}
+\def\showtablelines{
+\begin{itemize}
+\global\c@i 0\relax
+\showtablelinebody
+\end{itemize}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Pr{\'e}sentation des tablelines en un tableau
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Premi{\`e}re ligne
+\newtoks\tableauhead
+% Lignes de contenu
+\newtoks\tableaubody
+
+
+
+\def\computetableauhead{%
+  \global\c@i 0\relax
+  \global\tableauhead={\hline}%
+  \loop
+  \advance\c@i 1\relax
+  \edef\currentheader{\the\tableauhead \csname nbfield\romannumeral\c@i\endcsname}
+  \global\tableauhead=\expandafter{\currentheader}%
+  \ifnum \c@i = \c@nbfields
+    \global\tableauhead=\expandafter{\the\tableauhead\\ \hline\endhead}%
+  \else
+    \global\tableauhead=\expandafter{\the\tableauhead & }%
+  \fi
+  \unless\ifnum \c@i = \c@nbfields
+  \repeat
+}
+
+
+
+
+\def\computetableaubody{%
+  \c@i 0\relax
+  \global\tableaubody={}
+  \loop{ 
+    \ifnum\c@i < \c@linenum
+      \advance\c@i 1\relax 
+      \c@j 0\relax
+      \loop
+      \advance\c@j 1\relax
+      \edef\currentfield{\csname nbfield\romannumeral\c@j\endcsname}
+      \edef\currentfield{\csname\currentfield\romannumeral\c@i\endcsname}
+      \edef\currentfield{\the\tableaubody \currentfield}
+      \global\tableaubody=\expandafter{\currentfield}%
+      \ifnum\c@j = \c@nbfields
+      \global\tableaubody=\expandafter{\the\tableaubody \\\hline}%
+      \else
+      \global\tableaubody=\expandafter{\the\tableaubody & }
+      \fi
+      \unless\ifnum\c@j = \c@nbfields
+      \repeat
+  }\repeat 
+}
+
+
+
+
+
+\def\tableau#1{%
+\newpage
+\computetableauhead
+\computetableaubody
+\begin{landscape}
+\centering
+\begin{longtable}{\the\tableaudescription}
+\the\tableauhead
+\the\tableaubody
+\caption{\large\sc\hbox{\vbox to 1cm{}} #1}
+\end{longtable}
+\end{landscape}
+}

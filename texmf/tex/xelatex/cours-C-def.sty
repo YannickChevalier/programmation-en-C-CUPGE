@@ -1,0 +1,136 @@
+
+\usepackage{algorithm} % environnement algorithme
+\usepackage[chapter]{/users/cassis/chevalie/TeX/Cours/exemple} % environnement pour les exemples
+\makeatletter
+\renewcommand{\ALG@name}{Programme}
+\renewcommand{\listalgorithmname}{Liste des \ALG@name s}
+\makeatother
+
+\usepackage{vmargin}
+\setpapersize{A4}
+% \setmargins{leftmargin}{topmargin}{textwidth}{textheight}{headheight}{headsep}%{footheight}{footskip}
+%\setmargins{1.5cm}{2.5cm}{18cm}{23.2cm}{1cm}{1.5cm}{1cm}{1cm}
+
+%%
+%% symboles du C 
+%%
+\newlength{\tablength}
+\setlength{\tablength}{0em}
+
+\newrgbcolor{stringcolor}{0 0.3 0}
+\newrgbcolor{commentcolor}{0 0 0.4}
+\newrgbcolor{functioncolor}{0.4 0 0}
+\newrgbcolor{typecolor}{0.3 0 0.3}
+\newrgbcolor{preproccolor}{0.1 0 0.6}
+\newrgbcolor{keywordcolor}{0 0.4 0.4}
+
+\newcommand{\imp}[1]{\textcolor{red}{#1}}
+\newcommand{\mimp}[1]{\textcolor{red}{\ensuremath{#1}}}
+
+\newcommand{\bslash}{\ensuremath{\backslash}}
+\newcommand{\cinclude}[1]{\textcolor{preproccolor}{\#include #1}}
+\newcommand{\cpp}[1]{\textcolor{preproccolor}{\# #1}}
+\newcommand{\cfun}[1]{\textcolor{functioncolor}{#1}}
+\newcommand{\ctype}[1]{\textcolor{typecolor}{#1}}
+\newcommand{\cstring}[1]{\textcolor{stringcolor}{"#1"}}
+\newcommand{\ccomment}[1]{\textcolor{commentcolor}{/* #1 */}}
+\newcommand{\ckeyword}[1]{\textcolor{keywordcolor}{#1}}
+
+\newcommand{\cmain}{\cfun{main}}
+\newcommand{\cmaindef}{\ctab\cint\\%
+\cmain(\cint argc, \cchar * argv[]) \lb \\}
+\newcommand{\cprintf}[1]{\cfun{printf}(#1)}
+
+\newcommand{\cint}{\ctype{int }}
+\newcommand{\cchar}{\ctype{char }}
+\newcommand{\cvoid}{\ctype{void }}
+\newcommand{\cfloat}{\ctype{float }}
+
+\newcommand{\stdio}{\textcolor{blue}{stdio}}
+
+
+\newcommand{\ctab}{\item\hspace{\tablength}}
+\newcommand{\lb}{\ensuremath{\lbrace}\addtolength{\tablength}{2em}}
+\newcommand{\rb}{\hspace{-2em}\ensuremath{\rbrace}\addtolength{\tablength}{-2em}}
+\newcommand{\cnl}{\ensuremath{\backslash n}}
+\newcommand{\diff}{\ensuremath{\ !\!=}}
+
+\newcommand{\cif}{\ckeyword{if }}
+\newcommand{\celse}{\ckeyword{else }}
+\newcommand{\cfor}{\ckeyword{for }}
+\newcommand{\cwhile}{\ckeyword{while }}
+\newcommand{\cswitch}{\ckeyword{switch }}
+\newcommand{\cdefault}{\ckeyword{default}\addtolength{\tablength}{2em}}
+\newcommand{\ccase}{\ckeyword{case }\addtolength{\tablength}{2em}}
+\newcommand{\cbreak}{\ckeyword{break }\addtolength{\tablength}{-2em}}
+\newcommand{\cdo}{\ckeyword{do }}
+\newcommand{\cnon}{\ckeyword{!}}
+\newcommand{\cou}{\ckeyword{\ensuremath{\vert\,\vert}}}
+\newcommand{\cet}{\ckeyword{\ensuremath{\&\&}}}
+\newcommand{\creturn}{\ckeyword{return }}
+\newcommand{\n}{\ensuremath{\backslash}n}
+%%
+%% environnements
+%%
+%\newcounter{exemple}[chapter]
+%\newenvironment{example}[1]{\stepcounter{exemple}\vspace{1em}\hrule\vspace{0.3em}%
+%\noindent\textbf{Exemple \arabic{exemple} }\textsl{#1}%
+%\vspace{0.3em}\hrule\vspace{1em}
+%}{\samepage\vspace{1em}\hrule\vspace{1em}}
+
+\def\mots{\vspace{1em}\hrule\vspace{1em}\noindent\underline{\sl %
+Mots \`a conna\^{\i}tre \`a la fin du chapitre~:} }
+\def\endmots{\vspace{1em}\hrule\vspace{1em}}
+
+\newcommand{\gcc}{\texttt{gcc}}
+\newcommand{\xemacs}{\texttt{XEmacs}}
+
+\newcommand{\warning}[1]{\vspace{1em}\hrule\begin{center}
+\parbox{1.5cm}{%
+\begin{center}
+\includegraphics[width=1.2cm]{../EncapsulatedPS/gnome-warning.eps}
+\end{center}
+}\hspace{0.02\linewidth}\parbox{0.7\linewidth}{#1}%
+\end{center}
+\samepage\hrule\vspace{1em}
+}
+
+\newenvironment{Ccode}{\setlength{\tablength}{0em}%
+\begin{trivlist}}%
+{\end{trivlist}%
+\samepage\setlength{\tablength}{0em}}
+
+\newenvironment{note}{}{}
+
+\newenvironment{algo}{\begin{algorithm}}%
+{\samepage\end{algorithm}}
+
+\newcommand{\shellcommand}[1]{{\tt dendron} & #1 \\}
+\newenvironment{pshell}{\vspace{1em}\begin{center}\begin{tabular}{l@{\% }l}
+\hline
+\multicolumn{2}{c}{\makebox[330pt][c]{\hfill}}\\}%
+{\multicolumn{2}{l}{\makebox[330pt][c]{\hfill}}\\ %
+\hline\end{tabular}\end{center}\vspace{1em}}
+
+\untypedspaces
+
+\makeatletter
+\newcommand\npblistoftables{%
+  \section*{Liste des Tableaux}%
+  \@namedef{l@tables}{\@dottedtocline{1}{1.5em}{2.3em}}%
+  \@starttoc{lot}}
+\newcommand\npblistoffigures{%
+  \section*{Liste des Figures}%
+  \@namedef{l@figures}{\@dottedtocline{1}{1.5em}{2.3em}}%
+  \@starttoc{lof}}
+
+\renewcommand{\npblistofalgorithms}{%
+  \section*{Liste des Programmes}%
+    \@namedef{l@algorithm}{\@dottedtocline{1}{1.5em}{2.3em}}%
+    \@starttoc{\@nameuse{ext@algorithm}}}
+
+\renewcommand{\npblistofexemples}{%
+  \section*{Liste des Exemples}%
+    \@namedef{l@exemple}{\@dottedtocline{1}{1.5em}{2.3em}}%
+    \@starttoc{\@nameuse{ext@exemple}}}
+\makeatother
