@@ -1,0 +1,279 @@
+\titre{\tio}
+
+
+\begin{center}
+  \parbox{0.9\textwidth}{%
+    \sl Dans ce thème, nous verrons comment un programme écrit en C
+    interagit avec son environnement, que ce soit un terminal (la
+    fenêtre dans laquelle il est exécuté) ou des fichiers.
+  }
+\end{center}
+
+\exo{Premier programme}
+% 1
+On va travailler sur les types, donc dans le répertoire \url{src/Entrées-Sorties/}.
+
+\question Vérifiez que vous êtes bien sur la branche
+\texttt{etudiant}, et si ce n'est pas le cas, allez sur cette branche.
+
+\begin{solution}
+  \begin{lstlisting}[language=bash]
+    git branch
+    git checkout etudiant
+  \end{lstlisting}
+\end{solution}
+
+\question Créez le fichier \url{~/workspace/src/Entrées-Sorties/exercice\arabic{exercicenum}.c} et
+ouvrez-le.
+
+\question Tapez le code suivant dans le fichier:
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+
+int
+main ( int argc , char * argv[] )
+{
+  return 0 ;
+}
+\end{lstlisting}
+
+\question Sauvegardez le fichier (avec Ctrl-S). 
+
+\begin{center}
+  \sl On va maintenant compiler et exécuter ce programme.
+\end{center}
+
+\question Changer de répertoire pour aller dans \url{~/workspace/src/Entrées-Sorties}.
+\begin{solution}
+  \begin{lstlisting}[language=bash]
+    cd ~/workspace/src/Entrées-Sorties
+  \end{lstlisting}
+\end{solution}
+
+\question Compiler le programme avec la commande:
+\begin{solution}
+  \begin{lstlisting}[language=bash]
+    gcc -o exercice%\arabic{exercicenum}% exercice%\arabic{exercicenum}%.c
+  \end{lstlisting}
+\end{solution}
+
+\question Exécutez le programme. Que se passe-t'il ?
+\begin{solution}
+  \begin{lstlisting}[language=bash]
+    ./exercice%\arabic{exercicenum}%
+  \end{lstlisting}
+  Il ne se passe rien.
+\end{solution}
+
+\question Ajoutez la ligne suivante juste au dessus de \texttt{return 0}:
+\begin{lstlisting}[language=C]
+  printf ( "Bonjour." ) ;
+\end{lstlisting}
+et compilez et exécutez le programme.
+
+\begin{center}
+  \fbox{~\parbox{0.9\textwidth}{\texttt{printf} est une \emph{fonction} qui permet à un programme d'envoyer des données au terminal dans lequel il est exécuté.}~}
+\end{center}
+
+\question Ajoutez \verb+\n+ après Bonjour,   compilez et exécutez le programme.
+
+\begin{center}
+  \fbox{~\parbox{0.9\textwidth}{\verb+\n+ est un caractère qui demande au terminal de passer à la ligne suivante.}~}
+\end{center}
+
+\exo{Affichage d'un entier.}
+% 2
+
+Le 'f' de \texttt{printf} signifie \emph{mettre en
+  \texttt{f}orme}. Cette fonction est un peu spéciale car
+contrairement aux fonctions normales en C, elle peut prendre un nombre
+variable d'arguments, mais il en faut au moins 1. 
+
+Le premier argument est une \emph{chaîne de formattage} qui sert à
+mettre en forme les données qui sont contenues dans les autres
+arguments, dans l'ordre de lecture. Pour celà, la chaîne de formattage
+contient des \emph{directives d'affichage}. La première directive sera
+utilisée pour afficher la première donnée après la chaîne de
+formattage, la seconde directive sera utilisée pour afficher la
+seconde donnée après la chaîne de formattage, etc.
+
+\paragraph{Directives d'affichage.} Une directive commence toujours
+par \%. Il y en a des dizaines, donc on va juste en regarder quelques unes:
+\begin{itemize}
+\item \texttt{\% d}: permet d'afficher un entier en base \texttt{d}ix;
+\item \texttt{\% c}: permet d'afficher une lettre (un caractère) à partir d'un entier;
+\item \texttt{\% f}: permet d'afficher un nombre à virgule;
+\item \texttt{\% s}: permet d'afficher une chaîne de caractères;
+\end{itemize}
+Pour l'exercice 2, on commence par copier le contenu du programme
+\texttt{exercice1.c} dans un nouveau fichier \emph{exercice%\arabic{exercicenum}%.c}.
+
+
+\question Modifiez le premier programme pour afficher sur 10 lignes
+chaque lettre de 0 à 9 suivi de sa valeur en tant qu'entier.
+\begin{solution}
+  \begin{lstlisting}[language=C]
+    #include <stdio.h>
+
+    int main ( int argc , char * argv[] ) 
+    {
+      print ( "%c -> %d \n" , '0' , '0' ) ;
+      print ( "%c -> %d \n" , '1' , '1' ) ;
+      print ( "%c -> %d \n" , '2' , '2' ) ;
+      print ( "%c -> %d \n" , '3' , '3' ) ;
+      print ( "%c -> %d \n" , '4' , '4' ) ;
+      print ( "%c -> %d \n" , '5' , '5' ) ;
+      print ( "%c -> %d \n" , '6' , '6' ) ;
+      print ( "%c -> %d \n" , '7' , '7' ) ;
+      print ( "%c -> %d \n" , '8' , '8' ) ;
+      print ( "%c -> %d \n" , '9' , '9' ) ;
+      return 0 ; 
+    }
+  \end{lstlisting}
+\end{solution}
+Que remarque-t'on ?
+
+\begin{solution}
+  les codes se suivent dans le même ordre que les chiffres.
+\end{solution}
+
+\question Faites de même pour les lettres \texttt{'a'} et \texttt{'z'}, et affichez leur
+différence \texttt{'z'} - \texttt{'a'}. Idem pour les majuscules.
+
+\exo{Classes de caractères}
+\prerequis\ttype 1
+%3
+Comme les caractères de même type (lettres minuscules, chiffres, etc.)
+se suivent, on va écrire un programme qui va lire un caractère, et va
+afficher son type (lorsqu'on le connaît).
+
+\begin{solution}
+  \begin{lstlisting}[language=C]
+#include <stdio.h>
+
+int 
+main ( int argc , char * arv[] ) 
+{ 
+  int x ; 
+  x = getchar ( ) ;
+  if ( ( '0' <= x ) && ( x <= '9' ) ) 
+  { 
+    printf ( "%c est un chiffre.\n" , x ) ;
+  } 
+  if ( ( 'a' <= x ) && ( x <= 'z' ) ) 
+  { 
+    printf ( "%c est une lettre minuscule.\n" , x ) ;
+  } 
+  if ( ( 'A' <= x ) && ( x <= 'Z' ) ) 
+  { 
+    printf ( "%c est une lettre majuscule.\n" , x ) ;
+  } 
+  return 0 ; 
+}
+  \end{lstlisting}
+\end{solution}
+
+
+\exo{Chaînes de caractères}
+% 4
+\prerequis \ttype 3
+Contrairement à Python, C fait la différence entre un caractère seul
+et une suite de caractères.  Les valeurs de type caractère
+(\texttt{char}) s'écrivent entre des apostrophes, comme \texttt{'a'},
+\texttt{'3'}, \texttt{'\textbackslash n'}. Les \emph{chaînes de
+  caractères} sont juste des tableaux de caractères. Pour indiquer la
+fin de la chaîne, on met dans le tableau l'entier \(0\), qu'on peut
+aussi écrire \texttt{'\textbackslash 0'}. Il s'agit d'une convention
+qui est utilisée pour pouvoir traîté plus facilement les chaînes de
+caractères:
+\begin{itemize}
+\item Il n'y a pas de type spécifique: une chaîne de caractères est
+  définie par l'adresse du premier caractère, donc on utilise \texttt{char *};
+\item Pour afficher une chaîne de caractères avec \texttt{printf}, on
+  utilise la directive d'affichage \texttt{\%s}:
+  \begin{exemple}
+    Les deux morceaux suivants de programme font la même chose:
+    \begin{lstlisting}[language=C]
+      printf ( "Bonjour.\n" ) ;
+    \end{lstlisting}
+    \begin{lstlisting}[language=C]
+      char * hello = "Bonjour" ;
+      printf ( "%s.\n" , hello ) ;
+    \end{lstlisting}
+  \end{exemple}
+\end{itemize}
+
+\question Écrivez dans le fichier
+\texttt{exercice\arabic{exercicenum}} un programme qui affiche les 3
+premiers éléments du tableau \texttt{argv}. Compilez et exécutez ce
+programme avec \emph{et sans} arguments. Que remarque-t'on ?
+
+\begin{solution}
+  On utilise le programme suivant:
+  \begin{lstlisting}[language=C]
+#include <stdio.h>
+
+int main ( int argc , char * argv[] )
+{
+    char * hello = "Bonjour" ;
+    printf ( "%s.\n" , hello ) ;
+    printf ( "Bonjour.\n") ;
+    printf ( "argument 0: %s\n" , argv[0] ) ;
+    printf ( "argument 1: %s\n" , argv[1] ) ;
+    printf ( "argument 2: %s\n" , argv[2] ) ;
+    printf ( "argument 3: %s\n" , argv[3] ) ;
+    printf ( "argument 4: %s\n" , argv[4] ) ;
+    printf ( "argument 5: %s\n" , argv[5] ) ;
+    printf ( "argument 6: %s\n" , argv[6] ) ;
+    return 0 ;
+}
+  \end{lstlisting}
+  Une fois que les arguments sont terminés, il y a une case qui vaut
+  \texttt{(null)} (c'est l'adresse 0), suivie de cases qui ont une
+  valeur de la forme \texttt{NOM=chaine}
+\end{solution}
+
+\question Dans le terminal, tapez la commande:
+\begin{lstlisting}[language=bash]
+  echo $LANGUAGE_PID_FILE
+\end{lstlisting}
+%$
+Que remarquez vous ?
+
+\begin{solution}
+  Plein de choses !
+  \begin{itemize}
+  \item La mémoire du programme contient aussi les valeurs des
+    \emph{variables d'environnement} qui sont définies dans le
+    terminal où le programme a été exécuté.
+  \item En fait, la mémoire contient deux tableaux l'un à côté de l'autre:
+    \begin{itemize}
+    \item Dans le premier, il y a l'adresse des arguments du programme;
+    \item Dans le second, il y a la valeur des variables d'environnement;
+    \item La fin de ces tableaux est marquée avec l'adresse 0 (comme
+      la fin d'une chaîne de caractères est marquée par l'entier 0);
+    \item \textbf{Très mauvaise nouvelle}: en C, il n'y a aucun
+      mécanisme qui oblige à rester dans un tableau. Quand on parcourt
+      les cases tableau, si on ne fait pas attention, on fini par
+      tomber sur des cases dans la mémoire qui peuvent être définies
+      (ou pas), et qui contiennent d'autres données au bon vouloir du
+      compilateur. 
+    \end{itemize}
+  \end{itemize}
+
+\end{solution}
+
+\question On va maintenant tenter de voir ce qu'il y a plus
+loin. Affichez la case 80 du tableau \texttt{argv}.
+
+\begin{solution}
+  Lors des tests, celà suffit pour avoir un \emph{segmentation
+    fault}. Donc si accède à une case qui n'est pas dans le tableau, on peut
+  avoir soit:
+  \begin{itemize}
+  \item un résultat qui vient d'ailleurs (de gcc, par exemple);
+  \item une erreur qui arrête le programme. \emph{Segmentation fault}
+    signifie qu'on veut accéder à une adresse dans la mémoire qui
+    n'est pas définie.
+  \end{itemize}
+\end{solution}
