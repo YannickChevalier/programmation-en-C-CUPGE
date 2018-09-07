@@ -1,0 +1,68 @@
+\ProvidesPackage{formations}
+
+
+
+% Utilisation d'une formation:
+% \useformation pcp (Pr{\'e}paration aux Concours Polytechniques: Informatique)
+% Les macros de mise en page utilise la
+\def\useformation #1 (#2:#3){%
+  \expandafter
+  \gdef \csname formation#1name\endcsname {%
+    #2%
+  }
+  \expandafter
+  \gdef \csname module#1name\endcsname {%
+    #3%
+  }%
+}
+\def\useformation #1 (#2:#3){%
+	\gdef\formationname{#2}%
+	\gdef\modulename{#3}%
+}
+\def\pcp{\useformation pcp (L2 PCP: Informatique S3)}
+\def\pcpcg{\useformation pcp (L2 PCP: Informatique S4)}
+\def\mmesi{\useformation mmesi (L3 MMESI: Programmation)}
+\def\web{\useformation web (L2 CUPGE: D\'eveloppement Web)}
+\def\complexite{\useformation complexite (L2 Informatique: Complexit\'e des Algorithmes)}
+\def\useform#1{%
+  \expandafter
+    \global\expandafter\let \expandafter \formationname  \csname formation#1name\endcsname
+  \expandafter
+    \global\expandafter\let \expandafter \modulename  \csname module#1name\endcsname
+}
+\RequirePackage{catchfile}
+
+\def\appendtoconfigjs#1#2{%
+    \begingroup
+    \IfFileExists{config.js}%
+      {\CatchFileDef{\filecontent}{config.js}{\endlinechar=`^^J\catcode\endlinechar=12\relax}}% keep existing end-of-lines
+      {\let\filecontent\empty}%
+    \immediate\openout\appendwrite=#1\relax
+    \immediate\write\appendwrite{\filecontent}%
+    \immediate\write\appendwrite{{ 'name' : '#1' , 'type' : 'toclink' , 'stay': true , 'url' :  urlHref(window.location.href) + '#2' },}%
+    \immediate\closeout\appendwrite
+    \endgroup
+}
+
+%\ifnum\pdf@strcmp{\modulename}{web}=\z@
+%% Le nom de module est Web. On cherche si on est une solution ou pas
+%  \ifnum\pdf@strcmp{\solutions}{true}=\z@
+%    \gdef\finalname{\jobname\numero-web-sol.pdf}
+%  \else
+%    \gdef\finalname{\jobname\numero-web.pdf}
+%  \fi
+%  \gdef\titre#1{%
+%    \newwrite\tdinfo
+%    \immediate\openout\tdinfo=vol\numero.js
+%    \immediate\write\tdinfo{{ 'name' : '#1' , 'type' : 'toclink' ,
+%        'stay': true , 'url' :  urlHref(window.location.href) +
+%        '\finalname' },}
+%    \immediate\closeout\tdinfo
+%  }%
+%\else
+%\def\titre#1{}
+%\fi
+
+
+
+\endinput

@@ -1,0 +1,341 @@
+\NeedsTeXFormat{LaTeX2e}[1998/06/01]
+\ProvidesPackage{tad}
+
+\newif\ifTadStyleC
+\newif\ifTadStyleCaml
+\newif\ifTadStyleStd
+
+\TadStyleStdtrue
+\DeclareOption{caml}{\TadStyleCamltrue\TadStyleStdfalse\TadStyleCfalse}
+\DeclareOption{C}{\TadStyleCtrue\TadStyleStdfalse\TadStyleCamlfalse}
+\DeclareOption{std}{\TadStyleStdtrue\TadStyleCfalse\TadStyleCamlfalse}
+\ProcessOptions*
+
+\RequirePackage{ifthen}
+\RequirePackage{iterators}
+\RequirePackage{amsmath}
+
+% Fonte pour les mots-clefs et style g{\'e}n{\'e}ral
+\newcommand{\tadkw}[1]{\mbox{\sc{} #1}}
+\newcommand{\wpkw}[1]{\mbox{\sc\bf #1}}
+\newcommand{\tadMod}[1]{\uppercase{#1}}
+
+\newcommand{\userfunction}[1]{\ensuremath{\text{\rm #1}}}
+\def\makeuserfunction#1{
+\expandafter\gdef\csname #1\endcsname%
+{\@expandtwoargs{\userfunction}{#1}{}}}
+
+% Commentaires
+
+\ifTadStyleC
+\newcommand{\tadCommentSignBegin}{/*}
+\newcommand{\tadCommentSignEnd}{*/}
+\fi
+
+\ifTadStyleCaml
+\newcommand{\tadCommentSignBegin}{(*}
+\newcommand{\tadCommentSignEnd}{*)}
+\fi
+\ifTadStyleStd
+\newcommand{\tadCommentSignBegin}{\_\,\_}
+\newcommand{\tadCommentSignEnd}{}
+\fi
+
+\newcommand{\tadComment}[1]{%
+\ensuremath{\text{\rm\tadCommentSignBegin~\tt #1~\tadCommentSignEnd}}%
+}
+
+
+% Macros pour les d{\'e}finitions de mots-clefs
+
+
+\def\maketadkw#1#2{%
+  \expandafter\def\csname tad#1\endcsname%
+  {\tadkw{#2}\xspace}
+}
+\def\tadkw@iterator#1{\@expandtwoargs\maketadkw{#1}{#1}}
+\def\MakeTADkw#1{\apply@iterator{#1}{tadkw}}
+\MakeTADkw{Type,epyT,Variables,avec,Sortes,Axiomes}
+\maketadkw{etend}{{\'e}tend}
+\maketadkw{renomme}{renomm{\'e}}
+\maketadkw{Operateurs}{Op{\'e}rateurs}
+\maketadkw{Preconditions}{Pr{\'e}conditions}
+
+\newif\ifwasmodemath
+\newif\ifhoriz
+
+\newenvironment{formule}[1]{%
+\ifhoriz\ifmmode\wasmodemathtrue\else\wasmodemathfalse\begin{math}\fi
+\else\ifmmode\wasmodemathtrue\else\wasmodemathfalse\begin{math}\fi
+\if@twocolumn
+\def\impl{\\\hfil\Rightarrow}
+\def\implique{\\\hfil\Rightarrow}
+\def\et{\\\hfil\wedge}
+\else
+\def\et{\wedge}
+\def\impl{\Rightarrow}
+\def\implique{\\\hfil\Rightarrow}
+\fi
+\begin{array}[t]{l}
+#1\ifthenelse{\equal{#1}{}}{}{,\\}\fi}%
+{\ifwasmodemath
+\ifhoriz\else\end{array}\fi
+\else
+\ifhoriz\end{math}\else\end{array}\end{math}\fi
+\fi}
+% Environnements pour les specifications de type
+
+\newenvironment{type}[1]{%
+\begin{list}{}{\setlength{\itemsep}{0pt}}
+\item \tadType\  \tadMod{#1}
+}{%
+\item \tadepyT
+\end{list}}
+
+\newcommand{\sortes}[1]{\item \tadSortes\ \ensuremath{#1}}
+\newcommand{\extensionde}[1]{\item \tadetend ~ #1}
+\newcommand{\renommage}[2]{, \tadavec\ \ensuremath{#1} \tadrenomme\ \ensuremath{#2} }
+
+\def\make@assoc@renommage@aux(#1->#2){\renommage{#1}{#2}}
+\def\make@assoc@renommage#1{\expandafter\make@assoc@renommage@aux#1}
+\def\make@list@renommage#1{\@for\p@arg:=#1\do{%
+\edef\arg{\expandafter\@firstofone\p@arg}
+\make@assoc@renommage\p@arg
+}}
+\newcommand{\TADmodule}[2][]{%
+\ifthenelse{\equal{#1}{}}{\tadMod{#2}}{%
+\tadMod{#2}  \make@list@renommage{#1}
+}}
+
+\newenvironment{axiomlist}[1]%
+{\item #1
+\vspace*{-0.7em}
+\begin{displaymath}}
+{\end{displaymath}
+\vspace*{-1.5em}}
+
+% Sp{\'e}cification de types -- Operateurs
+
+\newenvironment{operateurs}{
+\item \tadOperateurs\par
+\begin{tabular}{l@{~:~}r@{\ensuremath{\rightarrow}}l}}{
+\end{tabular}}
+\newcommand{\newTADop}[3]{
+\makeuserfunction{#1}\ifthenelse{\equal{#2}{}}{\ensuremath{#1}&%
+\ensuremath{\emptyset}&\ensuremath{#3}}{\ensuremath{#1}&\ensuremath{#2}&\ensuremath{#3}}\hfill\\}
+\newcommand{\newTADox}[3]{
+\ifthenelse{\equal{#2}{}}{\ensuremath{#1}&%
+\ensuremath{\emptyset}&\ensuremath{#3}}{\ensuremath{#1}&\ensuremath{#2}&\ensuremath{#3}}\hfill\\}
+
+% Sp{\'e}cification de types -- Variables
+
+\newcommand{\variables}[1]{\item \tadVariables\ \ensuremath{#1}}
+
+
+% Sp{\'e}cification de types -- Axiomes
+
+\newenvironment{preconditions}{%
+\item \tadPreconditions\par
+\if@twocolumn
+\def\operation##1{\ensuremath{##1}:\hfil \\}
+\def\precondition##1{\hfil \ensuremath{##1}\\}
+\begin{tabular}{p{0.9\columnwidth}}%
+\else
+\def\operation##1{\ensuremath{##1}: }
+\def\precondition##1{& \ensuremath{##1}\\}
+\begin{tabular}{lc}%
+\fi}
+{%
+\end{tabular}}
+\newcommand{\TADpre}[2]{\operation{#1}\precondition{#2}}
+
+
+
+\newenvironment{axiomes}[1][]{
+\begin{axiomlist}{\tadAxiomes\ #1}
+\def\nom##1{(##1)&}
+\if@twocolumn
+\def\n{ \\ & \hfil}
+\def\twon{\n}
+\def\et{\\ & \hfil\wedge}
+\def\implique{\\ &\hfil\Rightarrow}
+\def\commentaire##1{\ifthenelse{\equal{##1}{}}{}{\\&\tadComment{##1}}}
+\begin{array}{l@{\hspace*{1em}}l}
+\else
+\def\n{& \\ &}
+\def\twon{}
+\def\et{\wedge}
+\def\implique{\Rightarrow}
+\def\commentaire##1{&\ifthenelse{\equal{##1}{}}{}{\tadComment{##1}}}
+\begin{array}{l@{\hspace*{1em}}c@{\hspace*{2em}}p{0.5\linewidth}}
+\fi
+}{%
+\end{array}
+\end{axiomlist}}
+   % arguments: 1 -> commentaire (optionnel), 2 -> axiome
+
+\newcommand{\newTADax}[2][]{#2\commentaire{#1}\\}
+   % Types d'axiomes
+\newcommand{\TADeq}[3][]{\nom{#1} #2=#3}
+\newcommand{\TADHorn}[3][]{\nom{#1} #2\implique #3}
+\newcommand{\TADcoer}[2]{(#1:#2)}
+\if@twocolumn
+\newcommand{\rais}[3][]{#2:\par\centerline{\ensuremath{\begin{formule}{#1}#3\end{formule}}}\par}
+\else
+\newcommand{\rais}[3][]{#2:\hfil\ensuremath{\begin{formule}{#1}#3\end{formule}}\par}
+\fi
+
+
+
+\def\makewpkw#1#2{%
+  \expandafter\def\csname wp#1\endcsname%
+  {\wpkw{#2}\xspace}
+}
+\def\wpkw@iterator#1{\@expandtwoargs\makewpkw{#1}{#1}}
+\def\MakeWPkw#1{\apply@iterator{#1}{wpkw}}
+
+\MakeWPkw{MACHINE,BEGIN,INITIALISATION,OPERATIONS,IMPLEMENTATION,REFINES,PRE,THEN,END,VAR,IN,IF,ELSE,WHILE,DO,INVARIANT,VARIANT}
+\def\wpCVARIABLES{\wpkw{CONCRETE\_VARIABLES}}
+
+\newcommand{\ELSE}{\end{wpCodeBlock}\wpELSE\begin{wpCodeBlock}}
+\let\semicolon;
+\newenvironment{wpFormulaBlock}{\ifhoriz
+\else
+\begin{list}{}{\setlength{\itemsep}{0pt}\setlength{\leftmargin}{1em}}
+\item
+\fi }{
+\ifhoriz\else\end{list}\fi}
+
+\def\lignecode{\ifhoriz\hspace*{0ex}\else\item\fi}
+\newenvironment{wpCodeBlock}{
+\begingroup
+  \lccode`\~=`\;
+  \lowercase{\endgroup
+    \def~{ \semicolon
+\lignecode }%
+  }%
+\ifhoriz\hspace*{0pt}\else
+\begin{list}{\setlength{\itemsep}{0pt}\setlength{\leftmargin}{1em}}
+\lignecode\fi}{
+\ifhoriz\hspace*{0pt}\else\end{list}\fi
+\catcode`\;=12
+}
+
+\newenvironment{wpIfThenElse}[1]{
+\wpIF\ \ensuremath{#1} \wpTHEN
+\begin{wpCodeBlock}}{%
+\end{wpCodeBlock}
+\wpEND}
+
+\newenvironment{wpBlock}{
+\wpBEGIN
+\begin{wpCodeBlock}}{%
+\end{wpCodeBlock}
+\wpEND}
+
+
+\newcommand{\VARIANT}{\item \wpVARIANT: }
+\newcommand{\INVARIANT}{\item \wpINVARIANT: }
+\newenvironment{wpWhileLoop}[1]{
+\wpWHILE\ \ensuremath{ #1 } \wpDO
+\begin{wpCodeBlock}
+\lignecode }{\end{wpCodeBlock}
+\wpEND}
+
+\newenvironment{wpVar}[1]{%
+\wpVAR\ \ensuremath{#1}\ \wpIN\
+\begin{wpCodeBlock}}{%
+\end{wpCodeBlock}
+\wpEND\ }
+
+\def\THEN{\end{formule}\end{wpFormulaBlock}\wpTHEN\ \begin{wpFormulaBlock}}
+
+\newenvironment{wpSpecif}{%
+\wpPRE
+\begin{wpFormulaBlock} 
+\begin{formule}{}}{%
+\end{wpFormulaBlock}\wpEND}
+
+%\newcommand{\pfp}[2]{\ensuremath{\text{pfp}(\llbracket#1\rrbracket,\ \left\lbrace #2\right\rbrace)}}
+\newcommand{\pfp}[2]{\ensuremath{\llbracket#1\rrbracket\  #2}}
+
+
+\def\wpFunction #1<-- #2(#3){%
+\makeuserfunction{#2}\horizfalse%
+\begin{list}{}{\setlength{\itemsep}{0pt}\setlength{\leftmargin}{1em}}
+\item \ensuremath{#1 \longleftarrow} \userfunction{#2}\ensuremath{(#3) ~\stackrel\Delta=} 
+\item}
+\def\endwpFunction{\end{list}}
+
+
+
+
+
+\begin{comment}
+  \newenvironment{wpPreuve}[1][]{%
+    \begin{center}
+      \begin{tabular}{p{0.18\linewidth}p{0.78\linewidth}}
+        \ifthenelse{\equal{#1}{}}{}{& {} \ensuremath{#1}\\[0.5ex]}%
+      }{%
+      \end{tabular}
+    \end{center}} \newcommand{\egal}[2][]{%
+    \ensuremath{\overset{\raisebox{0.6ex}{\parbox{\linewidth}{\footnotesize
+            #1}}}=} & \ensuremath{#2} \\[0.5ex] }
+  % \newcommand{\noegal}[1]{\multicolumn 2r {\ensuremath{#1}}\\ }
+  \newcommand{\noegal}[1]{& {} \ensuremath{#1}\\[0.5ex] }
+  \newcommand{\raistext}[1]{\multicolumn{2}{c}{\parbox[t]{0.8\linewidth}{#1}}\\[0.5ex]}
+\end{comment}
+\newcommand{\egal}[2][]{%
+  \vbox{% ligne
+    \hbox{%
+      \hbox{% premi{\`e}re partie
+        \vbox{%
+          \hsize=1.5cm
+          \hfil\vbox{%
+            \hsize=1.4cm
+            \footnotesize #1 
+          }\hfil%
+          \vspace*{-0.3\baselineskip}
+          \vbox{%
+            \hsize=1.5cm
+            \hfil\ensuremath{=}
+          }%
+        }%
+      }%
+      \advance\hsize by -1.6cm
+      \hbox to \hsize{%
+        \parbox[t]{0.9\linewidth}{%
+          \ensuremath{#2}}%
+      }%
+    }%
+  }%
+  \vspace*{1ex}
+}
+\newcommand{\noegal}[1]{%
+  \vbox{% ligne
+    \hbox{%
+      \hspace*{1.5cm}%
+      \advance\hsize by -1.6cm
+      \hbox to \hsize{%
+        \parbox[t]{0.9\linewidth}{%
+          \ensuremath{#1}}%
+      }%
+    }%
+  }%
+  \vspace*{1ex}
+}
+
+\newenvironment{wpPreuve}[1][]{%
+\begin{center}
+  \vbox\bgroup%
+  \parindent=0pt
+  \hsize=0.9\linewidth
+  \noegal{#1}
+}{%
+  \vspace*{0.5em}
+  \egroup
+\end{center}
+}
+\newcommand{\raistext}[1]{\vspace*{0.5ex}
+\hspace*{2.5cm}\parbox{.7\linewidth}{#1\hfil}
+\vspace*{1ex}}

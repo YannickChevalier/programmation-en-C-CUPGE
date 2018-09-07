@@ -1,0 +1,38 @@
+\def\makeconstant#1#2{%
+\expandafter\def\csname #1\endcsname{%
+\ensuremath{\operatorname{#2}}}
+}
+
+
+\def\makefunction#1#2{%
+  \expandafter\newcommand\csname #1\endcsname[2][]%
+  {\ensuremath{\operatorname{#2}_{\rm ##1}(##2)}}
+}
+
+\makeatletter
+
+\def\make@math@constant#1{\makeconstant{#1}{#1}}
+
+\def\make@math@function#1{\makefunction{#1}{#1}}
+
+\def\make@math@cal#1{%
+\expandafter\def\csname #1\endcsname{%
+\ensuremath{\mathcal{#1}}\xspace}
+}
+
+\def\make@math@ded#1{%
+\expandafter\def\csname D#1\endcsname{%
+\ensuremath{\mathcal{D}_{\textrm{\footnotesize #1}}}}
+}
+
+\def\make@math@iterator#1#2{\@for\p@arg:=#1\do{%
+\edef\arg{\expandafter\@firstofone\p@arg}
+\csname make@math@#2\endcsname\arg\relax
+}}
+
+\def\MakeLabelledFunctions#1{\make@math@iterator{#1}{labelledfunction}}
+\def\MakeFunctions#1{\make@math@iterator{#1}{function}}
+\def\MakeConstants#1{\make@math@iterator{#1}{constant}}
+\def\MakeCal#1{\make@math@iterator{#1}{cal}}
+\def\MakeDed#1{\make@math@iterator{#1}{ded}}
+\makeatother

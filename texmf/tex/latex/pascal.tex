@@ -1,0 +1,80 @@
+\documentclass[a4paper]{article}
+
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{vmargin}
+\setpapersize{A4}
+% \setmargins{leftmargin}{topmargin}{textwidth}{textheight}{headheight}{headsep}%{footheight}{footskip}
+\setmargins{2.5cm}{1cm}{16cm}{22.7cm}{1cm}{1.5cm}{1cm}{1.5cm}
+\usepackage[francais]{babel}
+\usepackage{pstricks}
+\usepackage{epsfig}
+
+\def\n{\newline}
+\psset{fillcolor=white}
+\psset{framesep=2em}
+%%
+\def\fup#1{\raisebox{1ex}{\footnotesize #1}}
+\def\pascal{\mbox{\tt Pascal}}
+\def\var#1{\mbox{\tt #1}}
+\def\tab{\hspace{1em}}
+\def\psep{\vspace{0.8em}}
+\def\ee{\fup{e}\,}
+%%
+%% Les types Pascal
+%%
+
+\def\int{\var{integer}}
+\def\real{\var{real}}
+\def\char{\var{char}}
+\def\bool{\var{boolean}}
+
+%%
+%% valeurs booleennes
+%%
+
+\def\true{\var{true}}
+\def\false{\var{false}}
+
+%%
+%% operations
+%%
+\def\pand{\var{ and }}
+\def\por{\var{ or }}
+\def\pnot{\var{ not }}
+\def\pxor{\var{ xor }}
+\def\pfor{\var{for }}
+\def\pforward{\var{ Forward }}
+\def\pwhile{\var{while }}
+\def\pif{\var{if }}
+\def\pthen{\var{ then }}
+\def\pelse{\var{else }}
+\def\pcase{\var{case }}
+\def\pof{\var{ of }}
+\def\pdo{\var{ do }}
+\def\pto{\var{ to }}
+\def\pvar{\var{Var }}
+\def\pconst{\var{Const }}
+\def\parray{\var{Array }}
+\def\ptype{\var{Type }}
+\def\prepeat{\var{repeat }}
+\def\puntil{\var{until }}
+\def\pdownto{\var{ downto }}
+\def\pbegin{\var{begin}}
+\def\pend{\var{end}}
+\def\pwriteln{\var{writeln}}
+\def\preadln{\var{readln}}
+\def\pwrite{\var{write}}
+\def\pread{\var{read}}
+\def\pprocedure{\var{Procedure }}
+\def\pfunction{\var{Function }}
+\def\pprogram{\var{Program }}
+
+
+%%
+%% environnements
+%%
+
+\def\exercice{\hfill\hrule \vspace{0.5em} \underline{\bf Exercice :}\newline}
+\def\endexercice{\vspace{0.5cm}\hfill\hrule \vspace{0.5em}}
+

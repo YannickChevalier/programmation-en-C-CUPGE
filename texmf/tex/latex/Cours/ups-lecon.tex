@@ -1,0 +1,101 @@
+
+\newcommand\ups{1}
+\newcommand{\uhp}{0}
+\newcommand{\plg}{0}
+\newcommand{\esial}{0}
+
+\input{Cours/commun.tex}
+\input{Cours/caracteres}
+\input{Cours/enseignement}
+
+\usepackage{ifvtex}
+\usepackage{ifpdf}
+\usepackage{eurosym}
+\usepackage{comment}
+\usepackage{color}
+
+\renewcommand{\topfraction}{1} % max fraction of floats at top
+\renewcommand{\bottomfraction}{1} % max fraction of floats at bottom
+% Parameters for TEXT pages (not float pages):
+\setcounter{topnumber}{4} \setcounter{bottomnumber}{4}
+\setcounter{totalnumber}{8} % 2 may work better
+\setcounter{dbltopnumber}{4} % for 2-column pages
+\renewcommand{\dbltopfraction}{1} % fit big float above 2-col. text
+\renewcommand{\textfraction}{0} % allow minimal text w. figs
+% Parameters for FLOAT pages (not text pages):
+\renewcommand{\floatpagefraction}{1} % require fuller float pages
+% N.B.: floatpagefraction MUST be less than topfraction !!
+\renewcommand{\dblfloatpagefraction}{1} % require fuller float pages
+% remember to use [htp] or [htpb] for placement
+
+
+\ifvtexpdf\pdftrue\fi
+
+
+\ifpdf
+\usepackage{graphicx}            % for including graphics
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{bookmark}
+
+\hypersetup{pdftitle={Enseignements Universite Paul Sabatier Toulouse 3},
+  pdfsubject={Cours d'Informatique},
+  pdfauthor={Yannick Chevalier <ychevali@irit.fr>},
+  pdfkeywords={pdftex, acrobat}, 
+  linkcolor={red},
+}
+\else
+\usepackage[dvips]{graphicx}
+\usepackage{pstcol}
+\usepackage{pst-node,pst-plot}
+\DeclareGraphicsExtensions{.jpg,.jpeg,.eps,.pdf,.png,.mps,.ps}
+\fi
+
+
+%\usepackage{vmargin}
+%\setpapersize{A4}
+% \setmargins{leftmargin}{topmargin}{textwidth}{textheight}{headheight}{headsep}
+%{footheight}{footskip}
+%\setmargins{1.5cm}{2cm}{18cm}{22.2cm}{1cm}{1.5cm}{1cm}{2cm}
+
+
+\usepackage[chapter]{algorithm} % environnement algorithme
+\usepackage[chapter]{exemple} % environnement pour les exemples
+\makeatletter
+\renewcommand{\ALG@name}{Programme}
+\renewcommand{\listalgorithmname}{Liste des \ALG@name s}
+\makeatother
+
+
+% \usepackage{hevea}
+\usepackage{avant}
+\usepackage[french]{varioref}
+
+\typeout{Creating Lesson file}
+
+\newcommand{\mref}[1]{\ref{#1}~\vpageref{#1}}
+
+
+
+\newcommand{\stpitd}[1]{%
+\td{#1}{Deug STPI 1}{ann{\'e}e \cetteannee}}
+\newcommand{\stpitp}[1]{%
+\tp{#1}{Deug STPI 1}{ann{\'e}e \cetteannee}}
+
+\newcommand{\maittd}[1]{%
+\td{#1}{Ma{\^\i} trise d'Informatique Fondamentale}{ann{\'e}e \cetteannee}}
+\newcommand{\maittp}[1]{%
+\tp{#1}{Ma{\^\i} trise d'Informatique Fondamentale}{ann{\'e}e \cetteannee}}
+
+\newcommand{\esialtd}[1]{%
+\td{#1}{ESIAL 2 -- ASPD}{ann{\'e}e \cetteannee}}
+\newcommand{\esialtp}[1]{%
+\tp{#1}{ESIAL 2 -- ASPD}{ann{\'e}e \cetteannee}}
+
+\newcommand{\mmesitd}[1]{%
+\td{#1}{L3 MMESI}{ann{\'e}e \cetteannee}}
+\newcommand{\mmesitp}[1]{%
+\tp{#1}{L3 MMESI}{ann{\'e}e \cetteannee}}
+\newcommand{\mmesidevoir}[1]{%
+\devoir{#1}{L3 MMESI}{ann{\'e}e \cetteannee}}
+
