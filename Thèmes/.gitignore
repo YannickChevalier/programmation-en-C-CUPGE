@@ -4,5 +4,5 @@ tmp.log
 tp.aux
 tp.log
 *.tex
-tp-solutions*.pdf
+./tp-solutions*.pdf
 images/**
