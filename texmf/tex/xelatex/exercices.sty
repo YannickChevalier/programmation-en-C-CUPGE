@@ -16,19 +16,19 @@
 %
 % Exercices, questions
 %
-\newcounter{num}
-\setlabel{num}{\Roman{num}}
-\newcounter{quest}[num]
+\newcounter{exercicenum}
+\setlabel{exercicenum}{\Roman{exercicenum}}
+\newcounter{quest}[exercicenum]
 \setlabel{quest}{(\alph{quest})}
 
 \newcommand{\exo}[1]{\vspace{1.5em}
-  \refstepcounter{num}\vspace{1.eM}\hspace{-2em}%
-  \underline{\bf \Roman{num} Exercice : \it  #1}\\%
+  \refstepcounter{exercicenum}\vspace{1.eM}\hspace{-2em}%
+  \underline{\bf \Roman{exercicenum} Exercice : \it  #1}\\%
   \nopagebreak}
 
 \newcommand{\prob}[1]{vspace{1.5em}
-  \refstepcounter{num}\vspace{1.eM}\hspace{-2em}%
-  \underline{\bf \Roman{num} Probl{\`e}me : \it  #1}\\}
+  \refstepcounter{exercicenum}\vspace{1.eM}\hspace{-2em}%
+  \underline{\bf \Roman{exercicenum} Probl{\`e}me : \it  #1}\\}
 
 \newcommand{\question}{\vspace{1em}
   
@@ -51,5 +51,5 @@
 \begin{center}
   {\Huge Correction}
 \end{center}
-\setcounter{num}{0}
+\setcounter{exercicenum}{0}
 }
