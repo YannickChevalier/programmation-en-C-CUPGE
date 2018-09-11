@@ -16,9 +16,12 @@ sites Web externes qui nous permettront de gérer le code C qui sera
 \exo{Espace de travail sur Cloud 9}
 
 \question Commencez par ouvrir le mail reçu de \url{support@c9.io} sur
-l'adresse mail que vous avez indiqué, et allez sur la page pour créer
-un compte.
+l'adresse mail de l'université, et allez sur la page pour créer un
+compte. évitez d'être trop imaginatif sur le nom, prénom, car vous
+pourriez être amené à présenter votre travail sur ce compte.
 
+\question Une fois l'inscription terminée, vous recevrez un autre
+email avec un lien pour modifier votre mot de passe.
 
 Un \emph{workspace} (espace de travail) correspond à un projet
 unique. Cette définition englobe à la fois les fichiers, les
@@ -27,7 +30,7 @@ visualisation de l'ensemble.
 
 \question Créez un \emph{workspace} appelé \texttt{programmation-c} (tout
 en minuscules) comme projet \emph{blank} (icône orange Ubuntu
-sur la Fig.~\ref{fig:workspace:creation}).
+sur la Fig.~\ref{fig:workspace:creation}) et privé.
 
 \begin{figure}[htbp]
   \centering
@@ -50,6 +53,18 @@ L'environnement de travail ressemble alors à la Fig.~\ref{fig:workspace:initial
   l'exercice suivant (il faut ouvrir un nouvel onglet).
 \end{fminipage}
 
+\question Par défaut, votre compte sur \url{c9.io} peut être identifié
+avec le protocole \texttt{ssh} par une clef publique. Allez dans le répertoire \url{~/.ssh} et affichez la clef privée (qui est stockée dans le fichier \texttt{id\_rsa}) et la clef publique (qui est stockée dans le fichier \texttt{id\_rsa.pub})
+
+
+\begin{solution}
+  \begin{lstlisting}[language=bash]
+    cd ~/.ssh
+    cat id_rsa
+    cat id_rsa.pub
+  \end{lstlisting}
+\end{solution}
+
 \exo{Création d'un compte sur BitBucket}
 
 Pour créer un compte sur \url{https://bitbucket.org/}, il faut
@@ -63,7 +78,7 @@ bord (\emph{dashboard}). Puis allez dans votre compte en cliquant sur
 l'icône en bas, à gauche, puis \texttt{view profile},
 \texttt{settings}, \texttt{Security}, et \texttt{ssh keys}. On va
 relier notre espace de travail sur \url{c9.io} en utilisant la clef
-publique ssh créée à l'exercice précédent.
+publique qu'on a vue à l'exercice précédent.
 
 \question Allez ensuite sur \texttt{overview}, et créez un premier
 dépôt (repository) (\texttt{Programmation C}, par exemple) comme dépôt
