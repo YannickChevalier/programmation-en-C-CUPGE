@@ -16,12 +16,12 @@ On va travailler sur les types, donc dans le répertoire \url{~/workspace/progra
 \question Vérifiez que vous êtes bien sur la branche
 \texttt{master}, et si ce n'est pas le cas, allez sur cette branche.
 
-\begin{solution}
+\begin{solutioncachee}
   \begin{lstlisting}[language=bash]
     git branch
     git checkout etudiant
   \end{lstlisting}
-\end{solution}
+\end{solutioncachee}
 
 \question Créez le fichier \expandafter\url{~/workspace/programmation-en-C-CUPGE/src/Entrées-Sorties/exercice\arabic{exercicenum}.c} et
 ouvrez-le.
@@ -51,26 +51,26 @@ main ( int argc , char * argv[] )
 \end{center}
 
 \question Changer de répertoire pour aller dans \url{~/workspace/src/Entrées-Sorties}.
-\begin{solution}
+\begin{solutioncachee}
   \begin{lstlisting}[language=bash]
     cd ~/workspace/src/Entrées-Sorties
   \end{lstlisting}
-\end{solution}
+\end{solutioncachee}
 
 \question Compiler le programme avec la commande:
-\begin{solution}
+\begin{solutioncachee}
   \begin{lstlisting}[language=bash]
     gcc -o exercice%\arabic{exercicenum}% exercice%\arabic{exercicenum}%.c
   \end{lstlisting}
-\end{solution}
+\end{solutioncachee}
 
 \question Exécutez le programme. Que se passe-t'il ?
-\begin{solution}
+\begin{solutioncachee}
   \begin{lstlisting}[language=bash]
     ./exercice%\arabic{exercicenum}%
   \end{lstlisting}
   Il ne se passe rien.
-\end{solution}
+\end{solutioncachee}
 
 \question Ajoutez la ligne suivante juste au dessus de \texttt{return 0}:
 \begin{lstlisting}[language=C]
@@ -118,7 +118,7 @@ Pour l'exercice 2, on commence par copier le contenu du programme
 
 \question Modifiez le premier programme pour afficher sur 10 lignes
 chaque lettre de 0 à 9 suivi de sa valeur en tant qu'entier.
-\begin{solution}
+\begin{solutioncachee}
   \begin{lstlisting}[language=C]
     #include <stdio.h>
 
@@ -137,12 +137,12 @@ chaque lettre de 0 à 9 suivi de sa valeur en tant qu'entier.
       return 0 ; 
     }
   \end{lstlisting}
-\end{solution}
+\end{solutioncachee}
 Que remarque-t'on ?
 
-\begin{solution}
+\begin{solutioncachee}
   les codes se suivent dans le même ordre que les chiffres.
-\end{solution}
+\end{solutioncachee}
 
 \question Faites de même pour les lettres \texttt{'a'} et \texttt{'z'}, et affichez leur
 différence \texttt{'z'} - \texttt{'a'}. Idem pour les majuscules.
@@ -154,7 +154,7 @@ Comme les caractères de même type (lettres minuscules, chiffres, etc.)
 se suivent, on va écrire un programme qui va lire un caractère, et va
 afficher son type (lorsqu'on le connaît).
 
-\begin{solution}
+\begin{solutioncachee}
   \begin{lstlisting}[language=C]
 #include <stdio.h>
 
@@ -178,7 +178,7 @@ main ( int argc , char * arv[] )
   return 0 ; 
 }
   \end{lstlisting}
-\end{solution}
+\end{solutioncachee}
 
 
 \exo{Chaînes de caractères}
@@ -215,7 +215,7 @@ caractères:
 premiers éléments du tableau \texttt{argv}. Compilez et exécutez ce
 programme avec \emph{et sans} arguments. Que remarque-t'on ?
 
-\begin{solution}
+\begin{solutioncachee}
   On utilise le programme suivant:
   \begin{lstlisting}[language=C]
 #include <stdio.h>
@@ -238,7 +238,7 @@ int main ( int argc , char * argv[] )
   Une fois que les arguments sont terminés, il y a une case qui vaut
   \texttt{(null)} (c'est l'adresse 0), suivie de cases qui ont une
   valeur de la forme \texttt{NOM=chaine}
-\end{solution}
+\end{solutioncachee}
 
 \question Dans le terminal, tapez la commande:
 \begin{lstlisting}[language=bash]
@@ -247,7 +247,7 @@ int main ( int argc , char * argv[] )
 %$
 Que remarquez vous ?
 
-\begin{solution}
+\begin{solutioncachee}
   Plein de choses !
   \begin{itemize}
   \item La mémoire du programme contient aussi les valeurs des
@@ -268,12 +268,12 @@ Que remarquez vous ?
     \end{itemize}
   \end{itemize}
 
-\end{solution}
+\end{solutioncachee}
 
 \question On va maintenant tenter de voir ce qu'il y a plus
 loin. Affichez la case 80 du tableau \texttt{argv}.
 
-\begin{solution}
+\begin{solutioncachee}
   Lors des tests, celà suffit pour avoir un \emph{segmentation
     fault}. Donc si accède à une case qui n'est pas dans le tableau, on peut
   avoir soit:
@@ -283,4 +283,4 @@ loin. Affichez la case 80 du tableau \texttt{argv}.
     signifie qu'on veut accéder à une adresse dans la mémoire qui
     n'est pas définie.
   \end{itemize}
-\end{solution}
+\end{solutioncachee}

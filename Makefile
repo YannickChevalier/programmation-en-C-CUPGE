@@ -192,9 +192,10 @@ etudiants:
 	@echo "Bonjour les amis !"
 	@echo "Vous allez bien ?"
 
-
-publication:
+compilation:
 	cd Thèmes ; ./compile.sh
+
+publication: compilation
 	echo "Message pour le commit ?"
 	read msg ; \
 	git add . ; \
@@ -205,4 +206,10 @@ publication:
 	git add . ; \
 	git commit -m "$${msg}" ; \
 	git push cours enonces ; \
-	git push cours-public enonces
+	git push cours-public enonces ; \
+	git checkout solutions ; \
+	git checkout enseignants -- $(wildcard Thèmes/tp-solutions-*.pdf) ; \
+	git add . ; \
+	git commit -m "$${msg}" ; \
+	git push cours solutions ; \
+	git push cours-public solutions

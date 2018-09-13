@@ -32,7 +32,7 @@ Commencez par écrire une fonction \texttt{crible} qui ne fait rien,
 mais est appelée avec les bons arguments, et vérifiez que le programme
 compile correctement.
 
-\begin{solution}
+\begin{solutioncachee}
   \begin{lstlisting}[language=C]
  #include <stdio.h>
 
@@ -69,7 +69,7 @@ main ( int argc , char * argv[] )
     return 0 ;
 } 
   \end{lstlisting}
-\end{solution}
+\end{solutioncachee}
 
 \question Lorsqu'on programme en C, il est recommandé de suivre la
 recommandation suivante:
@@ -81,7 +81,7 @@ recommandation suivante:
 Modifiez le programme pour qu'en cas d'erreur de la fonction
 \texttt{crible}, la fonction \texttt{main} s'arrête immédiatement en
 renvoyant un entier \(> 0\).
-\begin{solution}
+\begin{solutioncachee}
   \begin{lstlisting}[language=C]
     if ( crible ( t  ) != 0 )
     {
@@ -89,7 +89,7 @@ renvoyant un entier \(> 0\).
         return 1 ;
     }
   \end{lstlisting}
-\end{solution}
+\end{solutioncachee}
 
 \question Dans la fonction \texttt{crible}, commencez par mettre les
 deux premières cases à \(0\) (car \(0\) et \(1\) ne sont pas premiers)
@@ -112,7 +112,7 @@ s'exécute correctement, même s'il ne fait rien pour l'instant.
 \question Modifiez la boucle externe pour ne pas parcourir toutes les
 cases jusqu'à \texttt{TAILLE} et vous arrêter avant. 
 
-\begin{solution}
+\begin{solutioncachee}
   \begin{lstlisting}[language=C]
 int crible ( int * t )
 {
@@ -129,7 +129,7 @@ int crible ( int * t )
     return  0 ;
 }    
   \end{lstlisting}
-\end{solution}
+\end{solutioncachee}
 
 \question Dans la fonction \texttt{main}, faire une boucle infinie
 (dont la condition est toujours vraie) demandant à l'utilisateur un entier
@@ -145,7 +145,7 @@ et faisant:
 
 \end{itemize}
 
-\begin{solution}
+\begin{solutioncachee}
   \begin{lstlisting}[language=C]
 int
 main ( int argc , char * argv[] )
@@ -173,7 +173,7 @@ main ( int argc , char * argv[] )
     return 0 ;
 }    
   \end{lstlisting}
-\end{solution}
+\end{solutioncachee}
 
 \exo{Crible d'Érathostène utile}
 % 2
@@ -189,7 +189,7 @@ programme de l'exercice précédent.
 Pour \(i=1\), on prend \(t[1]=1\).
 
 
-\begin{solution}
+\begin{solutioncachee}
   \begin{lstlisting}[language=C]
 int crible ( int * t )
 {
@@ -205,14 +205,14 @@ int crible ( int * t )
     return  0 ;
 }
   \end{lstlisting}
-\end{solution}
+\end{solutioncachee}
 
 \question Écrivez une fonction qui prend en entrée le crible et un
 entier, et affiche la décomposition en facteurs premiers de cet
 entier.
 
 
-\begin{solution}
+\begin{solutioncachee}
   \begin{lstlisting}[language=C]
 int
 decomposition ( int * t , int i )
@@ -229,13 +229,13 @@ decomposition ( int * t , int i )
     return 0 ;
 }
   \end{lstlisting}
-\end{solution}
+\end{solutioncachee}
 
 \question Modifiez la fonction \texttt{main} pour qu'elle affiche la
 décomposition en facteurs premiers des entiers que donne
 l'utilisateur.
 
-\begin{solution}
+\begin{solutioncachee}
   \begin{lstlisting}[language=C]
 int
 main ( int argc , char * argv[] )
@@ -261,7 +261,7 @@ main ( int argc , char * argv[] )
     return 0 ;
 }
   \end{lstlisting}
-\end{solution}
+\end{solutioncachee}
 
 \exo{Recherche de majorité}
 
@@ -291,7 +291,7 @@ On fixe une taille de tableau à 10 éléments.
 positif \(n\), et initialise un tableau \texttt{t} avec des entiers
 entre \(0\) et \(n-1\).
 
-\begin{solution}
+\begin{solutioncachee}
   \begin{lstlisting}[language=C]
 #include <stdio.h>
 #include <stdlib.h>
@@ -332,7 +332,7 @@ main ( int argc , char * argv[] )
 }
 
   \end{lstlisting}
-\end{solution}
+\end{solutioncachee}
 
 La recherche d'un candidat majoritaire se fait en 2 phases:
 \begin{enumerate}
@@ -365,7 +365,7 @@ avec \texttt{t} l'adresse de la première case d'un tableau de
 \texttt{TAILLE} entiers, et \texttt{candidat} l'adresse de la variable
 dans laquelle il faut mettre la valeur trouvée.
 
-\begin{solution}
+\begin{solutioncachee}
   \begin{lstlisting}[language=C]
 void trouve_candidat ( int * t , int * candidat )
 {
@@ -386,7 +386,7 @@ void trouve_candidat ( int * t , int * candidat )
         }
 }    
   \end{lstlisting}
-\end{solution}
+\end{solutioncachee}
 
 \question Écrire la fonction \texttt{verifie\_candidat} qui vérifie
 que le candidat trouvé est majoritaire.
@@ -394,7 +394,7 @@ que le candidat trouvé est majoritaire.
 int verifie_candidat ( int * t , int candidat ) ;  
 \end{lstlisting}
 
-\begin{solution}
+\begin{solutioncachee}
   \begin{lstlisting}[language=C]
 int verifie_candidat ( int * t , int candidat )
 {
@@ -405,12 +405,12 @@ int verifie_candidat ( int * t , int candidat )
     return ( occurrences > ( TAILLE / 2 ) ) ;
 }    
   \end{lstlisting}
-\end{solution}
+\end{solutioncachee}
 
 \question Afin de vérifier le résultat, écrire une fonction qui
 affiche le contenu du tableau d'entiers.
 
-\begin{solution}
+\begin{solutioncachee}
   \begin{lstlisting}[language=C]
 int
 affiche_tableau ( int * t )
@@ -422,11 +422,11 @@ affiche_tableau ( int * t )
     return 0 ;
 }
   \end{lstlisting}
-\end{solution}
+\end{solutioncachee}
 
 \question Complétez la fonction \texttt{main} et vérifiez que votre programme marche. Il est conseillé de prendre de choisir \(n=2\) ou \(n=3\) pour avoir de bonnes chances d'avoir un élément majoritaire.
 
-\begin{solution}
+\begin{solutioncachee}
   \begin{lstlisting}[language=C]
 int 
 main ( int argc , char * argv[] )
@@ -451,7 +451,7 @@ main ( int argc , char * argv[] )
     return 0 ;
 }
   \end{lstlisting}
-\end{solution}
+\end{solutioncachee}
 
 \exo{Tri lent}
 % 4
