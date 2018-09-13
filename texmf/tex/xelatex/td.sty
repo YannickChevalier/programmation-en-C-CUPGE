@@ -14,13 +14,12 @@
 \usepackage{ifpdf}
 \usepackage{eurosym}
 \usepackage{comment}
-\usepackage{color}
+
 \definecolor{azur}{RGB}{33,140,223}
 \newif\ifsolution
 \AtBeginDocument{%
 \ifsolution
 \specialcomment{solution}{%
-        \vadjust{\vskip3pt}
         \noindent
         \hfil
         \rule{0.8\textwidth}{.4pt}
@@ -30,13 +29,12 @@
         \noindent
         \underline{\bf Solution:}\par
 }{%
+        \end{mdframed}
         \noindent
         \hfil
         \rule{0.8\textwidth}{.4pt}
         \hfil
-        \vadjust{\vskip3pt}
 }
-
 \else
 \excludecomment{solution}
 \fi

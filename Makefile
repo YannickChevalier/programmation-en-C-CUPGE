@@ -213,3 +213,4 @@ publication: compilation
 	git commit -m "$${msg}" ; \
 	git push cours solutions ; \
 	git push cours-public solutions
+	git checkout enseignants
