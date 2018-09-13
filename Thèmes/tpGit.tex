@@ -30,7 +30,7 @@ visualisation de l'ensemble.
 
 \question Créez un \emph{workspace} appelé \texttt{programmation-c} (tout
 en minuscules) comme projet \emph{blank} (icône orange Ubuntu
-sur la Fig.~\ref{fig:workspace:creation}) et privé.
+sur la Fig.~\ref{fig:workspace:creation}) et \emph{privé}.
 
 \begin{figure}[htbp]
   \centering
@@ -54,7 +54,16 @@ L'environnement de travail ressemble alors à la Fig.~\ref{fig:workspace:initial
 \end{fminipage}
 
 \question Par défaut, votre compte sur \url{c9.io} peut être identifié
-avec le protocole \texttt{ssh} par une clef publique. Allez dans le répertoire \url{~/.ssh} et affichez la clef privée (qui est stockée dans le fichier \texttt{id\_rsa}) et la clef publique (qui est stockée dans le fichier \texttt{id\_rsa.pub})
+avec le protocole \texttt{ssh} par une clef publique. Allez dans le répertoire \url{~/.ssh} et affichez la clef privée (qui est stockée dans le fichier \texttt{id\_rsa}) et la clef publique (qui est stockée dans le fichier \texttt{id\_rsa.pub}).
+
+\begin{fminipage}{\textwidth}
+  \begin{itemize}
+  \item Revenez ensuite dans le répertoire \url{~/workspace/}
+  \item \textbf{Tous les TP seront dans ce répertoire}
+  \item Le répertoire marqué \url{~/workspace/} a le nom de votre projet dans la
+    fenêtre de gauche
+  \end{itemize}
+\end{fminipage}
 
 
 \begin{solution}
@@ -62,6 +71,7 @@ avec le protocole \texttt{ssh} par une clef publique. Allez dans le répertoire 
     cd ~/.ssh
     cat id_rsa
     cat id_rsa.pub
+    cd ~/workspace
   \end{lstlisting}
 \end{solution}
 
@@ -83,6 +93,10 @@ publique qu'on a vue à l'exercice précédent.
 \question Allez ensuite sur \texttt{overview}, et créez un premier
 dépôt (repository) (\texttt{Programmation C}, par exemple) comme dépôt
 privé. 
+\begin{fminipage}{\textwidth}
+  Créez un dépôt vide (sans README.md) pour éviter des conflits plus
+  tard.
+\end{fminipage}
 
 
 
@@ -93,7 +107,7 @@ site de gestion de projets utilisant le système de gestion de version git.
 
 \question Téléchargez les énoncés de TP en utilisant la commande suivante:
 \begin{lstlisting}[language=bash]
-  https://github.com/YannickChevalier/programmation-en-C-CUPGE.git
+  git clone https://github.com/YannickChevalier/programmation-en-C-CUPGE.git
 \end{lstlisting}
 
 

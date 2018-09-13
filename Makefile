@@ -191,3 +191,18 @@ init:
 etudiants:
 	@echo "Bonjour les amis !"
 	@echo "Vous allez bien ?"
+
+
+publication:
+	cd Thèmes ; ./compile.sh
+	echo "Message pour le commit ?"
+	read msg ; \
+	git add . ; \
+	git commit -m "$${msg}" ; \
+	git push cours enseignants ; \
+	git checkout enonces ; \
+	git checkout enseignants -- $(wildcard Thèmes/tp-enonces-*.pdf) ; \
+	git add . ; \
+	git commit -m "$${msg}" ; \
+	git push cours enonces ; \
+	git push cours-public enonces
