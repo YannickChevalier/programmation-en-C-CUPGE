@@ -23,11 +23,11 @@ On va travailler sur les types, donc dans le répertoire \url{~/workspace/progra
   \end{lstlisting}
 \end{solutioncachee}
 
-\question Créez le fichier \expandafter\url{~/workspace/programmation-en-C-CUPGE/src/Entrées-Sorties/exercice\arabic{exercicenum}.c} et
+\question Créez le fichier exercice1.c dans le répertoire \expandafter\url{~/workspace/programmation-en-C-CUPGE/src/Entrées-Sorties/} et
 ouvrez-le.
 
 \begin{fminipage}{\textwidth}
-  Il ne faut jamais faire du copier-coller d'un fichier pdf vers un
+  ATTENTION !!! Il ne faut jamais faire du copier-coller d'un fichier pdf vers un
   fichier texte: même si les caractères affichés se ressemblent, ils
   sont différents.
 \end{fminipage}
@@ -37,10 +37,9 @@ ouvrez-le.
 \begin{lstlisting}[language=C]
 #include <stdio.h>
 
-int
-main ( int argc , char * argv[] )
+int main ( int argc , char * argv[] )
 {
-  return 0 ;
+  return 0;
 }
 \end{lstlisting}
 
@@ -57,10 +56,11 @@ main ( int argc , char * argv[] )
   \end{lstlisting}
 \end{solutioncachee}
 
-\question Compiler le programme avec la commande:
+\question Compiler le programme avec la commande :
 \begin{solutioncachee}
   \begin{lstlisting}[language=bash]
-    gcc -o exercice%\arabic{exercicenum}% exercice%\arabic{exercicenum}%.c
+    gcc -o exercice1 exercice1.c
+    /* ou bien gcc -o exercice1.exe exercice1.c */
   \end{lstlisting}
 \end{solutioncachee}
 
@@ -79,10 +79,11 @@ main ( int argc , char * argv[] )
 et compilez et exécutez le programme.
 
 \begin{center}
-  \fbox{~\parbox{0.9\textwidth}{\texttt{printf} est une \emph{fonction} qui permet à un programme d'envoyer des données au terminal dans lequel il est exécuté.}~}
+  \fbox{~\parbox{0.9\textwidth}{\texttt{printf} est une \emph{fonction} 
+  qui permet à un programme d'envoyer des données au terminal dans lequel il est exécuté.}~}
 \end{center}
 
-\question Ajoutez \verb+\n+ après Bonjour,   compilez et exécutez le programme.
+\question Ajoutez \verb+\n+ après Bonjour, compilez et exécutez le programme.
 
 \begin{center}
   \fbox{~\parbox{0.9\textwidth}{\texttt{\textbackslash n} est un caractère qui demande au terminal de passer à la ligne suivante.}~}
@@ -107,17 +108,17 @@ seconde donnée après la chaîne de formattage, etc.
 \paragraph{Directives d'affichage.} Une directive commence toujours
 par \%. Il y en a des dizaines, donc on va juste en regarder quelques unes:
 \begin{itemize}
-\item \texttt{\% d}: permet d'afficher un entier en base \texttt{d}ix;
-\item \texttt{\% c}: permet d'afficher une lettre (un caractère) à partir d'un entier;
-\item \texttt{\% f}: permet d'afficher un nombre à virgule;
-\item \texttt{\% s}: permet d'afficher une chaîne de caractères;
+\item \texttt{\%d}: permet d'afficher un entier en base \texttt{d}ix;
+\item \texttt{\%c}: permet d'afficher une lettre (un caractère) à partir de son encodage en machine;
+\item \texttt{\%f}: permet d'afficher un nombre à virgule;
+\item \texttt{\%s}: permet d'afficher une chaîne de caractères;
 \end{itemize}
 Pour l'exercice 2, on commence par copier le contenu du programme
-\texttt{exercice1.c} dans un nouveau fichier \texttt{exercice\arabic{exercicenum}.c}.
+\texttt{exercice1.c} dans un nouveau fichier \texttt{exercice2.c}.
 
 
 \question Modifiez le premier programme pour afficher sur 10 lignes
-chaque lettre de 0 à 9 suivi de sa valeur en tant qu'entier.
+chaque caractère de '0' à '9' suivie de la valeur entière de l'encodage machine du caractère.
 \begin{solutioncachee}
   \begin{lstlisting}[language=C]
     #include <stdio.h>
@@ -150,16 +151,17 @@ différence \texttt{'z'} - \texttt{'a'}. Idem pour les majuscules.
 \exo{Classes de caractères}
 \prerequis\ttype 1
 %3
-Comme les caractères de même type (lettres minuscules, chiffres, etc.)
+Comme les caractères de même nature (lettres minuscules, chiffres, etc.)
 se suivent, on va écrire un programme qui va lire un caractère, et va
-afficher son type (lorsqu'on le connaît).
+afficher sa nature (lorsqu'on la connaît). Par exemple, 
+l'encodage du caractère 5' est bien compris entre l'encodage du caractère '0'
+et l'encodage du caractère '9'.
 
 \begin{solutioncachee}
   \begin{lstlisting}[language=C]
 #include <stdio.h>
 
-int 
-main ( int argc , char * arv[] ) 
+int main ( int argc , char * arv[] ) 
 { 
   int x ; 
   x = getchar ( ) ;
@@ -185,16 +187,16 @@ main ( int argc , char * arv[] )
 % 4
 \prerequis \ttype 3
 Contrairement à Python, C fait la différence entre un caractère seul
-et une suite de caractères.  Les valeurs de type caractère
+et une suite de caractères. Les valeurs de type caractère
 (\texttt{char}) s'écrivent entre des apostrophes, comme \texttt{'a'},
 \texttt{'3'}, \texttt{'\textbackslash n'}. Les \emph{chaînes de
   caractères} sont juste des tableaux de caractères. Pour indiquer la
 fin de la chaîne, on met dans le tableau l'entier \(0\), qu'on peut
 aussi écrire \texttt{'\textbackslash 0'}. Il s'agit d'une convention
-qui est utilisée pour pouvoir traîté plus facilement les chaînes de
-caractères:
+qui est utilisée pour pouvoir traîter plus facilement les chaînes de
+caractères :
 \begin{itemize}
-\item Il n'y a pas de type spécifique: une chaîne de caractères est
+\item Il n'y a pas de type spécifique : une chaîne de caractères est
   définie par l'adresse du premier caractère, donc on utilise \texttt{char *};
 \item Pour afficher une chaîne de caractères avec \texttt{printf}, on
   utilise la directive d'affichage \texttt{\%s}:
@@ -204,7 +206,7 @@ caractères:
       printf ( "Bonjour.\n" ) ;
     \end{lstlisting}
     \begin{lstlisting}[language=C]
-      char * hello = "Bonjour" ;
+      char * hello = "Bonjour" ; /* Création de la chaîne de caractères */
       printf ( "%s.\n" , hello ) ;
     \end{lstlisting}
   \end{exemple}
@@ -212,8 +214,16 @@ caractères:
 
 \question Écrivez dans le fichier
 \texttt{exercice\arabic{exercicenum}.c} un programme qui affiche les 3
-premiers éléments du tableau \texttt{argv}. Compilez et exécutez ce
-programme avec \emph{et sans} arguments. Que remarque-t'on ?
+premiers éléments du tableau de chaînes de caractères passé en paramètre du main \texttt{argv}. 
+Compilez et exécutez ce programme avec \emph{et sans} arguments sur la ligne de commande.
+Exemple ci-dessous avec 4 arguments (nombre récupéré grâce à argc) qui sont 
+4 chaînes de caractères qui sont le nom de l'exécutable 
+suivi de 3 arguments sans signification particulière :
+  \begin{lstlisting}[language=C]
+  \texttt{exercice\arabic{exercicenum}} toto 12 argument3
+  \end{lstlisting}
+
+Que remarque-t'on ?
 
 \begin{solutioncachee}
   On utilise le programme suivant:
@@ -242,7 +252,7 @@ int main ( int argc , char * argv[] )
 
 \question Dans le terminal, tapez la commande:
 \begin{lstlisting}[language=bash]
-  echo $LANGUAGE_PID_FILE
+  echo $LANG
 \end{lstlisting}
 %$
 Que remarquez vous ?
