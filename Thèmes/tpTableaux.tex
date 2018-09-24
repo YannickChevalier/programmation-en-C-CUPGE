@@ -453,11 +453,293 @@ main ( int argc , char * argv[] )
   \end{lstlisting}
 \end{solutioncachee}
 
+\exo{Demi-additionneur et additionneur}
+% 4 
+
+On va voir dans cet exercice comment additionner deux entiers
+ayant un nombre arbitraire de chiffres. Le principe est simple:
+\begin{enumerate}
+\item Chaque entier en entrée est codé par un tableau de chiffres;
+\item On calcule la solution chiffre par chiffre, en n'oubliant pas 
+  la retenue.
+\end{enumerate}
+
+Pour le 1. on pourrait choisir des chiffres dans n'importe quelle base
+(au fond, c'est l'ordinateur qui fait les additions), mais pour avoir
+des exemples faciles à construire, on va utiliser la base 256, donc:
+\begin{itemize}
+\item Chaque chiffre est un \emph{unsigned char} entre \(0\) et \(255\);
+\item Un entier est un tableau de \emph{unsigned char}.
+\end{itemize}
+Pour les exemples, on va fixer la taille de ces tableaux à 10, mais
+n'importe quelle valeur est possible. Pour pouvoir parcourir les
+tableaux à partir de l'indice 0, on suppose en plus que les chiffres
+sont écrits dans l'ordre inversé (le chiffre des unités dans la case
+0, puis celui des ``dizaines'', etc.)
+
+\question Dans la fonction \emph{main}, définissez 3 tableaux de type
+\emph{unsigned char}, et initialisez les 2 premiers. Vérifiez que le
+code est correct en compilant et en exécutant le programme (il ne fait
+rien).
+\paragraph{Initialisation:} 
+\begin{lstlisting}[language=C]
+unsigned char
+    t1[10] = { 56 , 125 , 234 , 12 , 124 , 0 } ,
+    t2[10] = { 34 , 131 , 20 , 244 , 200 , 0 } ,
+    t3[10] ;
+\end{lstlisting}
+\begin{solution}
+  \begin{lstlisting}language=C]
+#include <stdio.h>
+
+int
+main ( int argc , unsigned char * argv[] )
+{
+  unsigned char
+    t1[10] = { 56 , 125 , 234 , 12 , 124 , 0 } ,
+    t2[10] = { 34 , 131 , 20 , 244 , 200 , 0 } ,
+      t3[10] ;
+  return 0 ;
+}
+  \end{lstlisting}
+\end{solution}
+
+\question Écrire une fonction qui prend en entrée l'adresse d'un tableau d'\emph{unsigned char} et son nombre de cases, et qui affiche le contenu du tableau. Modifiez la fonction 
+\emph{main} pour afficher les 3 tableaux.
+\begin{solution}
+  \begin{lstlisting}[language=C]
+#include <stdio.h>
+
+void print_tableau_c ( unsigned char * t , int n )
+{
+  int i ;
+  printf ( "[ %3d " , t[0] ) ;
+  for ( i = 1 ; i < n ; i ++ )
+    printf ( ", %3d " , t[i] ) ;
+  printf ( "]\n" ) ;
+}
+
+int
+main ( int argc , unsigned char * argv[] )
+{
+  unsigned char
+    t1[10] = { 56 , 125 , 234 , 12 , 124 , 0 } ,
+    t2[10] = { 34 , 131 , 20 , 244 , 200 , 0 } ,
+      t3[10] ;
+      print_tableau_c ( t1 , 3 ) ;
+      print_tableau_c ( t2 , 3 ) ;
+      print_tableau_c ( t3 , 3 ) ;
+  return 0 ;
+}    
+  \end{lstlisting}
+\end{solution}
+
+\question Écrire une fonction \emph{additionneur} qui prend en entrée:
+\begin{itemize}
+\item l'adresse de deux \emph{unsigned char}, \texttt{resultat} et
+  \texttt{retenue}, à laquelle elle mettra les valeurs de la somme et
+  de la retenue de la somme suivante;
+\item 2 \emph{unsigned char} dont elle doit faire la somme avec la valeur, lors
+  de l'appel de la fonction, contenue à l'adresse \texttt{retenue}.
+\end{itemize}
+Cette fonction ne renvoie pas de résultat.
+
+\begin{solution}
+  \begin{lstlisting}[language=C]
+void additionneur (
+		       unsigned char * retenue ,
+		       unsigned char * resultat ,
+		       unsigned char c1 ,
+		       unsigned char c2 )
+{
+  int tmp ;
+  tmp = c1 + c2 + * retenue ;
+  *retenue = tmp / 256 ;
+  *resultat = tmp % 256 ;
+}    
+  \end{lstlisting}
+\end{solution}
+
+\question Écrire une fonction \emph{addition\_tableau} qui prend en
+entrée les adresses de 3 tableaux d'\emph{unsigned char} et leur
+nombre de cases, et qui écrit dans le premier le résultat de
+l'addition des 2 autres. Cette fonction renvoie 1 si la retenue finale
+est 1 (c'est un cas d'erreur), et 0 sinon. Appliquez cette fonction
+sur les tableaux de la fonction \emph{main}, et affichez le résultat.
+
+\begin{solution}
+  \begin{lstlisting}[language=C]
+int addition_tableau (
+		unsigned char * res ,
+		unsigned char * t1 ,
+		unsigned char * t2 ,
+		int n )
+{
+  int i ;
+  unsigned char retenue = 0 ;
+  for ( i = 0 ; i < n ; i++ )
+    additionneur ( & retenue , res + i , t1[i], t2[i] ) ;
+  return retenue ;
+}
+  
+  \end{lstlisting}
+\end{solution}
+
+
+\question \textbf{Attention, ce qui suit peut être perturbant !}\\
+De la même manière que précédement, créez et initialisez 3 tableaux
+d'entiers dans la fonction main, écrivez une fonction d'affichage des
+tableaux d'entiers, et \emph{appelez la fonction addition\_tableau}
+sur ces tableaux (attention au nombre de cases, cette fonction a
+besoin du nombre de cases de type \emph{unsigned char}. Affichez le
+résultat. Que remarquez-vous ? Est-ce normal ?
+
+\begin{solution}
+  Pour la solution complète, on utilise des demi-additionneurs, qui
+  sont plus proches des circuits utilisés dans les processeurs (notez
+  le \emph{ou logique} pour la retenue finale). De plus, on teste que
+  toutes adresses sont possibles (la seule réellement impossible étant 
+  l'adresse \texttt{NULL})
+  \begin{lstlisting}[language=C]
+#include <stdio.h>
+
+
+int demi_additionneur (
+		       unsigned char * retenue ,
+		       unsigned char * resultat ,
+		       unsigned char c1 ,
+		       unsigned char c2 )
+{
+  int tmp ;
+  if ( retenue == NULL )
+    return 1 ;
+  if ( resultat == NULL )
+    return 1 ;
+  * resultat = ( c1 + c2 ) % 256 ;
+  * retenue = ( c1 + c2 ) / 256 ;
+  return 0 ;
+}
+
+int additionneur (
+		       unsigned char * retenue ,
+		       unsigned char * resultat ,
+		       unsigned char c1 ,
+		       unsigned char c2 )
+{
+  unsigned char retenue1 , retenue2 ;
+  if ( retenue == NULL )
+    return 1 ;
+  if ( resultat == NULL )
+    return 1 ;
+  if ( demi_additionneur ( & retenue1 , resultat , c1 , c2 ) )
+    return 1 ;
+  if ( demi_additionneur ( & retenue2 , resultat , * resultat , * retenue ) )
+    return 1 ;
+  * retenue = retenue1 || retenue2 ;
+  return 0 ;
+}
+
+
+
+int addition_c (
+		unsigned char * res ,
+		unsigned char * t1 ,
+		unsigned char * t2 ,
+		int n )
+{
+  int i ;
+  unsigned char retenue = 0 ;
+  for ( i = 0 ; i < n ; i++ )
+    if ( additionneur ( & retenue , res + i , t1[i], t2[i] ) )
+      return 1 ;
+  if ( retenue )
+    return 2 ;
+  return 0 ;
+}
+
+void print_tableau_c ( unsigned char * t , int n )
+{
+  int i ;
+  printf ( "[ %3d " , t[0] ) ;
+  for ( i = 1 ; i < n ; i ++ )
+    printf ( ", %3d " , t[i] ) ;
+  printf ( "]\n" ) ;
+}
+void print_tableau_i ( unsigned int * t , int n )
+{
+  int i ;
+  printf ( "[ %3d " , t[0] ) ;
+  for ( i = 1 ; i < n ; i ++ )
+    printf ( ", %3d " , t[i] ) ;
+  printf ( "]\n" ) ;
+}
+
+int calcule ( char * t3 , char * t1 , char * t2 , int n )
+{
+  int i ;
+  print_tableau_c ( t1 , n ) ;
+  print_tableau_c ( t2 , n ) ;
+  switch ( addition_c ( t3 , t1 , t2 , n ) )
+    {
+    case 1:
+      printf ( "Erreur lors de l'addition.\n" ) ;
+      return 1 ;
+    case 2:
+      printf ( "Il reste une retenue (dépassement).\n" ) ;
+      return 2 ;
+    default:
+      print_tableau_c ( t1 , n ) ;
+      print_tableau_c ( t2 , n ) ;
+      print_tableau_c ( t3 , n ) ;
+    }
+}
+
+int
+main ( int argc , unsigned char * argv[] )
+{
+  unsigned int
+    i1[3] = { 12345 , 12345 , 0 } ,
+    i2[3] = { 66666 , 44444 , 0 } ,
+      i3[3] ,
+	i ;
+  unsigned char
+    t1[10] = { 56 , 125 , 234 , 12 , 124 , 0 } ,
+    t2[10] = { 34 , 131 , 20 , 244 , 200 , 0 } ,
+      t3[10] ;
+      calcule ( t3 , t1 , t2 , 10 ) ;
+      calcule ( ( unsigned char * ) i3 , ( unsigned char * ) i1 , ( unsigned char * ) i2 , 3 * sizeof ( int ) ) ;
+      print_tableau_i ( i1 , 3 ) ;
+      print_tableau_i ( i2 , 3 ) ;
+      print_tableau_i ( i3 , 3 ) ;
+  return 0 ;
+}    
+  \end{lstlisting}
+  Le résultat attendu est que l'addition est correcte pour les
+  tableaux d'entiers. Quand on y pense; c'est très perturbant, car
+  normalement, dans chaque case d'entier, c'est comme-ci on faisait
+  l'addition de la gauche vers la droite (on avait inversé l'ordre des
+  chiffres dans le codage en tableau).
+
+  La raison est que les processeurs Intel ont évolué à partir
+  d'ordinateurs (les processeurs 8086) qui ne faisaient d'additions
+  que \emph{char} par \emph{char}. Par conservatisme, même maintenant,
+  les entiers continuent d'être stockés dans l'ordre inverse, appelé
+  en anglais \emph{Big Endian}: le dernier char dans la représentation
+  est celui qui contient les chiffres les plus importants. À
+  l'inverse, les tablettes et téléphones portables, qui utilisent des
+  processeurs de type ARM, stockent les entiers dans l'ordre naturel
+  (\emph{Little Endian}, les chiffres les moins importants sont à la
+  fin de la représentation). 
+\end{solution}
+
 \exo{Tri lent}
-% 4
+% 5
+
+
+
 
 \exo{Tri rapide}
-% 5
+% 6
 
 
 % tri fusion et tri avec qsort dans le thème pointeurs
