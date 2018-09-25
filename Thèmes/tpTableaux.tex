@@ -488,7 +488,7 @@ unsigned char
     t2[10] = { 34 , 131 , 20 , 244 , 200 , 0 } ,
     t3[10] ;
 \end{lstlisting}
-\begin{solution}
+\begin{solutioncachee}
   \begin{lstlisting}language=C]
 #include <stdio.h>
 
@@ -502,11 +502,11 @@ main ( int argc , unsigned char * argv[] )
   return 0 ;
 }
   \end{lstlisting}
-\end{solution}
+\end{solutioncachee}
 
 \question Écrire une fonction qui prend en entrée l'adresse d'un tableau d'\emph{unsigned char} et son nombre de cases, et qui affiche le contenu du tableau. Modifiez la fonction 
 \emph{main} pour afficher les 3 tableaux.
-\begin{solution}
+\begin{solutioncachee}
   \begin{lstlisting}[language=C]
 #include <stdio.h>
 
@@ -532,7 +532,7 @@ main ( int argc , unsigned char * argv[] )
   return 0 ;
 }    
   \end{lstlisting}
-\end{solution}
+\end{solutioncachee}
 
 \question Écrire une fonction \emph{additionneur} qui prend en entrée:
 \begin{itemize}
@@ -544,7 +544,7 @@ main ( int argc , unsigned char * argv[] )
 \end{itemize}
 Cette fonction ne renvoie pas de résultat.
 
-\begin{solution}
+\begin{solutioncachee}
   \begin{lstlisting}[language=C]
 void additionneur (
 		       unsigned char * retenue ,
@@ -558,7 +558,7 @@ void additionneur (
   *resultat = tmp % 256 ;
 }    
   \end{lstlisting}
-\end{solution}
+\end{solutioncachee}
 
 \question Écrire une fonction \emph{addition\_tableau} qui prend en
 entrée les adresses de 3 tableaux d'\emph{unsigned char} et leur
@@ -567,7 +567,7 @@ l'addition des 2 autres. Cette fonction renvoie 1 si la retenue finale
 est 1 (c'est un cas d'erreur), et 0 sinon. Appliquez cette fonction
 sur les tableaux de la fonction \emph{main}, et affichez le résultat.
 
-\begin{solution}
+\begin{solutioncachee}
   \begin{lstlisting}[language=C]
 int addition_tableau (
 		unsigned char * res ,
@@ -583,7 +583,7 @@ int addition_tableau (
 }
   
   \end{lstlisting}
-\end{solution}
+\end{solutioncachee}
 
 
 \question \textbf{Attention, ce qui suit peut être perturbant !}\\
@@ -594,7 +594,7 @@ sur ces tableaux (attention au nombre de cases, cette fonction a
 besoin du nombre de cases de type \emph{unsigned char}. Affichez le
 résultat. Que remarquez-vous ? Est-ce normal ?
 
-\begin{solution}
+\begin{solutioncachee}
   Pour la solution complète, on utilise des demi-additionneurs, qui
   sont plus proches des circuits utilisés dans les processeurs (notez
   le \emph{ou logique} pour la retenue finale). De plus, on teste que
@@ -730,16 +730,194 @@ main ( int argc , unsigned char * argv[] )
   processeurs de type ARM, stockent les entiers dans l'ordre naturel
   (\emph{Little Endian}, les chiffres les moins importants sont à la
   fin de la représentation). 
-\end{solution}
+\end{solutioncachee}
 
 \exo{Tri lent}
 % 5
 
+Trier un tableau signifie ordonner ses éléments du plus petit au plus
+grand. On va voir dans cet exercice et les suivants plusieurs algorithmes de
+tri, en commençant par un algorithme simple:
+On trie un tableau de \(n\) entiers en:
+\begin{itemize}
+\item Trouvant l'indice \(0\le i_{\text{max}}<n\) tel que la valeur
+  \(t[i_{\text{max}}]\) soit maximale dans le tableau;
+\item On échange cette valeur avec celle contenue dans la case d'indice \(n-1\);
+\item On trie les \(n-1\) valeurs restantes.
+\end{itemize}
 
+\question Écrivez un programme initial contenant:
+\begin{itemize}
+\item une fonction qui affiche un tableau d'entiers (\textit{cf.} exercice précédent);
+\item une fonction \emph{tri} qui ne fait rien pour l'instant, mais qui triera un tableau d'entiers de \(n\) cases
+\item Dans la fonction \emph{main}:
+  \begin{itemize}
+  \item un tableau d'entiers initialisé (et avec des valeurs dans le
+    désordre);
+  \item un appel à la fonction d'affichage;
+  \item un appel à la fonction de tri;
+  \item un second appel à la fonction d'affichage.
+  \end{itemize}
+\end{itemize}
 
+\begin{solutioncachee}
+  \begin{lstlisting}[language=C]
+#include <stdio.h>
+
+void affichage ( int * t , int n )
+{
+  int i ;
+  printf ( "[ %d " , t[0] ) ;
+  for ( i = 1 ; i < n ; i++ )
+    printf ( ", %d " , t[i] ) ;
+  printf ( "]\n'' ) ;
+}
+
+void tri ( int * t , int n )
+{
+}
+
+int main ( int argc , char * argv[] )
+{
+  int t[10] = {5,8,1,4,9,2,2,3,6,7} ;
+  affiche ( t , 10 ) ;
+  tri ( t , 10 ) ;
+  affiche ( t , 10 ) ;
+  return 0 ;
+}
+  \end{lstlisting}
+\end{solutioncachee}
+
+\question Écrivez une fonction \emph{echange} qui échange les valeurs
+de deux cases de type \texttt{int} dont l'adresse est donnée en paramètre.
+
+\begin{solutioncachee}
+  \begin{lstlisting}[language=C]
+void echange ( int * a , int * b )
+{
+  int c ;
+  c = *a ;
+  *a = *b ;
+  *b = c ;
+}
+  \end{lstlisting}
+\end{solutioncachee}
+
+\question Écrivez une fonction qui calcule l'indice d'un élément
+maximal d'un tableau de \(n\) entiers.
+
+\begin{solutioncachee}
+  \begin{lstlisting}[language=C]
+void indice_max ( int * res , int * t , int n )
+{
+  int i ;
+  *res = 0 ;
+  for ( i = 1 ; i < n ; i++ )
+    if ( t[*res] < t[i] )
+      *res = i ;
+}
+  \end{lstlisting}
+\end{solutioncachee}
+
+\question Complétez la fonction \emph{tri} pour qu'elle trie
+effectivement un tableau de \(n\) entiers.
+
+\begin{solutioncachee}
+  \begin{lstlisting}[language=C]
+void tri ( int * t , int n )
+{
+  int i , i_max ;
+  for ( i = n - 1 ; i > 0 ; i-- )
+  {
+    index_max ( & i_max , t , i ) ;
+    echange ( t + i , t + i_max ) ;
+  }
+}
+  \end{lstlisting}
+\end{solutioncachee}
+
+\question Écrivez une deuxième version qui calcule le minimum du
+tableau, et l'échange avec le premier élément.
+
+\begin{solutioncachee}
+  \begin{lstlisting}[language=C]
+void indice_min ( int * res , int * t , int n )
+{
+  int i ;
+  *res = 0 ;
+  for ( i = 1 ; i < n ; i++ )
+    if ( t[*res] > t[i] )
+      *res = i ;
+}
+
+void tri2 ( int * t , int n )
+{
+  int i_min ;
+  for (  ; n > 0 ; t++ , n-- )
+  {
+    index_min ( & i_min , t , n ) ;
+    echange ( t , t + i_min ) ;
+  }
+}
+  \end{lstlisting}
+\end{solutioncachee}
 
 \exo{Tri rapide}
-% 6
+
+Le tri rapide est un tri en plusieurs étapes. Sur un tableau \(t\) de
+\(n\) entiers:
+\begin{enumerate}
+\item une première fonction \texttt{choix\_pivot} choisit un indice
+  pivot \(p\) et l'échange avec l'élément d'indice \(0\);
+\item une fonction, qu'on appellera \texttt{drapeau\_hollandais}
+  parcourt le tableau pour que, par échanges successifs, tous les
+  éléments plus petits que le pivot soient placés avant dans le
+  tableau, et tous les éléments plus grand soient placés après;
+\item La procédure de tri est ensuite appelée récursivement sur les
+  zones bleu (éléments strictement plus petits que le pivot) et rouge
+  (éléments strictement plus grand que le pivot.
+\end{enumerate}
+
+\question Comme dans l'exercice précédent, initialisez et affichez un
+tableau, et écrivez une fonction de tri qui ne fait rien.
+
+\question On va aussi écrire une \texttt{choix\_pivot} qui, elle
+aussi, ne fait rien. Les variantes de l'algorithme de tri rapide sont
+basées sur des fonctions de choix plus élaborées, mais on codera
+uniquement la version de base.
+
+\question \textbf{Procédure de drapeau hollandais.} Dans cette
+procédure, un tableau est divisé en 4 zones:
+\begin{itemize}
+\item Une zone bleu, qui commence toujours à l'indice 0, mais peut
+  être vide, et qui contient les éléments strictement plus petits que
+  le pivot;
+\item Une zone blanche, qui commence juste après la zone bleu, et qui
+  contient les éléments égaux au pivot. Au début, cette zone blanche
+  contient juste le premier élément du tableau (le pivot);
+\item Une zone rouge, qui part de la fin du tableau, et contient tous
+  les éléments strictement plus grands que le pivot. Au départ, cette
+  zone est vide;
+\item une zone grise, qui contient au départ tous les éléments du
+  tableau sauf le premier, et qui correspond aux éléments qui n'ont
+  pas encore été comparés au pivot. Elle est entre la zone blanche et
+  la zone grise;
+\end{itemize}
+Ces zones sont délimitées par 3 indices, \texttt{premier\_blanc},
+\texttt{dernier\_blanc}, et \texttt{dernier\_gris}.  Ces indices
+évoluent quand on compare le dernier élément blanc avec l'élément
+suivant (\textit{cf.} schéma ou S2). À chaque itération la zone grise
+doit diminuer d'un élément, et le parcourt du tableau est terminé
+quand la zone grise est vide. La procédure doit alors indiquer le
+premier et le dernier indice de la zone blanche.
+
+\question La procédure de tri rapide récupère ensuite les indices de
+début et de fin de la zone blanche (les éléments entre ces deux
+indices sont correctement placés), et est appelée récursivement sur
+les zones bleu et rouge si elles ont strictement plus qu'un élément.
+
+
+
 
 
 % tri fusion et tri avec qsort dans le thème pointeurs
