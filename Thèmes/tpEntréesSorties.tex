@@ -154,7 +154,7 @@ différence \texttt{'z'} - \texttt{'a'}. Idem pour les majuscules.
 Comme les caractères de même nature (lettres minuscules, chiffres, etc.)
 se suivent, on va écrire un programme qui va lire un caractère, et va
 afficher sa nature (lorsqu'on la connaît). Par exemple, 
-l'encodage du caractère 5' est bien compris entre l'encodage du caractère '0'
+l'encodage du caractère '5' est bien compris entre l'encodage du caractère '0'
 et l'encodage du caractère '9'.
 
 \begin{solutioncachee}
@@ -219,8 +219,8 @@ Compilez et exécutez ce programme avec \emph{et sans} arguments sur la ligne de
 Exemple ci-dessous avec 4 arguments (nombre récupéré grâce à argc) qui sont 
 4 chaînes de caractères qui sont le nom de l'exécutable 
 suivi de 3 arguments sans signification particulière :
-  \begin{lstlisting}[language=C]
-  \texttt{exercice\arabic{exercicenum}} toto 12 argument3
+  \begin{lstlisting}[language=bash,escapechar=\%]
+  exercice%\arabic{exercicenum}% toto 12 argument3
   \end{lstlisting}
 
 Que remarque-t'on ?
@@ -285,12 +285,103 @@ loin. Affichez la case 80 du tableau \texttt{argv}.
 
 \begin{solutioncachee}
   Lors des tests, celà suffit pour avoir un \emph{segmentation
-    fault}. Donc si accède à une case qui n'est pas dans le tableau, on peut
-  avoir soit:
+    fault}. Donc si accède à une case qui n'est pas dans le tableau, on peut 
+ avoir soit:
   \begin{itemize}
   \item un résultat qui vient d'ailleurs (de gcc, par exemple);
   \item une erreur qui arrête le programme. \emph{Segmentation fault}
     signifie qu'on veut accéder à une adresse dans la mémoire qui
     n'est pas définie.
   \end{itemize}
+\end{solutioncachee}
+
+\exo{Lecture d'entrées}
+
+Même s'il est possible de lire tout ce que tape l'utilisateur avec la
+fonction \texttt{getchar} pour ensuite traduire ce qui est marqué, on
+utilise en général la fonction \texttt{scanf} qui permet de lire des
+entrées structurées en utilisant des directives.
+
+\question Écrivez le programme suivant:
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+
+int
+main ( int argc , char * argv[] )
+{
+  printf ( "Écrivez: Bonjour, monde !\n" ) ;
+  scanf ( "Bonjour, monde !" ) ;
+  printf ( "Je vous ai compris!\n" ) ;
+  return 0 ;
+}
+\end{lstlisting}
+Et essayez de vérifier que \texttt{scanf} a bien lu ce que vous tapez.
+
+\begin{solutioncachee}
+  Pas de différence notable entre le cas où on tape ce qui est
+  demandé, et celui où on tape n'importe quoi.
+\end{solutioncachee}
+
+\question Pour faire la différence entre une lecture réussie et une
+lecture qui a échoué, lisez et affichez tous les caractères que
+\texttt{scanf} n'a pas réussi à lire jusqu'au caractère de fin de
+ligne (\texttt{'\textbackslash n'}) en utilisant la fonction
+\texttt{getchar}.
+
+\begin{solutioncachee}
+  \begin{lstlisting}[language=C]
+ #include <stdio.h>
+
+int
+main ( int argc , char * argv[] )
+{
+  int c ;
+  printf ( "Écrivez: Bonjour, monde !\n" ) ;
+  scanf ( "Bonjour, monde !" ) ;
+  c = getchar () ;
+  while ( c != '\n' )
+  {
+    printf ( "%c" , c ) ;
+    c = getchar ( ) ;
+  }
+  return 0 ;
+}   
+  \end{lstlisting}
+  Si l'utilisateur a correctement écrit, on n'affiche rien, sinon, le
+  programme affiche les caractères à partir du moment où ça ne marche
+  plus. Notez aussi que les blancs peuvent être ajoutés ou enlevés là
+  où il y en a dans la chaîne de formattage.
+\end{solutioncachee}
+
+\question L'intérêt de \texttt{scanf} est de pouvoir lire des données
+avec les types existants. Au contraire de \texttt{printf}, il ne faut
+pas donner en argument une \textbf{valeur} mais l'adresse à laquelle
+il faudra stocker la valeur qui a été lue. Modifiez le programme
+précédent pour lire une chaîne de la forme "Bonjour, je suis XXX", où
+XXX est un entier. Le programme devra répondre par "Bonjour, XXX".
+
+\begin{solutioncachee}
+  \begin{lstlisting}[language=C]
+ #include <stdio.h>
+
+int
+main ( int argc , char * argv[] )
+{
+  int i ;
+  int c ;
+  scanf ( "Bonjour, je suis %d" , & i ) ;
+  c = getchar () ;
+  while ( c != '\n' )
+  {
+    printf ( "%c" , c ) ;
+    c = getchar ( ) ;
+  }
+  printf ( "Bonjour, %d.\n" , i ) ;
+  return 0 ;
+}   
+  \end{lstlisting}
+  Si l'utilisateur a correctement écrit, on n'affiche rien, sinon, le
+  programme affiche les caractères à partir du moment où ça ne marche
+  plus. Notez aussi que les blancs peuvent être ajoutés ou enlevés là
+  où il y en a dans la chaîne de formattage.
 \end{solutioncachee}
