@@ -112,7 +112,7 @@ Quelques règles pour l'utilisation de variables:
 nouveau fichier \texttt{exercice\arabic{exercicenum}.c}, et écrire un
 programme minimal.
 
-\begin{solutioncachee}
+\begin{solution}
   \begin{lstlisting}[language=C]
     #include <stdio.h>
     int
@@ -121,11 +121,11 @@ programme minimal.
       return 0 ;
     }
   \end{lstlisting}
-\end{solutioncachee}
+\end{solution}
 
 \question Modifiez le programme pour afficher la valeur de \texttt{argc}. 
 
-\begin{solutioncachee}
+\begin{solution}
   \begin{lstlisting}[language=C]
     #include <stdio.h>
     int
@@ -135,7 +135,7 @@ programme minimal.
       return 0 ;
     }
   \end{lstlisting}
-\end{solutioncachee}
+\end{solution}
 
 \question Compilez et exécutez le programme.
 
@@ -143,10 +143,10 @@ programme minimal.
 après le nom du programme (sur la même ligne). Que vaut
 \texttt{argc} ?
 
-\begin{solutioncachee}
+\begin{solution}
   \texttt{argc} vaut le nombre de mots (séparés par des espaces) qui
   sont après le nom du programme sur la même ligne.
-\end{solutioncachee}
+\end{solution}
 
 \exo{Adresses}
 % 2
@@ -162,7 +162,7 @@ directive \texttt{\%p}.
 \texttt{x0} et \texttt{x1} de type \texttt{int}, et affichez les
 adresses de ces 2 variables.
 
-\begin{solutioncachee}
+\begin{solution}
   \begin{lstlisting}[language=C]
 #include <stdio.h>
 
@@ -176,7 +176,7 @@ main ( int argc , char * argv[] )
   return 0 ;
 }
   \end{lstlisting}
-\end{solutioncachee}
+\end{solution}
 
 \question On peut soustraire une adresse à une autre. Le résultat est
 un entier long (de type \texttt{long int}, avec la directive
@@ -184,7 +184,7 @@ d'affichage \texttt{\%ld}). Modifiez le programme précédent pour
 afficher la différence entre les adresses de \texttt{x0} et
 \texttt{x1}.
 
-\begin{solutioncachee}
+\begin{solution}
   \begin{lstlisting}[language=C]
 #include <stdio.h>
 
@@ -202,12 +202,12 @@ main ( int argc , char * argv[] )
 
   Suivant le choix, la différence n'est que \(1\) ou \(-1\), alors que si on
   regarde les adresses en hexadécimal, la différence est de 4.
-\end{solutioncachee}
+\end{solution}
 
 \question Ajoutez une variable \texttt{x2} et calculez les différences.
 
 
-\begin{solutioncachee}
+\begin{solution}
   \begin{lstlisting}[language=C]
 #include <stdio.h>
 
@@ -227,7 +227,7 @@ main ( int argc , char * argv[] )
 }
   \end{lstlisting}
   Idem pour la différence des adresses !
-\end{solutioncachee}
+\end{solution}
 
 \question Pour la suite, on suppose que les variables sont déclarées
 dans l'ordre \texttt{x0}, \texttt{x1}, \texttt{x2}. Suit on suit la
@@ -241,7 +241,7 @@ zéro pour que le compilateur soit satisfait).
 \question Changez la valeur à l'adresse de \texttt{x} moins 2 et
 affichez \texttt{argc}.
 
-\begin{solutioncachee}
+\begin{solution}
   \begin{lstlisting}[language=C]
 #include <stdio.h>
 
@@ -269,13 +269,13 @@ main ( int argc , char * argv[] )
   \end{lstlisting}
   Morale: quand on fait des opérations sur les adresses, on ne sait
   pas forcément ce qu'on modifie. 
-\end{solutioncachee}
+\end{solution}
 
 \question Changez les types de \texttt{x0}, \texttt{x1}, et
 \texttt{x2} en \texttt{char} au lieu d'\texttt{int}. Que remarque-t'on
 ?
 
-\begin{solutioncachee}
+\begin{solution}
   De prime abord, c'est n'importe quoi:
   \begin{itemize}
   \item Maintenant, la différence entre les adresses réelles est de 1 ( et plus 4);
@@ -297,7 +297,7 @@ main ( int argc , char * argv[] )
     l'addition renvoie l'adresse de la \textit{i}ème case du type
     après la case courante.
   \end{itemize}
-\end{solutioncachee}
+\end{solution}
 
 \question Pour conclure, \texttt{sizeof} calcule le nombre de cases
 qu'il faut pour stocker une variable. Affichez ce nombre pour les types suivants:
