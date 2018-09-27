@@ -212,5 +212,9 @@ publication: compilation
 	git add . ; \
 	git commit -m "$${msg}" ; \
 	git push cours solutions ; \
-	git push cours-public solutions
+	git checkout solutionsprof ; \
+	git checkout enseignants -- $(wildcard Thèmes/tp-solutionsprof-*.pdf) ; \
+	git add . ; \
+	git commit -m "$${msg}" ; \
+	git push cours solutionsprof ; \
 	git checkout enseignants

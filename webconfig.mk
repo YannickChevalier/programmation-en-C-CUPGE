@@ -1,7 +1,7 @@
 $(eval $(begin_Makefile))
 
 TARGET_DIR:=Cours/L2-Developpement-C
-$(TARGET_DIR)/DIR_SUBMODULES:=Thèmes/enonces Thèmes/solutions
+$(TARGET_DIR)/DIR_SUBMODULES:=Thèmes/enonces Thèmes/solutions Thèmes/solutionsprof
 $(TARGET_DIR)/SUBDIRS:=
 $(TARGET_DIR)/TITRE:=Développement C
 $(TARGET_DIR)/WEB_TEST:=/export/longview/public_html

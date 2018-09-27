@@ -1,7 +1,7 @@
 #! /bin/bash
 
 prefix=tp
-modules="enonces solutions"
+modules="enonces solutions solutionsprof"
 titres="EntréesSorties Git Tableaux Types"
 
 

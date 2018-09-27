@@ -7,7 +7,11 @@
 \ifthenelse{\equal{\versionname}{solutions}}{%
   \RequirePackage[utf8,listings,solutions]{course}%
 }{%
-  \RequirePackage[utf8,listings]{course}%
+  \ifthenelse{\equal{\versionname}{solutionsprof}}{%
+  	\RequirePackage[utf8,listings,solutionsprof]{course}%
+  }{%
+  	\RequirePackage[utf8,listings]{course}%
+  }
 }
 
 
@@ -71,7 +75,6 @@
 \end{center}
 }
 
-\excludecomment{solutioncachee}
 
 \begin{document}
 
