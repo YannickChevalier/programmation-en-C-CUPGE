@@ -48,11 +48,8 @@ main ( int argc , char * argv[] )
 {
     int n ;
     int t[TAILLE] ;
-    if ( crible ( t , TAILLE ) != 0 )
-    {
-        printf ( "Il y a eu une erreur lors du calcul.\n" ) ;
-        return 1 ;
-    }
+    crible ( t , TAILLE )  ;
+
     while ( 1 )
     {
         printf ( "Donnez un entier strictement inférieur à %d:\n" , TAILLE ) ;
