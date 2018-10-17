@@ -327,11 +327,11 @@ en C est de déclarer un tableau.
 \end{enumerate}
 Compilez et exécuter le programme.
 
-\begin{solutioncachee}
+\begin{solution}
   On n'a pas initialisé les variables du tableau, donc x[0] a une
   valeur quelconque, mais pour le reste, on obtient exactement les
   mêmes résultats qu'avant.
-\end{solutioncachee}
+\end{solution}
 
 \begin{fminipage}{0.9\textwidth}
   La déclaration \texttt{int x[3]} déclare une suite (un tableau) de 3
@@ -343,14 +343,14 @@ Compilez et exécuter le programme.
 \question Affichez la valeur de \texttt{x} en utilisant la directive
 des adresses. Que remarque-t'on ?
 
-\begin{solutioncachee}
+\begin{solution}
   La \emph{valeur} de \texttt{x} est l'\emph{adresse} de \texttt{x[0]}.
-\end{solutioncachee}
+\end{solution}
 
 \question Affichez l'adresse de \texttt{x}. Affichez les tailles de \texttt{x} et de \texttt{\& x}. Que remarque-t'on ?
 
 
-\begin{solutioncachee}
+\begin{solution}
   \begin{lstlisting}[language=C]
 #include <stdio.h>
 
@@ -387,7 +387,7 @@ main ( int argc , char * argv[] )
   \item La valeur de \texttt{\& x} est l'adresse du début de cette grande case;
   \item La taille de \texttt{\& x} est la taille normale des adresses.
   \end{itemize}
-\end{solutioncachee}
+\end{solution}
 
 \begin{fminipage}{0.9\textwidth}
   Les tableaux ont les propriétés suivantes:
@@ -401,7 +401,7 @@ main ( int argc , char * argv[] )
 vérifiant que les résultats sont les mêmes.
 
 
-\begin{solutioncachee}
+\begin{solution}
   \begin{lstlisting}[language=C]
 #include <stdio.h>
 
@@ -427,4 +427,4 @@ main ( int argc , char * argv[] )
   return 0 ;
 }    
   \end{lstlisting}
-\end{solutioncachee}
+\end{solution}

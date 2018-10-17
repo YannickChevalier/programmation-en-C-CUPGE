@@ -32,7 +32,7 @@ Commencez par écrire une fonction \texttt{crible} qui ne fait rien,
 mais est appelée avec les bons arguments, et vérifiez que le programme
 compile correctement.
 
-\begin{solutioncachee}
+\begin{solution}
   \begin{lstlisting}[language=C]
  #include <stdio.h>
 
@@ -66,7 +66,7 @@ main ( int argc , char * argv[] )
     return 0 ;
 } 
   \end{lstlisting}
-\end{solutioncachee}
+\end{solution}
 
 \question Lorsqu'on programme en C, il est recommandé de suivre la
 recommandation suivante:
@@ -78,7 +78,7 @@ recommandation suivante:
 Modifiez le programme pour qu'en cas d'erreur de la fonction
 \texttt{crible}, la fonction \texttt{main} s'arrête immédiatement en
 renvoyant un entier \(> 0\).
-\begin{solutioncachee}
+\begin{solution}
   \begin{lstlisting}[language=C]
     if ( crible ( t  ) != 0 )
     {
@@ -86,7 +86,7 @@ renvoyant un entier \(> 0\).
         return 1 ;
     }
   \end{lstlisting}
-\end{solutioncachee}
+\end{solution}
 
 \question Dans la fonction \texttt{crible}, commencez par mettre les
 deux premières cases à \(0\) (car \(0\) et \(1\) ne sont pas premiers)
@@ -109,7 +109,7 @@ s'exécute correctement, même s'il ne fait rien pour l'instant.
 \question Modifiez la boucle externe pour ne pas parcourir toutes les
 cases jusqu'à \texttt{TAILLE} et vous arrêter avant. 
 
-\begin{solutioncachee}
+\begin{solution}
   \begin{lstlisting}[language=C]
 int crible ( int * t )
 {
@@ -126,7 +126,7 @@ int crible ( int * t )
     return  0 ;
 }    
   \end{lstlisting}
-\end{solutioncachee}
+\end{solution}
 
 \question Dans la fonction \texttt{main}, faire une boucle infinie
 (dont la condition est toujours vraie) demandant à l'utilisateur un entier
@@ -142,7 +142,7 @@ et faisant:
 
 \end{itemize}
 
-\begin{solutioncachee}
+\begin{solution}
   \begin{lstlisting}[language=C]
 int
 main ( int argc , char * argv[] )
@@ -170,7 +170,7 @@ main ( int argc , char * argv[] )
     return 0 ;
 }    
   \end{lstlisting}
-\end{solutioncachee}
+\end{solution}
 
 \exo{Crible d'Érathostène utile}
 % 2
@@ -878,10 +878,87 @@ Le tri rapide est un tri en plusieurs étapes. Sur un tableau \(t\) de
 \question Comme dans l'exercice précédent, initialisez et affichez un
 tableau, et écrivez une fonction de tri qui ne fait rien.
 
+\begin{solutioncachee}
+  \begin{lstlisting}[language=C]
+#include <stdio.h>
+// on inclut stdlib pour utiliser la fonction rand
+#include <stdlib.h>
+#define TAILLE 100000
+#define TAILLE_AFFICHAGE 10
+
+/*
+  On commence par une fonction de tri qui ne fait rien.
+  Les fonctions des questions suivantes sont à écrire au dessus
+  de cette fonction, et on changera bien sûr la définition de la 
+  fonction tri pour qu'elle fasse quelque chose.
+*/
+void tri ( int * t , int n )
+{
+  return ;
+}  
+
+/*
+  L'utilisation de TAILLE_AFFICHAGE est optionnelle,
+  et est juste présente pour permettre d'afficher partiellement 
+  de grands tableaux.
+*/
+void affiche ( int * t , int n )
+{
+  int i ;
+  if ( n == 0 )
+  {
+    printf ( "[ ]\n" ) ;
+    return ;
+  }
+  printf ( "[ %d " , t[0] ) ;
+  for ( i = 1 ; ( i < n ) && ( i < TAILLE_AFFICHAGE ) ; i++ )
+    printf ( ", %d " , t[i] ) ;
+  if ( n > TAILLE_AFFICHAGE )
+   printf ( ", ... " ) ;
+  printf ( "]\n" ) ;
+}
+
+/*
+  la fonction suivante est optionnelle, on peut
+  choisir une petite taille et rentrer les valeurs dans
+  le code au moment de la définition du tableau.
+*/
+void initialise ( int * t , int n )
+{
+  int i ;
+  for ( i = 0 ; i < n ; i++ )
+    t[i] = rand ( ) ;
+}
+
+int
+main ( int argc , char * argv[] )
+{
+  int t[TAILLE] ;
+  initialise ( t , TAILLE ) ;
+  affiche ( t , TAILLE ) ;
+  tri ( t , TAILLE ) ;
+  affiche ( t , TAILLE ) ;
+  return 0 ;
+}
+
+  \end{lstlisting}
+\end{solutioncachee}
+
+
+
 \question On va aussi écrire une \texttt{choix\_pivot} qui, elle
 aussi, ne fait rien. Les variantes de l'algorithme de tri rapide sont
 basées sur des fonctions de choix plus élaborées, mais on codera
 uniquement la version de base.
+
+\begin{solutioncachee}
+  \begin{lstlisting}[language=C]
+void choix_pivot ( int * t , int n )
+{
+  return ;
+}  
+  \end{lstlisting}
+\end{solutioncachee}
 
 \question \textbf{Procédure de drapeau hollandais.} Dans cette
 procédure, un tableau est divisé en 4 zones:
@@ -908,13 +985,60 @@ doit diminuer d'un élément, et le parcourt du tableau est terminé
 quand la zone grise est vide. La procédure doit alors indiquer le
 premier et le dernier indice de la zone blanche.
 
+\begin{solutioncachee}
+  \begin{lstlisting}[language=C]
+void
+echange ( int * a , int * b )
+{
+  int tmp ;
+  tmp = *a ;
+  *a = *b ;
+  *b = tmp ;
+}
+void partition ( int * t , int n , int * premier , int * dernier )
+{
+  int dernier_gris = n -1 ;
+  /* le pivot est a l'indice 0 du tableau */
+  * premier = * dernier = 0 ;
+  while ( *dernier < dernier_gris )
+  {
+    if ( t[ *dernier + 1] == t[ *dernier ] )
+    {  // blanc
+       *dernier = ( *dernier ) + 1 ;
+       continue ;
+     }
+     if ( t[ *dernier + 1 ] < t[ *dernier ] )
+     { // bleu
+       echange ( t + *dernier + 1, t + *premier ) ;
+       *premier = *premier + 1 ;
+       *dernier = *dernier + 1 ;
+       continue ;
+     }
+     // rouge
+     echange ( t + *dernier + 1 , t + dernier_gris-- ) ;
+  }
+}    
+  \end{lstlisting}
+\end{solutioncachee}
+
+
 \question La procédure de tri rapide récupère ensuite les indices de
 début et de fin de la zone blanche (les éléments entre ces deux
 indices sont correctement placés), et est appelée récursivement sur
 les zones bleu et rouge si elles ont strictement plus qu'un élément.
+\begin{solutioncachee}
+  \begin{lstlisting}[language=C]
+void tri ( int * t , int n )
+{
+  int fin_premier , debut_second ;
+  if ( n <= 1 )
+    return ;
+  choix_pivot ( ) ;
+  partition ( t , n , & fin_premier , & debut_second ) ;
+  tri ( t , fin_premier ) ;
+  tri ( t + debut_second + 1 , n - debut_second - 1 ) ;
+}  
+  \end{lstlisting}
+\end{solutioncachee}
 
 
-
-
-
-% tri fusion et tri avec qsort dans le thème pointeurs
