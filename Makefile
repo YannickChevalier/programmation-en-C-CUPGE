@@ -1,5 +1,7 @@
 # Yannick Chevalier, 2018
 SHELL:=/bin/bash
+BRANCHES=configuration enonces enseignants solutions solutionsprof 
+
 
 a_nom_de_branche_solution/%:: \
 	THEME = $(shell awk -F + '{print $$1;}' <<< $* ) 
@@ -41,7 +43,7 @@ update_local_branch:
 
 push: 
 	branch=$$(git branch | grep \* | cut -d ' ' -f2) ; \
-	repos=( $$(git config --file .gitconfig --get-all branch.$(BRANCH).repository) ) ; \
+	repos=( $$(git config --file .gitconfig --get-all branch.$${branch}.repository) ) ; \
 	for rep in $${repos[@]} ; do \
 		git push $${rep} $${branch} ; \
 	done 
@@ -53,10 +55,15 @@ push_all:
 		git checkout $$b ; \
 		make push ; \
 	done
+	git checkout enseignants
 
-pull: set_branch_name
-	git checkout $(BRANCH)
-	git pull cours $(BRANCH)
+pull: 
+	branches=$$(git branch | sed -e 's/\*//g' -e 's/ //g' ); \
+	for branch in $(BRANCHES) ; do \
+		git checkout $${branch} ; \
+		git pull -Xtheirs cours $${branch} ; \
+	done
+	git checkout enseignants
 
 commit:: update_index
 
