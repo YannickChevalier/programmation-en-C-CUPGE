@@ -134,4 +134,6 @@ acs-*.bib
 # listings
 *.lol
 
+Devoirs/**
+Projet/**
 
