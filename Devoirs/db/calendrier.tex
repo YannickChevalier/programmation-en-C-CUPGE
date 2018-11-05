@@ -1,0 +1,170 @@
+
+\exo{Calendrier (9pts)}
+
+Dans cette partie, on mod{\'e}lise une date par un triplet
+jour-mois-ann{\'e}e.
+
+\question (1pt) On veut mod{\'e}liser les mois en utilisant dans le programme
+les noms des mois (janvier, f{\'e}vrier, \ldots) plut{\^o}t que des entiers.
+Donnez la d{\'e}claration C {\`a} {\'e}crire.
+
+\begin{solution}
+  \begin{Ccode}
+    \ctab{}enum \cvar{mois} \lb janvier = 1 , fevrier , mars , avril , 
+    \ctab{} mai , juin , juillet , aout , septembre , octobre, 
+    \ctab{}novembre , decembre \rb ;
+  \end{Ccode}
+\end{solution}
+
+
+\question (0.5pt) Donnez la d{\'e}finition de structure permettant de
+mod{\'e}liser une date.
+
+\question (1pt) {\'E}crire une fonction \cfun{date} qui prend en entr{\'e}e
+un jour, un mois, et une ann{\'e}e,  et qui rend une date.
+
+\begin{solution}
+  \begin{Ccode}
+    \ctab{}\cstruct \ctype{date\_std} *
+    \ctab{}\cfun{date\_std} ( \cint \cvar{jour} , enum \cvar{mois} \cvar{mois} , \cint \cvar{an} )
+    \ctab{}\lb
+    \ctab{}  \cstruct \ctype{date\_std} * \cvar{res} ;
+    \ctab{}  \cvar{res} = ( \cstruct \ctype{date\_std} * ) \cfun{malloc} ( \cfun{sizeof} ( \cstruct \ctype{date\_std} ) ) ;
+    \ctab{}  \cvar{res}\ensuremath{\rightarrow}\cvar{jour} = \cvar{jour} ;
+    \ctab{}  \cvar{res}\ensuremath{\rightarrow}\cvar{mois} = \cvar{mois} ;
+    \ctab{}  \cvar{res}\ensuremath{\rightarrow}\cvar{an} = \cvar{an} ;
+    \ctab{}  \creturn \cvar{res} ;
+    \ctab{}\rb
+  \end{Ccode}
+\end{solution}
+
+\question (1pt) {\'E}crire une fonction affichant une date.
+
+\question (0.5pt) {\'E}crire une fonction \cfun{bissextile} qui rend vrai si
+l'ann{\'e}e donn{\'e}e en argument est bissextile, et faux sinon.
+
+\hspace*{5em}\parbox{0.8\linewidth}{\underline{Rappel:} une ann{\'e}e
+  $n$ est bissextile si, et seulement si, $n$ est divisible par 400 ou
+  si $n$ est divisible par 4 mais pas par 100.}
+
+\begin{solution}
+  \begin{Ccode}
+\ctab{}\cint
+\ctab{}\cfun{bissextile} ( \cint \cvar{annee} ) 
+\ctab{}\lb
+\ctab{}  \creturn ( \cvar{annee} \% 4 == 0 ) \&\& ( ( \cvar{annee} \% 100 != 0 ) || ( \cvar{annee} \% 400 == 0 ) ) ;
+\ctab{}\rb
+  \end{Ccode}
+\end{solution}
+
+\question (1pt) {\'E}crire une fonction \cfun{nb\_jours} qui prend en
+entr{\'e}e une date et rend le nombre de jours du mois de cette date.
+
+
+\begin{petitsexemples}
+\itemex{ \cfun{nb\_jours}(10/01/2012) = 31}
+\itemex{ \cfun{nb\_jours}(5/11/2011) = 30}
+\end{petitsexemples}
+
+\begin{solution}
+  \begin{Ccode}
+    \ctab{}\cint 
+    \ctab{}\cfun{\cvar{nb\_jours}} ( \cstruct \ctype{date} * \cvar{d} )
+    \ctab{}\lb
+    \ctab{}    \cfun{switch} ( \cvar{d}\ensuremath{\rightarrow}\cvar{mois} )
+    \ctab{}      \lb
+    \ctab{}      case janvier:
+    \ctab{}      case mars:
+    \ctab{}      case mai:
+    \ctab{}      case juillet:
+    \ctab{}      case aout:
+    \ctab{}      case octobre:
+    \ctab{}      case decembre:
+    \ctab{}	\creturn  31 ;
+    \ctab{}      case 4:
+    \ctab{}      case 6:
+    \ctab{}      case 9:
+    \ctab{}      case 11:
+    \ctab{}	\creturn 30 ;
+    \ctab{}      default: /* case 2: */
+    \ctab{}      \cif ( \cfun{bissextile} ( \cvar{d}\ensuremath{\rightarrow}\cvar{an} ) )
+    \ctab{}	\creturn 29 ;
+    \ctab{}      \celse
+    \ctab{}	\creturn 28 ;
+    \ctab{}    \rb
+    \ctab{}\rb
+  \end{Ccode}
+\end{solution}
+
+\question (3pts) {\'E}crire une fonction \cfun{jour\_suivant} qui change
+la date en argument en la date du jour suivant.
+
+\hspace*{5em}\parbox{0.8\linewidth}{\underline{Indication:} une
+  possibilit{\'e} est d'{\'e}crire 3 fonctions changeant la date en,
+  respectivement, le premier janvier de l'ann{\'e}e suivant, le premier
+  jour du mois suivant, et finalement le jour suivant.}
+
+\begin{petitsexemples}
+  \itemex{ \cfun{jour\_suivant}(31/12/2011) = 01/01/2012}
+  \itemex{ \cfun{jour\_suivant}(28/02/2012) = 29/02/2012}
+\end{petitsexemples}
+
+\begin{solution}
+  \begin{Ccode}
+    \ctab{}\cstruct \ctype{date} *
+    \ctab{}\cfun{\cvar{an}\_suivant} ( \cstruct \ctype{date} * \cvar{d} )
+    \ctab{}\lb
+    \ctab{}  \cif ( \cvar{d} == \cvar{NULL} )
+    \ctab{}    \creturn \cvar{NULL} ;
+    \ctab{}
+    \ctab{}  \cvar{d}\ensuremath{\rightarrow}\cvar{mois} = janvier ;
+    \ctab{}  \cvar{d}\ensuremath{\rightarrow}\cvar{an} = \cvar{d}\ensuremath{\rightarrow}\cvar{an} + 1 ;
+    \ctab{}  \creturn \cvar{d} ;
+    \ctab{}\rb
+    \ctab{}
+    \ctab{}\cstruct \ctype{date} *
+    \ctab{}\cfun{\cvar{mois}\_suivant} ( \cstruct \ctype{date} * \cvar{d} )
+    \ctab{}\lb
+    \ctab{}  \cif ( \cvar{d} == \cvar{NULL} )
+    \ctab{}    \creturn \cvar{NULL} ;
+    \ctab{}
+    \ctab{}  \cvar{d}\ensuremath{\rightarrow}\cvar{jour} = 1 ;
+    \ctab{}  \cif ( \cvar{d}\ensuremath{\rightarrow}\cvar{mois} < decembre ) 
+    \ctab{}    \cvar{d}\ensuremath{\rightarrow}\cvar{mois} = \cvar{mois} + 1 ;
+    \ctab{}  \celse
+    \ctab{}    \cvar{d} =  \cfun{\cvar{an}\_suivant} ( \cvar{d} ) ;
+    \ctab{}  \creturn \cvar{d} ;
+    \ctab{}\rb
+    \ctab{}
+    \ctab{}\cstruct \ctype{date} *
+    \ctab{}\cfun{\cvar{jour}\_suivant} ( \cstruct \ctype{date} * \cvar{d} )
+    \ctab{}\lb
+    \ctab{}  \cif ( \cvar{d} == \cvar{NULL} )
+    \ctab{}    \creturn \cvar{NULL} ;
+    \ctab{}
+    \ctab{}  \cif ( \cvar{d}\ensuremath{\rightarrow}\cvar{jour} < \cfun{\cvar{nb\_jours}} ( \cvar{d} ) )
+    \ctab{}    \cvar{d}\ensuremath{\rightarrow}\cvar{jour} = \cvar{d}\ensuremath{\rightarrow}\cvar{jour} + 1 ;
+    \ctab{}  \celse
+    \ctab{}   \cvar{d} = \cfun{\cvar{mois}\_suivant} ( \cvar{d} ) ;
+    \ctab{}  \creturn \cvar{d} ;
+    \ctab{}\rb
+  \end{Ccode}
+\end{solution}
+
+\question (1pt) {\'E}crire une fonction \cfun{avance} qui change une date
+en celle de $n$ jours plus tard.
+
+\begin{petitexemple}
+  \itemex{\cfun{avance}(27/01/2012 , 5 ) = 01/02/2012}
+\end{petitexemple}
+
+\begin{solution}
+  \begin{Ccode}
+    \ctab{}\cstruct \ctype{date} * \ctab{}\cfun{avance} ( \cstruct
+    \ctype{date} * \cvar{d} , \cint \cvar{n} ) \ctab{}\lb \ctab{} \cif
+    ( \cvar{d} == \cvar{NULL} ) \ctab{} \creturn \cvar{NULL} ; \ctab{}
+    \cif ( \cvar{n} == 0 ) \ctab{} \creturn \cvar{d} ; \ctab{} \ctab{}
+    \creturn \cfun{avance} ( \cfun{\cvar{jour}\_suivant} ( \cvar{d} )
+    , \cvar{n} - 1 ) ; \ctab{}\rb
+  \end{Ccode}
+\end{solution}

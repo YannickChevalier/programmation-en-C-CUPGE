@@ -1,0 +1,64 @@
+\exo{Permutations}
+
+Le but de cet exercice est d'{\'e}crire des fonctions qui r{\'e}alisent des
+permutations d'un tableau d'entiers. On veut faire une permutation
+al{\'e}atoire en combinant les deux op{\'e}rations de base suivantes:
+\begin{itemize}
+\item Une transposition entre le premier {\'e}l{\'e}ment et le second {\'e}l{\'e}ment;
+\item Un cycle dans lequel tous les {\'e}l{\'e}ments du tableau sauf le
+  dernier sont d{\'e}plac{\'e}s d'une case vers la droite, et le dernier
+  {\'e}l{\'e}ment est mis en premier.
+\end{itemize}
+On donne un exemple de combinaison et de cycles dans la Fig.~\ref{fig:permutation}.
+
+\begin{figure}[hbp]
+  \centering
+  \begin{tabular}{|c|c|c|c|r}
+    \cline{1-4}
+    0&1&2&3& \hspace*{3em}tableau intial\\
+    \cline{1-4}
+    \multicolumn 5c {$\downarrow$}\\
+    \cline{1-4}
+    3&0&1&2& cycle\\
+    \cline{1-4}
+    \multicolumn 5c {$\downarrow$}\\
+    \cline{1-4}
+    0&3&1&2& transposition\\
+    \cline{1-4}
+    \multicolumn 5c {$\downarrow$}\\
+    \cline{1-4}
+    2&0&3&1& cycle\\
+    \cline{1-4}
+  \end{tabular}
+  \caption{\label{fig:permutation}Exemple de combinaison de permutations}
+\end{figure}
+
+\question (1pt) Donnez la d{\'e}claration d'une structure \ctype{perm} qui contient:
+\begin{itemize}
+\item un pointeur \cvar{val} vers un tableau d'entiers ;
+\item un entier \cvar{taille} qui est la taille de ce tableau ;
+\end{itemize}
+
+\question (2pts) {\'E}crivez une fonction \cfun{nouveau} qui prend en
+entr{\'e}e un entier $N$ et rend une permutation dans laquelle \cvar{val}
+pointe vers un tableau d'entiers de taille $N$.
+
+\question (2pts) {\'E}crivez une fonction \cfun{initialise} qui prend en
+entr{\'e}e une permutation et qui rend une permutation dans lequel la case
+$i$ du tableau vaut $i$.
+
+\question (2pts) {\'E}crivez une fonction \cfun{transpose} qui {\'e}change les
+deux premiers {\'e}l{\'e}ments de la permutation donn{\'e}e en entr{\'e}e.
+
+\question (2pts) {\'E}crivez une fonction \cfun{cycle} qui effectue une
+permutation circulaire sur les {\'e}l{\'e}ments de la permutation donn{\'e}e en
+
+entr{\'e}e.
+
+\question (3pts) {\'E}crivez une fonction \cfun{aleatoire} qui effectue
+une permutation circulaire sur les {\'e}l{\'e}ments de la permutation donn{\'e}e
+en entr{\'e}e. Pour cela, elle prend en entr{\'e}e une permutation de taille
+$N$, et effectue $N$ tirages al{\'e}atoires d'entier. {\`A} chaque tirage, si
+l'entier tir{\'e} est pair, la fonction fait une transposition, et s'il
+est impair, elle applique une permutation cyclique.
+
