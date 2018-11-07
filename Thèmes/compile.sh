@@ -2,7 +2,7 @@
 
 prefix=tp
 modules="enonces solutions solutionsprof"
-titres="EntréesSorties Git Tableaux Types"
+titres="EntréesSorties Git Tableaux Types Fractions"
 
 
 function tex_compile () {

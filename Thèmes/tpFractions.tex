@@ -8,18 +8,17 @@ Le but de ce thème est de traduire des réels de l’intervalle \([0,
 1]\) en fractions à une précision donnée près. On va travailler sur 5
 fichiers :
 \begin{itemize}
-\item le src/Fractions/fraction.mk pour compiler automatiquement
+\item le fichier \url{src/Fractions/fraction.mk} pour compiler automatiquement
   les fichiers ;
-\item le fichier src/Fractions/fraction.c qui contiendra
+\item le fichier \url{src/Fractions/fraction.c} qui contiendra
   l’implémentation des fractions ;
-\item le fichier include/fraction.h qui contiendra les en-têtes des
+\item le fichier \url{include/fraction.h} qui contiendra les en-têtes des
   fonctions et types définis ;
-\item le fichier src/Fractions/test_fraction.c qui contiendra les
+\item le fichier \url{src/Fractions/test_fraction.c} qui contiendra les
   tests sur les fractions ;
-\item le fichier src/Fractions/recherche.c qui contiendra les sources
+\item le fichier \url{src/Fractions/recherche.c} qui contiendra les sources
   du programme bin/fraction de recherche de fraction.
 \end{itemize}
-Avoir plusieurs fichiers nous permettra de faire de la compilation séparée.
 
 
 \section{Compilation}
@@ -83,7 +82,7 @@ struct fraction_s {
   \end{lstlisting}
 \end{solutioncachee}
 
-\question Déclarer un nouveau type fraction qui est le type des structures fraction_s.
+\question Déclarer un nouveau type fraction qui est le type des structures \texttt{fraction\_s}.
 \begin{solutioncachee}
   \begin{lstlisting}[language=C]
 typedef struct fraction_s fraction ;
@@ -221,7 +220,7 @@ une précision absolue \(\varepsilon\) près.
 \paragraph{Aide.} Il peut commencer par considérer uniquement
 le cas d’un nombre entre \(0\) et \(1\)  et faire une recherche
 dichotomique en partant de \(0 = \frac 01\) et \(1 = \frac 11\). On peut généraliser ensuite aux nombres positifs en posant \(+\infty=\frac 10\).  
-\paragrpah{Aide pour le C.} Pour
+\paragraph{Aide pour le C.} Pour
 calculer la valeur absolue, utilisez la fonction \texttt{fabsl} définie dans
 \texttt{math.h}.  
 
@@ -321,7 +320,7 @@ main ( int argc , char ∗ argv [ ] )
 \end{lstlisting}
 \end{solutioncachee}
 
-\srection{Programmation modulaire}
+\section{Programmation modulaire}
 
 Le fichier fraction.h a un défaut, qui est minime pour nous, mais qui
 est handicapant pour les gros programmes: les programmeurs qui
@@ -348,7 +347,7 @@ typedef struct fraction_s * fraction ;
 \texttt{numerateur}, et \texttt{denominateur} du fichier
 \texttt{fraction.c} pour les adapter au nouveau type.
 
-\question Recompilez \texttt{test_fraction} et \texttt{recherche}.
+\question Recompilez \texttt{test\_fraction} et \texttt{recherche}.
 
 \question Enlever la déclaration de la structure \texttt{fraction\_s}
 du fichier \texttt{fraction.h}. Recompilez \texttt{test\_fraction} et
