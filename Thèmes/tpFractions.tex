@@ -236,8 +236,8 @@ fraction ftofraction ( double x , double epsilon )
 
   do {
     courant = addition_cancre ( min , max ) ;
-    e = eval ( courant ) ;
-    if ( e < x )
+    e = eval ( courant ) ; 
+   if ( e < x )
     min = courant ;
     else
     max = courant ;
@@ -263,6 +263,7 @@ commence par regarder combien il a d’arguments :
 \item s’il en a 3, le premier doit être la chaîne de caractères
   \texttt{"-p"}, le second la précision, et le troisième est le nombre
   à chercher.
+\end{itemize}
 
 \exo{Utilisation des arguments}
 
