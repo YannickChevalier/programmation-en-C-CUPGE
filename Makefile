@@ -52,24 +52,18 @@ push:
 push_all:
 	branches=$$(git branch | sed -e 's/\*//g' -e 's/ //g' ); \
 	for b in $${branches} ; do \
-		git-cache-meta --store ; \
 		git checkout $$b ; \
-		git-cache-meta --apply ; \
 		make push ; \
 	done
 	git checkout enseignants
-	git-cache-meta --apply 
 
 pull: 
 	branches=$$(git branch | sed -e 's/\*//g' -e 's/ //g' ); \
 	for branch in $(BRANCHES) ; do \
-		git-cache-meta --store ; \
 		git checkout $${branch} ; \
-		git-cache-meta --apply ; \
 		git pull -Xtheirs cours $${branch} ; \
 	done
 	git checkout enseignants
-	git-cache-meta --apply
 
 commit:: update_index
 
@@ -79,20 +73,15 @@ commit::
 	branch=$$(git branch | grep \* | cut -d ' ' -f2) ; \
 	dependants=( $$(git config --file .gitconfig --get-all branch.$${branch}.dependants) ) ; \
 	for dep in $${dependants[@]} ; do \
-		git-cache-meta --store ; \
 		git checkout $${dep} ; \
-		git-cache-meta --apply ; \
 		git merge $${branch}  ; \
 		make commit ; \
 	done ; \
 	git checkout $${branch}
-	git-cache-meta --apply
 
 change_branch/%: update_index update_local_branch
 	if [ $$(git rev-parse --abbrev-ref HEAD) != "$*" ] ; then \
-		git-cache-meta --store ; \
 		git checkout $* ; \
-		git-cache-meta --apply ; \
 	fi
 
 Thèmes/tp-enonces-%.pdf: Thèmes/tp%.tex Thèmes/tp.tex
@@ -113,9 +102,7 @@ public_enonces:: $(patsubst Thèmes/tp%.tex,Thèmes/tp-enonces-%.pdf,$(wildcard 
 
 public_enonces::
 	version=$$(git log HEAD | head -1 | awk '{print $$2; }')  ; \
-	git-cache-meta --store ; \
 	git checkout enonces ; \
-	git-cache-meta --apply ; \
 	\rm $(patsubst Thèmes/tp%.tex,Thèmes/tp-enonces-%.pdf,$(wildcard Thèmes/tp?*.tex)) ; \
 	git commit -am "suppression des anciens fichiers d'énoncés"
 	git cherry-pick $${version}
@@ -131,11 +118,8 @@ nouvelle_correction/%: a_nom_de_branche_solution/%
 	if 1>/dev/null git rev-parse -sq --verify "$(THEME)+$(EXERCICE)" ; then \
 		echo "Cette correction existe déjà." ; \
 	else \
-		git-cache-meta --store ; \
 		git checkout $${origin} ; \
-		git-cache-meta --apply ; \
 		git checkout -b "$(THEME)+$(EXERCICE)" ; \
-		git-cache-meta --apply ; \
 	fi
 
 modifier_correction:
@@ -191,13 +175,9 @@ nouvelle_branche::
 	printf "De quelles branches dépend-t-elle principalement ?\n" ; \
 	read deps ; \
 	make change_branch/$${origin} ; \
-	git-cache-meta --store ; \
 	git checkout -b $${branch} ; \
-	git-cache-meta --apply ; \
 	make push ; \
-	git-cache-meta --store ; \
 	git checkout configuration ; \
-	git-cache-meta --apply ; \
 	for dep in configuration ${deps[@]} ; do \
 		git config --file .gitconfig --add "branch.$${dep}.dependants" "$${branch}" ; \
 	done ; \
@@ -206,9 +186,7 @@ nouvelle_branche::
 	done
 
 nouvelle_branche:: commit
-	git-cache-meta --store 
 	git checkout configuration
-	git-cache-meta --apply
 
 
 init:
@@ -230,29 +208,20 @@ publication: compilation
 	git add . ; \
 	git commit -m "$${msg}" ; \
 	git push cours enseignants ; \
-	git-cache-meta --store ; \
 	git checkout enonces ; \
-	git-cache-meta --apply ; \
 	git checkout enseignants -- $(wildcard Thèmes/tp-enonces-*.pdf) ; \
 	git add . ; \
 	git commit -m "$${msg}" ; \
 	git push cours enonces ; \
 	git push cours-public enonces ; \
-	git-cache-meta --store ; \
 	git checkout solutions ; \
-	git-cache-meta --apply ; \
 	git checkout enseignants -- $(wildcard Thèmes/tp-solutions-*.pdf) ; \
 	git add . ; \
 	git commit -m "$${msg}" ; \
-	git-cache-meta --store ; \
 	git push cours solutions ; \
 	git checkout solutionsprof ; \
-	git-cache-meta --apply ; \
 	git checkout enseignants -- $(wildcard Thèmes/tp-solutionsprof-*.pdf) ; \
 	git add . ; \
 	git commit -m "$${msg}" ; \
 	git push cours solutionsprof ; \
-	git-cache-meta --store ; \
-	git checkout enseignants ; \
-	git-cache-meta --apply
-
+	git checkout enseignants 
