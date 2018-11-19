@@ -1,0 +1,229 @@
+\def\modulename{pcp}
+\RequirePackage[utf8]{course}
+\pcp
+\newif\ifsolution
+\solutionfalse
+
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{units}
+\usepackage{listings}
+\usepackage{Cdefs}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+
+\tikzset{
+  treenode/.style = {align=center, inner sep=0pt, text centered,
+    font=\sffamily},
+  arn_n/.style = {treenode, circle, white, font=\sffamily\bfseries, draw=black,
+    fill=black, text width=1.5em},% arbre rouge noir, noeud noir
+  arn_r/.style = {treenode, circle, red, draw=red, 
+    text width=1.5em, very thick},% arbre rouge noir, noeud rouge
+  arn_x/.style = {treenode, rectangle, draw=black,
+    minimum width=0.5em, minimum height=0.5em}% arbre rouge noir, nil
+}
+
+\def\consigne#1{\null\begin{center}\parbox{13cm}{\large #1}\end{center}\relax}
+
+\def\Question#1#2{\question{}\textbf{(#2)} #1}
+\ifsolution
+\includecomment{solution}
+\else
+\excludecomment{solution}
+\fi
+
+\begin{document}
+\controlecontinu
+
+\consigne{{\bf Dur{\'e}e: 1h30. Aucun document n'est autorisé.}}
+
+\begin{solution}
+  Note de l'auteur: les solutions proposées sont complètes (de mon
+  point de vue) et sont écrites pour être compréhensibles avec les
+  rappels de cours qui vont avec. Il n'est pas nécessaire d'écrire
+  toutes les étapes pour avoir les points, ni même d'avoir le bon
+  résultat: juste savoir ou expliquer comment il aurait fallu faire
+  est récompensé.
+\end{solution}
+
+\vspace*{1em}
+
+\exo{Codage (3 points)}
+
+\begin{solution}
+  Note de l'auteur: cet exercice était un peu trop long par rapport
+  aux points (seulement 4).  Pour l'année prochaine (au cas où cette
+  correction circulerait), il y aurait probablement plus de points sur
+  cette partie, avec le même type de questions.
+\end{solution}
+
+\question Donnez, lorsque c'est possibles le codage en complément à 2
+sur \(4\) et \(6\) bits des entiers \(-8,-7,-1,0,1,7,8\) (\(-0,25 par mauvaise réponse\)).
+
+
+
+\exo{Test de compréhension (3 points)}
+
+
+On rappelle la règle, si la valeur \(x\) est l'adresse d'une case de type \(t\):
+\begin{center}
+  ( int ) ( x + 1 ) = ( ( int ) x ) + sizeof ( t ) 
+\end{center}
+
+
+On considère le programme suivant:
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+struct s {
+  int a ;
+  float b ;
+} ;
+
+int main ( int argc , char * argv[] )
+{
+  struct s t[3]  ;
+  struct s * p1 = ( struct s * ) ( t + 1 ) ;
+  struct s * p2 = ( struct s * ) ( & t + 1 ) - 1 ;
+  printf ( "%p %p %p\n" , t , p1 , p2 - 1 ) ;
+  return 0 ;
+}
+\end{lstlisting}
+
+
+\exo{Calcul de majorit{\'e} (14 pts)}
+
+\begin{quotation}
+  \sl Lors de l'ouverture de fichiers, il est demandé de faire
+  attention aux cas possibles d'erreur.
+\end{quotation}
+
+  Un \emph{automate cellulaire unidimensionnel born{\'e}} est
+  d{\'e}fini par un tableau fini de \emph{cellules}. Chaque \emph{cellule}
+  est d{\'e}finie par un {\'e}tat. Cet automate cellulaire \emph{{\'e}volue} suivant une
+  \emph{fonction de transition} qui indique comment chaque cellule doit 
+  {\'e}voluer en regardant son {\'e}tat et celui de ses voisines.
+
+  Cet exercice porte sur le probl{\`e}me de recherche de majorit{\'e} avec un
+  automate cellulaire unidimensionnel born{\'e}. Les {\'e}tats ne peuvent
+  {\^e}tre que \texttt{oui} ou \texttt{non}, et on veut faire {\'e}voluer un
+  automate pour que toutes ses cellules soient {\`a} \texttt{oui} s'il y a
+  une majorit{\'e} de oui-s, ou \texttt{non} s'il y a une majorit{\'e} de non-s.
+
+  Une solution (qui ne marche pas toujours, car le probl{\`e}me n'a pas de
+  solutions en g{\'e}n{\'e}ral) consiste {\`a} utiliser la fonction de transition
+  suivante:
+  \begin{itemize}
+  \item Si l'{\'e}tat de la cellule $i$ est \texttt{oui}, alors le nouvel 
+  {\'e}tat est celui de la majorit{\'e} entre cette cellule, celle {\`a} 
+  l'adresse $i-1$, et celle {\`a} l'indice $i-3$ ;
+  \item Si l'{\'e}tat de la cellule $i$ est \texttt{non}, alors le nouvel 
+  {\'e}tat est celui de la majorit{\'e} entre cette cellule, celle {\`a} 
+  l'adresse $i+1$, et celle {\`a} l'indice $i+3$.
+  \end{itemize}
+  Les indices dans le tableau sont modulo $n$, le nombre de cellules 
+  dans l'automate cellulaire unidimensionnel.
+
+\vspace*{1em}
+
+\question (2 pts) Écrire une fonction prenant en entrée une chaîne de
+caractères et renvoyant le nombre de caractères qu'elle contient, le
+\texttt{\textbackslash 0} final compris).
+
+\question (1 pt) Écrire une fonction indiquant (avec une réponse vrai
+ou faux) si une chaîne de caractères ne contient que des \texttt{'.'}
+et des \texttt{'*'}.
+
+\question (1 pt) Pour simplifier le calcul de majorit{\'e}, on veut d{\'e}finir
+une cellule comme pouvant avoir 2 {\'e}tats, \texttt{oui} et
+\texttt{non}, avec \texttt{oui} qui vaut $1$, et \texttt{non} qui vaut
+$-1$. D{\'e}finir le type \texttt{cellule} des cellules.
+
+
+\question (2 pts) On d{\'e}finit maintenant les automates comme des couples ayant:
+\begin{enumerate}
+\item l'adresse d'un tableau de cellules;
+\item un entier $n$ indiquant le nombre de cellules dans l'automate.
+\end{enumerate}.
+D{\'e}finir la structure \texttt{automate\_s} de ces couples, ainsi que le type 
+\texttt{automate} des pointeurs vers ces structures.
+
+
+{\bf On suppose qu'il existe une fonction \texttt{nouvel\_automate}
+qui prend en entrée un entier \(n\), et renvoie l'adresse d'une structure
+de type \texttt{automate\_s} pouvant contenir un automate ayant \(n\) cellules.
+
+
+\question (2 pts) {\'E}crire une fonction \url{lire_etat_initial} qui
+prend en entr{\'e}e une chaîne de caractères, et qui:
+\begin{itemize}
+\item calcul sa longueur \(n\) ;
+\item vérifie que la chaîne ne contient que des \texttt{'.'}
+et des \texttt{'*'} (erreur sinon);
+\item construit un automate ayant \(n\) cellules ;
+\item lit les $n$ valeurs de cellules stock{\'e}es dans la chaîne de caractères
+(le caract{\`e}re \texttt{'.'} pour \texttt{non}, et le caract{\`e}re 
+\texttt{'*'} pour \texttt{oui}, aucun autre caract{\`e}re n'est autoris{\'e}).
+\item 
+\end{itemize}
+
+\paragraph{Exemple.} On donne ci-dessous une chaîne de caractères bien
+formatt{\'e}e qui doit {\^e}tre lue sans erreurs:
+\begin{verbatim}
+...**.*.***..**..**...***..***
+\end{verbatim}
+
+\question (1 pt) {\'E}crire une fonction \url{affiche_automate} qui
+affiche la valeur des cellules de l'automate sur une ligne de ce fichier.
+
+
+\question (2 pts) {\'E}crire une fonction \url{vote} qui prend en entr{\'e}e
+un automate $a$ et le num{\'e}ro $i$ d'une cellule de cet automate, et
+renvoie le nouvel {\'e}tat pour la cellule $i$ de $a$. \textit{Rappel: 
+l'op{\'e}rateur C \% calcule le ``modulo'': $7\% 5 == 2$  mais \(-3 \% 5 == -3\)}.
+
+
+\question (1 pt) {\'E}crire une fonction \url{suivant} qui prend en
+entr{\'e}e un automate et renvoie un nouvel automate contenant
+l'évolution de toutes les cellules de l'automate en argument de la fonction.
+
+
+\question (2 pts) {\'E}crire une fonction \url{evolution} qui prend en
+entr{\'e}e une chaîne de caractères et:
+\begin{enumerate}
+\item lit l'automate $a$ qui est d{\'e}finit par cette chaîne;
+\item calcule et affiche les 100 {\'e}volutions de l'automate $a$.
+\end{enumerate}
+Comme pr{\'e}c{\'e}demment, il est demand{\'e} de faire tr{\`e}s
+attention {\`a} tous les cas possibles d'erreur.
+
+
+\paragraph{Exemple.} Si le programme lit la première ligne, il affiche
+(les derni{\`e}res lignes sont enlev{\'e}es car toutes identiques):
+
+\begin{verbatim}
+...**.*.***..**..**...***..***
+....****.**..**..**..*.**.****
+...*.***.**..**..**.**..******
+..*.*.**.**..**..**.**.*******
+.***...*.**..**..**.**********
+****..*...*..**..*************
+****..*......**.**************
+****..*.......****************
+****..*......*.***************
+****..*.....*.*.**************
+****..*....*.*.*.*************
+****..*...*.*.*.*.************
+****..*..*.*.*.*.*.***********
+****..*.***.*.*.*.*.**********
+****.***.*****.*.*.*.*********
+*****************.*.*.********
+********************.*.*******
+***********************.******
+******************************
+******************************
+\end{verbatim}
+
+
+
+\end{document}
+
