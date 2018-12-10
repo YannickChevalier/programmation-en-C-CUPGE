@@ -2,12 +2,14 @@
 \RequirePackage[utf8]{course}
 \pcp
 \newif\ifsolution
-\solutionfalse
+\solutiontrue
+\usepackage{listings}
+
+\lstset{language=C}
 
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{units}
-\usepackage{listings}
 \usepackage{Cdefs}
 \usepackage{tikz}
 \usetikzlibrary{arrows}
@@ -51,10 +53,7 @@
 \exo{Codage (3 points)}
 
 \begin{solution}
-  Note de l'auteur: cet exercice était un peu trop long par rapport
-  aux points (seulement 4).  Pour l'année prochaine (au cas où cette
-  correction circulerait), il y aurait probablement plus de points sur
-  cette partie, avec le même type de questions.
+  Correction en cours
 \end{solution}
 
 \question Donnez, lorsque c'est possible, le codage en complément à 2
@@ -64,6 +63,9 @@ par mauvaise réponse).
 
 \exo{Test de compréhension (3 points)}
 
+\begin{solution}
+  Correction en cours
+\end{solution}
 
 On rappelle la règle: si la valeur \(x\) est l'adresse d'une case de type \(t\):
 \begin{center}
@@ -127,10 +129,36 @@ schéma détaillé de la mémoire pour justifier la réponse.
 caractères et renvoyant le nombre de caractères qu'elle contient, le
 \texttt{'\textbackslash 0'} final compris).
 
+\begin{solution}
+  \begin{lstlisting}
+int longueur ( char * s )
+{
+  int i ;
+  for ( i = 0 ; s[i] != '0' ; i++ )
+    ;
+  return i + 1 ;
+}    
+  \end{lstlisting}
+\end{solution}
+
+
 \question (1,5 pts) Écrire une fonction indiquant (avec une réponse vrai
 ou faux) si une chaîne de caractères ne contient que des \texttt{'.'}
 et des \texttt{'*'}. Il est demandé que la fonction ne lise chaque caractère
 de la chaîne qu'une seule fois et qu'elle n'utilise pas la fonction précédente.
+
+\begin{solution}
+  \begin{lstlisting}
+int chaine_ok ( char * s )
+{
+  int i ;
+  for ( i = 0 ; s[i] != '0' ; i++ )
+    if ( ( s[i] != '.' ) || ( s[i] != '*' ) )
+      return 0;
+  return 1 ;
+}    
+  \end{lstlisting}
+\end{solution}
 
 \question (1 pt) Pour simplifier le calcul de majorit{\'e}, on veut
 d{\'e}finir une cellule comme pouvant avoir 2 {\'e}tats, \texttt{oui}
@@ -138,6 +166,12 @@ et \texttt{non}, avec \texttt{oui} qui vaut $1$, et \texttt{non} qui
 vaut $-1$. D{\'e}finir le type \texttt{cellule} des
 cellules. \paragraph{Attention: il ne faut pas confondre les
   caractères '.' et '*' avec ces valeurs.}
+
+\begin{solution}
+  \begin{lstlisting}
+typedef enum { oui = 1 , non = 0 } cellule ; 
+  \end{lstlisting}
+\end{solution}
 
 
 \question (2 pts) On d{\'e}finit maintenant les automates comme des
@@ -148,6 +182,21 @@ couples ayant:
 \end{enumerate}.
 D{\'e}finir la structure \texttt{automate\_s} de ces couples, ainsi que le type 
 \texttt{automate} de ces structures.
+
+\begin{solution}
+  \begin{lstlisting}
+/*
+  La question a ete simplifiee pour le CC: l'automate devrait
+  etre une adresse de structure
+*/
+struct automate_s {
+  cellule * t ;
+  int nb_cellules ;
+} ;
+typedef struct automate_s automate ; 
+  \end{lstlisting}
+\end{solution}
+
 
 
 {\bf On suppose qu'il existe une fonction \texttt{nouvel\_automate}
@@ -175,7 +224,6 @@ et des \texttt{'*'} (erreur sinon);
 \item lit les $n$ valeurs de cellules stock{\'e}es dans la chaîne de caractères
 (le caract{\`e}re \texttt{'.'} pour \texttt{non}, et le caract{\`e}re 
 \texttt{'*'} pour \texttt{oui}, aucun autre caract{\`e}re n'est autoris{\'e}).
-\item 
 \end{itemize}
 
 \paragraph{Exemple.} On donne ci-dessous une chaîne de caractères bien
@@ -183,21 +231,91 @@ formatt{\'e}e qui doit {\^e}tre lue sans erreurs:
 \begin{verbatim}
 ...**.*.***..**..**...***..***
 \end{verbatim}
+\begin{solution}
+  \begin{lstlisting}
+/*
+   des erreurs sont possibles, donc on renvoie un int:
+   int lire_etat_initial ( automate * res , char * s ) ;
+*/
+int lire_etat_initial ( automate * res , char * s )
+{
+  automate a ;
+  int n ;
+  int i ;
+  n = longueur ( s ) ;
+  if ( ! chaine_ok ( s ) )
+    return 1 ;
+  a = nouvel_automate ( n - 1 ) ; // le '\0' ne compte pas
+  for ( i = 0 ; i < n - 1 ; i ++ )
+    if ( s[i] == '*' )
+      a.t[i] = oui ;
+    else
+      a.t[i] = non ;
+  // fin: on stocke le resultat et on indique qu'il n'y a pas d'erreurs
+  * res = a ;
+  return 0 ;
+} 
+  \end{lstlisting}
+\end{solution}
 
 \question (1 pt) {\'E}crire une fonction \url{affiche_automate} qui
 affiche la valeur des cellules de l'automate sur une ligne de ce fichier.
 
+\begin{solution}
+  \begin{lstlisting}
+void affiche automate ( automate a )
+{
+  int i ;
+  for ( i = 0 ; i < a.nb_cellules ; i++ )
+    if ( a.t[i] == oui )
+      printf ( "*" ) ;
+    else
+      printf ( "." ) ;
+  printf ( "\n" ) ;
+}
+  \end{lstlisting}
+\end{solution}
 
 \question (2 pts) {\'E}crire une fonction \url{vote} qui prend en entr{\'e}e
 un automate $a$ et le num{\'e}ro $i$ d'une cellule de cet automate, et
 renvoie le nouvel {\'e}tat pour la cellule $i$ de $a$. \textit{Rappel: 
 l'op{\'e}rateur C \% calcule le ``modulo'': $7\% 5 == 2$  mais \(-3 \% 5 == -3\)}.
 
+\begin{solution}
+  \begin{lstlisting}
+cellule vote ( automate a , int i )
+{
+  int majorite ;
+  int n = a.nb_cellules ;
+  if ( a.t[i] == oui )
+    majorite = a.t[i] + a.t[ ( i + n - 1 ) % n ] + a.t[ ( i + n - 3 ) % n ] ;
+  else
+    majorite = a.t[i] + a.t[ ( i + 1 ) % n ] + a.t[ ( i + 3 ) % n ] ;
+  if ( majorite > 1 )
+    return oui ;
+  else
+    return non ;
+}
+  \end{lstlisting}
+\end{solution}
 
 \question (1 pt) {\'E}crire une fonction \url{suivant} qui prend en
 entr{\'e}e un automate et renvoie un nouvel automate contenant
 l'évolution de toutes les cellules de l'automate en argument de la fonction.
 
+\begin{solution}
+  \begin{lstlisting}
+automate suivant ( automate a )
+{
+  automate res ;
+  int i ;
+  res = nouvel_automate ( a.nb_cellules ) ;
+  for ( i = 0 ; i < a.nb_cellules ; i++ )
+    res.t[i] = vote ( a, i ) ;
+  return res ;
+}
+  \end{lstlisting}
+\end{solution}
 
 \question (2 pts) {\'E}crire une fonction \url{evolution} qui prend en
 entr{\'e}e une chaîne de caractères et:
@@ -208,6 +326,28 @@ entr{\'e}e une chaîne de caractères et:
 Comme pr{\'e}c{\'e}demment, il est demand{\'e} de faire tr{\`e}s
 attention {\`a} tous les cas possibles d'erreur.
 
+\begin{solution}
+  \begin{lstlisting}
+int evolution ( char * s )
+{
+  automate automate_courant , automate_suivant ;
+  int i ;
+  if ( lire_etat_initial ( & automate_courant , s ) )
+  {
+    printf ( "erreur, chaine %s invalide\n" , s ) ;
+    return 1 ;
+  }
+  for ( i = 0 ; i < 100 ; i++ )
+  {
+    affiche_automate ( automate_courant ) ;
+    automate_suivant = suivant ( automate_courant ) ;
+    automate_courant = automate_suivant ;
+  }
+  affiche_automate ( automate_courant ) ;
+  return 0; 
+}
+  \end{lstlisting}
+\end{solution}
 
 \paragraph{Exemple.} Si le programme lit la première ligne, il affiche
 (les derni{\`e}res lignes sont enlev{\'e}es car toutes identiques):
