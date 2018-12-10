@@ -10,28 +10,28 @@ On commence par utiliser des matrices dont les tailles sont
 fixées. Définissez deux constantes \texttt{NB\_LIGNES} et
 \texttt{NB\_COLONNES} valant \(2\).
 
-\begin{solutioncachee}
+\begin{solution}
   \begin{lstlisting}[language=C]
 #define NB_LIGNES 2
 #define NB_COLONNES 2
   \end{lstlisting}
-\end{solutioncachee}
+\end{solution}
 
 \question Définissez le type \texttt{matrice} comme étant le type des tableaux 
 de \texttt{float} ayant \texttt{NB\_LIGNES} lignes et
 \texttt{NB\_COLONNES} colonnes.
 
-\begin{solutioncachee}
+\begin{solution}
   \begin{lstlisting}[language=C]
 typedef float matrice[NB_LIGNES][NB_COLONNES] ;
   \end{lstlisting}
-\end{solutioncachee}
+\end{solution}
 
 \question Écrivez (et testez dans la fonction \texttt{main}) une
 fonction qui affiche une matrice passée en argument. 
 
 
-\begin{solutioncachee}
+\begin{solution}
   \begin{lstlisting}[language=C]
 void affiche_matrice ( matrice M )
 {
@@ -46,7 +46,7 @@ void affiche_matrice ( matrice M )
   printf ( "\n" ) ;
 }
   \end{lstlisting}
-\end{solutioncachee}
+\end{solution}
 
 \question Écrivez (et testez dans la fonction \texttt{main}) une
 fonction qui demande à l'utilisateur les coefficients d'une matrice
@@ -59,7 +59,7 @@ exo1: exo1.c
        gcc -Wall -o exo1 exo1.c -I ../../include -L ../../lib -lentrees
 \end{lstlisting}
 
-\begin{solutioncachee}
+\begin{solution}
   \begin{lstlisting}[language=C]
 void lit_matrice ( matrice M )
 {
@@ -75,7 +75,7 @@ void lit_matrice ( matrice M )
   }
 }
   \end{lstlisting}
-\end{solutioncachee}
+\end{solution}
 
 \question Dans la fonction \texttt{main}, lisez 2 matrices \(m_1\) et
 \(m_2\) données par l'utilisateur et affichez-les.
@@ -83,7 +83,7 @@ void lit_matrice ( matrice M )
 \question Créez une fonction \texttt{somme\_matrices}, et calculez la
 somme \(m_3\) de \(m_1+m_2\), et affichez le résultat.
 
-\begin{solutioncachee}
+\begin{solution}
   \begin{lstlisting}[language=C]
 void somme_matrices ( matrice res , matrice a , matrice b )
 {
@@ -93,13 +93,13 @@ void somme_matrices ( matrice res , matrice a , matrice b )
       res[i][j] = a[i][j] + b[i][j] ;
 }
   \end{lstlisting}
-\end{solutioncachee}
+\end{solution}
 
 
 \question Créez une fonction \texttt{produit\_matrices}, calculez le produit \(m_3\) de \(m_1\times m_2\), et
 affichez le résultat.
 
-\begin{solutioncachee}
+\begin{solution}
   \begin{lstlisting}[language=C]
 void produit_matrices ( matrice res , matrice a , matrice b )
 {
@@ -113,7 +113,7 @@ void produit_matrices ( matrice res , matrice a , matrice b )
     }
 }
   \end{lstlisting}
-\end{solutioncachee}
+\end{solution}
 
 \exo{Matrices de taille variable}
 
@@ -232,7 +232,7 @@ l'adresse d'une \textbf{structure} matrice\_s ayant le bon nombre de
 lignes et de colonnes.
 
 
-\begin{solutioncachee}
+\begin{solution}
   \begin{lstlisting}[language=C]
 #include <malloc.h>
 
@@ -249,12 +249,12 @@ matrice creer_matrice ( int nb_lignes , int nb_colonnes )
   return res ;
 }
   \end{lstlisting}
-\end{solutioncachee}
+\end{solution}
 
 \question Comme dans l'exercice précédent, écrivez les fonctions \texttt{lire\_matrice} et
   \texttt{afficher\_matrice}.
 
-\begin{solutioncachee}
+\begin{solution}
   \begin{lstlisting}[language=C]
 #include "entrees.h"
 #include "matrices.h"
@@ -287,7 +287,7 @@ void affiche_matrice ( matrice M )
   printf ( "\n" ) ;
 }
   \end{lstlisting}
-\end{solutioncachee}
+\end{solution}
 \question Ajoutez la règle suivante au fichier \texttt{Makefile}:
 
 \begin{lstlisting}[language=make]
@@ -328,7 +328,7 @@ structure) qu'elles devront créer avec la bonne taille. N'oubliez pas
 de mettre à jour le fichier \texttt{Makefile} et de tester ces
 fonctions !
 
-\begin{solutioncachee}
+\begin{solution}
   \begin{lstlisting}[language=C]
 #include "matrices.h"
 int somme_matrices ( matrice * res , matrice a , matrice b )
@@ -367,4 +367,4 @@ int produit_matrices ( matrice * res , matrice a , matrice b )
   return 0 ;
 }
   \end{lstlisting}
-\end{solutioncachee}
+\end{solution}

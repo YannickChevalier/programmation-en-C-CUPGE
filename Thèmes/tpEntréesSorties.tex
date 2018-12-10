@@ -317,10 +317,10 @@ main ( int argc , char * argv[] )
 \end{lstlisting}
 Et essayez de vérifier que \texttt{scanf} a bien lu ce que vous tapez.
 
-\begin{solutioncachee}
+\begin{solution}
   Pas de différence notable entre le cas où on tape ce qui est
   demandé, et celui où on tape n'importe quoi.
-\end{solutioncachee}
+\end{solution}
 
 \question Pour faire la différence entre une lecture réussie et une
 lecture qui a échoué, lisez et affichez tous les caractères que
@@ -328,7 +328,7 @@ lecture qui a échoué, lisez et affichez tous les caractères que
 ligne (\texttt{'\textbackslash n'}) en utilisant la fonction
 \texttt{getchar}.
 
-\begin{solutioncachee}
+\begin{solution}
   \begin{lstlisting}[language=C]
  #include <stdio.h>
 
@@ -351,7 +351,7 @@ main ( int argc , char * argv[] )
   programme affiche les caractères à partir du moment où ça ne marche
   plus. Notez aussi que les blancs peuvent être ajoutés ou enlevés là
   où il y en a dans la chaîne de formattage.
-\end{solutioncachee}
+\end{solution}
 
 \question L'intérêt de \texttt{scanf} est de pouvoir lire des données
 avec les types existants. Au contraire de \texttt{printf}, il ne faut
@@ -360,7 +360,7 @@ il faudra stocker la valeur qui a été lue. Modifiez le programme
 précédent pour lire une chaîne de la forme "Bonjour, je suis XXX", où
 XXX est un entier. Le programme devra répondre par "Bonjour, XXX".
 
-\begin{solutioncachee}
+\begin{solution}
   \begin{lstlisting}[language=C]
  #include <stdio.h>
 
@@ -384,7 +384,7 @@ main ( int argc , char * argv[] )
   programme affiche les caractères à partir du moment où ça ne marche
   plus. Notez aussi que les blancs peuvent être ajoutés ou enlevés là
   où il y en a dans la chaîne de formattage.
-\end{solutioncachee}
+\end{solution}
 
 \exo{ROT13 et code de César}
 
@@ -438,7 +438,7 @@ fonction \texttt{isspace} définie dans \texttt{ctype.h} renvoie vrai).
 
 
 
-\begin{solutioncachee}
+\begin{solution}
   \begin{lstlisting}[language=C]
 #include <ctype.h>
 #include <stdio.h>
@@ -458,14 +458,14 @@ int lire_fin_ligne ( )
   return count ;
 }
   \end{lstlisting}
-\end{solutioncachee}
+\end{solution}
 
 \question Écrire une fonction \texttt{lire\_entier} qui prend en
 entrée l'adresse d'un entier, et tente de lire jusqu'à ce qu'elle
 réussisse un entier. Pour que la lecture réussisse, il faut qu'il n'y
 ait que l'entier et des caractères blancs sur la ligne.
 
-\begin{solutioncachee}
+\begin{solution}
   \begin{lstlisting}[language=C]
 
 void lire_entier ( int * n) 
@@ -479,14 +479,14 @@ void lire_entier ( int * n)
   } while ( ( lu != 1 ) || ( nb > 0 ) ) ;
 }
   \end{lstlisting}
-\end{solutioncachee}
+\end{solution}
 
 \question Écrire une fonction \texttt{lire\_decimal} qui prend en
 entrée l'adresse d'un décimal, et tente de lire jusqu'à ce qu'elle
 réussisse un entier. Pour que la lecture réussisse, il faut qu'il n'y
 ait que le nombre décimal et des caractères blancs sur la ligne.
 
-\begin{solutioncachee}
+\begin{solution}
   \begin{lstlisting}[language=C]
 
 void lire_decimal ( float * n) 
@@ -503,25 +503,25 @@ void lire_decimal ( float * n)
   Note pour plus tard: La fonction \texttt{lire\_decimal} ressemble
   tellement à la fonction \texttt{lire\_entier} qu'on a très envie de ne l'écrire 
   qu'une seule fois.
-\end{solutioncachee}
+\end{solution}
 
 \question Créez un fichier \url{include/entrees.h} qui contient les
 déclarations de ces trois fonctions, et compilez le fichier
 \texttt{entrees.c} (on ne peut pas l'exécuter, il n'y a pas de
 fonction \texttt{main}).
 
-\begin{solutioncachee}
+\begin{solution}
   \begin{lstlisting}[language=C]
 int lire_fin_ligne ( ) ;
 lire_entier ( int * ) ;  
 lire_decimal ( float * ) ;     
   \end{lstlisting}
-\end{solutioncachee}
+\end{solution}
 \question Séparez le fichier \texttt{entrees.c} en trois fichiers, un
 pour chaque fonction. Assurez-vous que chaque fichier peut être
 correctement compilé.
 
-\begin{solutioncachee}
+\begin{solution}
   Il faut inclure le fichier \texttt{entrees.h} dans chacun des
   fichiers \texttt{.c}.
   \begin{lstlisting}[language=bash]
@@ -529,16 +529,16 @@ correctement compilé.
     gcc -c lire_entier.c  -I ../../include
     gcc -c lire_decimal.c  -I ../../include
   \end{lstlisting}
-\end{solutioncachee}
+\end{solution}
 
 \question Créez une librairie \url{lib/libentrees.a} à partir des 3
 fichiers que vous venez d'obtenir par compilation.
 
-\begin{solutioncachee}
+\begin{solution}
   \begin{lstlisting}[language=bash]
     ar rcs ../../lib/libentrees.a lire_fin_ligne.o lire_entier.o lire_decimal.o
   \end{lstlisting}
-\end{solutioncachee}
+\end{solution}
 
 \question On va automatiser la création et la mise à jour de la
 bibliothèque, car sinon on perd beaucoup de temps à taper des
@@ -556,7 +556,7 @@ une feuille de papier):
   \end{enumerate}
 \end{enumerate}
 
-\begin{solutioncachee}
+\begin{solution}
   \begin{enumerate}
   \item fichier à produire: \texttt{lib/libentrees.h}
     \begin{enumerate}
@@ -584,7 +584,7 @@ une feuille de papier):
     \item fichiers utilisés: \url{entrees.h} pour chacun des 3 fichiers \texttt{.c}
     \end{enumerate} 
   \end{enumerate}
-\end{solutioncachee}
+\end{solution}
 
 \question On va créer un fichier \texttt{entrees.mk} qui va
 automatiser la création et la mise à jour de la bibliothèque à partir
@@ -596,7 +596,7 @@ fichier à produire : fichiers utilisés
 \end{lstlisting}
 La seule contrainte est que la première règle doit produire le fichier final.
 
-\begin{solutioncachee}
+\begin{solution}
   \begin{lstlisting} [language=make]
 ../../lib/libentrees.a: lire_fin_ligne.o lire_entier.o lire_decimal.o
        ar rcs ../../lib/libentrees.a lire_fin_ligne.o lire_entier.o lire_decimal.o
@@ -614,17 +614,17 @@ lire_entier.o: lire_entier.c
 lire_decimal.o: lire_decimal.c
         gcc -c lire_decimal.c -I ../../include
   \end{lstlisting}
-\end{solutioncachee}
+\end{solution}
 
 \question Recompilez la librairie en utilisant:
 \begin{lstlisting}[language=bash]
   make -f entrees.mk
 \end{lstlisting}
 
-\begin{solutioncachee}
+\begin{solution}
   S'il ne fait rien, tout est normal. Modifiez un des fichiers
   \texttt{.c} pour l'obliger à recompiler.
-\end{solutioncachee}
+\end{solution}
 
 \question Écrire une fonction \texttt{lit\_format} qui prend en entrée
 une chaîne de caractère (de formattage) et une adresse (de type

@@ -73,27 +73,27 @@ marquant le but d’une règle. Par exemple :
 \question Déclarer une structure \texttt{fraction\_s} qui contient
 deux entiers, un numérateur \(p\) et un dénominateur \(q\)
 
-\begin{solutioncachee}
+\begin{solution}
   \begin{lstlisting}[language=C]
 struct fraction_s {
   int p ;
   int  q ;
 } ;
   \end{lstlisting}
-\end{solutioncachee}
+\end{solution}
 
 \question Déclarer un nouveau type fraction qui est le type des structures \texttt{fraction\_s}.
-\begin{solutioncachee}
+\begin{solution}
   \begin{lstlisting}[language=C]
 typedef struct fraction_s fraction ;
 \end{lstlisting}
-\end{solutioncachee}
+\end{solution}
 
 \question Écrire une fonction \texttt{nouvelle\_fraction} qui prend en
 entrée deux entiers, et qui renvoie une fraction avec ces entiers
 comme, respectivement, le numérateur et le dénominateur.  
 
-\begin{solutioncachee}
+\begin{solution}
   \begin{lstlisting}[language=C]
 fraction nouvelle\_fraction ( int p , int q )
 {
@@ -103,13 +103,13 @@ fraction nouvelle\_fraction ( int p , int q )
   return r ;
 }
 \end{lstlisting}
-\end{solutioncachee}
+\end{solution}
 
 \question Écrire deux fonctions \texttt{numerateur} et
 \texttt{denominateur} qui renvoient respectivement le numerateur et le
 dénominateur de la fraction passée en entrée.
 
-\begin{solutioncachee}
+\begin{solution}
   \begin{lstlisting}[language=C]
 int
 numerateur ( fraction f )
@@ -122,7 +122,7 @@ denominateur ( fraction f )
 return f.q ;
 }
 \end{lstlisting}
-\end{solutioncachee}
+\end{solution}
 
 \paragraph{Note de bonne programmation.} Dans la suite, utilisez
 uniquement les fonctions \texttt{nouvelle\_fraction}, \texttt{numerateur}, et
@@ -135,7 +135,7 @@ deux fraction \(f_1\) et \(f_2\) et rend un entier du même signe que
 \(f_1 - f_2\) (pour l’opération habituelle de soustraction) et \(0\)
 si les deux fractions sont égales.
 
-\begin{solutioncachee}
+\begin{solution}
   \begin{lstlisting}[language=C]
 int fractioncmp ( fraction a , fraction b )
 {
@@ -143,19 +143,19 @@ int fractioncmp ( fraction a , fraction b )
   - numerateur ( b ) ∗ denominateur ( a ) ;
 }
 \end{lstlisting}
-\end{solutioncachee}
+\end{solution}
 
 
 \question {\ 'E}crire une fonction \texttt{print\_fraction} qui affiche une
 fraction.
-\begin{solutioncachee}
+\begin{solution}
   \begin{lstlisting}[language=C]
 void print_fraction ( fraction f )
 {
   printf ( "  %d\n----------\n   %d\n" , numerateur ( f ) , denominateur ( f ) ) ;
 }
 \end{lstlisting}
-\end{solutioncachee}
+\end{solution}
 
 
 \question Écrire une fonction \texttt{addition\_cancre} qui fait
@@ -169,7 +169,7 @@ On note qu’il s’agit aussi de l’addition des professeurs, puisque
   \frac 58 \oplus \frac{8}{12} = \frac{13}{20}
 \]
 
-\begin{solutioncachee}
+\begin{solution}
   \begin{lstlisting}[language=C]
 fraction
 addition_cancre ( fraction f1 , fraction f2 )
@@ -178,19 +178,19 @@ return nouvelle_fraction ( numerateur ( f1 ) + numerateur ( f2 ) ,
 denominateur ( f1 ) + denominateur ( f2 ) ) ;
 }
 \end{lstlisting}
-\end{solutioncachee}
+\end{solution}
 
 \question Écrire une fonction \texttt{eval\_fraction} qui renvoie le
 nombre (de type double) qui est la valeur de la fraction passée en
 argument.
-\begin{solutioncachee}
+\begin{solution}
   \begin{lstlisting}[language=C]
 double eval_fraction ( fraction f ) 
 { 
   return ( (  double ) numerateur ( f ) ) / denominateur ( f ) ; 
 }
 \end{lstlisting}
-\end{solutioncachee}
+\end{solution}
 
 \exo{Recherche par dichotomie d’une fraction}
 
@@ -224,7 +224,7 @@ dichotomique en partant de \(0 = \frac 01\) et \(1 = \frac 11\). On peut génér
 calculer la valeur absolue, utilisez la fonction \texttt{fabsl} définie dans
 \texttt{math.h}.  
 
-\begin{solutioncachee}
+\begin{solution}
   \begin{lstlisting}[language=C]
 fraction ftofraction ( double x , double epsilon ) 
 { 
@@ -245,7 +245,7 @@ fraction ftofraction ( double x , double epsilon )
   return courant ;
 }
 \end{lstlisting}
-\end{solutioncachee}
+\end{solution}
 
 
 
@@ -268,7 +268,7 @@ commence par regarder combien il a d’arguments :
 \exo{Utilisation des arguments}
 
 Implémentez ce programme dans un fichier recherche.c.
-\begin{solutioncachee}
+\begin{solution}
   \begin{lstlisting}[language=C]
 #include <stdio.h>
 #include <stdlib.h>
@@ -319,7 +319,7 @@ main ( int argc , char ∗ argv [ ] )
 }
 
 \end{lstlisting}
-\end{solutioncachee}
+\end{solution}
 
 \section{Programmation modulaire}
 
@@ -338,11 +338,11 @@ ce changement est très rapide.
 \question Changez le type fraction en un type qui pointe sur des structures dans \texttt{fraction.h}
 et \texttt{fraction.c}.
 
-\begin{solutioncachee}
+\begin{solution}
   \begin{lstlisting}[language=C]
 typedef struct fraction_s * fraction ;
   \end{lstlisting}
-\end{solutioncachee}
+\end{solution}
 
 \question Changez les fonctions \texttt{nouvelle\_fraction},
 \texttt{numerateur}, et \texttt{denominateur} du fichier
@@ -354,7 +354,7 @@ typedef struct fraction_s * fraction ;
 du fichier \texttt{fraction.h}. Recompilez \texttt{test\_fraction} et
 \texttt{recherche}.
 
-\begin{solutioncachee}
+\begin{solution}
   \begin{lstlisting}[language=make]
 GCC=gcc
 LIBS=-lm ../lib/cours.o
@@ -374,4 +374,4 @@ recherche : recherche.c fraction.o
     $(GCC) $(FLAGS) −o $@ recherche.c $(INCLUDE) $(LIBS) fraction.o
     
   \end{lstlisting}
-\end{solutioncachee}
+\end{solution}
