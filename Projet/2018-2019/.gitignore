@@ -1,1 +1,2 @@
 etudiants/**
+!etudiants/Makefile
