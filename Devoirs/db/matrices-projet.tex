@@ -1,0 +1,107 @@
+\exo{Matrices}
+
+
+
+
+
+Le but de cet exercice est d'impl{\'e}menter des fonctions op{\'e}rant sur des
+matrices. Une \emph{matrice} est un tableau de \cfloat {\`a} deux
+dimensions. 
+
+\question (1 pt) D{\'e}clarez une structure \ctype{Matrice\_s} qui
+contient:
+\begin{itemize}
+\item le nombre de lignes et de colonnes ;
+\item un tableau de lignes, chaque ligne {\'e}tant un tableau de \cfloat ;
+\end{itemize}
+ainsi que le type \ctype{Matrice} des pointeurs vers ces
+structures. 
+
+Dans la suite, une matrice ayant $l$ lignes et $c$ colonnes est dite
+$l\times c$. Une matrice $l\times c$ peut {\^e}tre {\'e}crite
+\matrice alc ; dans ce cas on dit que $a_{i,j}$ est son coefficient
+{\`a} la ligne $i$ et {\`a} la colonne $j$. Enfin, on dit qu'une matrice est
+\emph{carr{\'e}e} si $l = c$.
+
+
+\question (2 pts) {\'E}crivez une fonction \cfun{matrice} cr{\'e}ant une
+nouvelle matrice ayant $l$ lignes et $c$ colonnes et dont tous les
+coefficients sont {\`a} $0$.
+
+\question (1 pt) L'addition de deux matrices $A=\matrice a{l_a}{c_a}$
+et $B=\matrice a{l_b}{c_b}$ est d{\'e}finie si, et seulement si, $l_a=l_b$
+et $c_a=c_b$. {\'E}crire une fonction indiquant si deux matrices peuvent
+{\^e}tre additionn{\'e}es.
+
+\question (2 pts) Si deux matrices \matrice alc et \matrice blc sont
+additionnables, le r{\'e}sultat de leur addition est la matrice \matrice
+rlc avec:
+$$
+r_{i,j}=a_{i,j}+b_{i,j}
+$$
+{\'E}crire une fonction rendant le r{\'e}sultat de l'addition de deux matrices.
+
+
+\question (2 pts) Le produit de deux matrices \matrice alc et \matrice
+b{l'}{c'} est d{\'e}fini lorsque $c=l'$, et dans ce cas, le r{\'e}sultat du
+produit est la matrice $\matrice rl{c'}$ d{\'e}finie par:
+$$
+r_{i,j} = \Sigma_{k=1}^c a_{i,k} \cdot b_{k,j}
+$$
+{\'E}crire une fonction rendant le produit de deux matrices.
+
+\question (2 pts) On donne ci-dessous un sch{\'e}ma pour effectuer un
+calcul de puissance rapide d'une matrice carr{\'e}e $n\times n$  $A$. Dans
+ce sch{\'e}ma, $I_n$ d{\'e}signe la matrice identit{\'e} $n\times n$ (ses
+coefficients $r_{i,i}$ valent $1$, tous les autres valent $0$).
+
+\begin{verbatim}
+// Calcul de A^k pour une matrice n x n A
+R:= I_n
+x := A ;
+Tant que k > 0 faire
+   Si k mod 2 == 0 Alors
+       k := k / 2 ; x := x * x
+   Sinon
+       k := k - 1 ; R := R * x ;
+   Fin Si
+Fin tant que
+retourner R.
+\end{verbatim}
+{\'E}crire une fonction impl{\'e}mentant ce calcul rapide de puissance d'une
+matrice carr{\'e}e.
+
+\question (3 pts) Soient $A=\matrice alc$ et $B=\matrice bc{c'}$ deux
+matrices telles que le produit $A\times B$ soit d{\'e}fini. On peut alors
+d{\'e}couper $A$ et $B$ en blocs tels que toutes les op{\'e}rations ci-dessous
+(additions et produits de matrices) soient d{\'e}finies:
+$$
+\left(
+  \begin{array}[b]{c|c}
+    A_1 & A_2\\
+    \hline
+    A_3 & A_4
+  \end{array}
+\right) \times
+\left(
+  \begin{array}[b]{c|c}
+    B_1 & B_2\\
+    \hline
+    B_3 & B_4
+  \end{array}
+\right) =
+\left(
+  \begin{array}[b]{c|c}
+    A_1\times B_1 + A_2\times B_3 & 
+    A_1\times B_2 + A_2 \times B_4 \\
+    \hline
+    A_3\times B_1 + A_4\times B_3 & 
+    A_3\times B_2 + A_4 \times B_4 
+  \end{array}
+\right) 
+$$ 
+{\'E}crire une fonction effectuant le produit de deux matrices en
+commen{\c c}ant par les s{\'e}parer en blocs de taille ad{\'e}quate, puis en
+regroupant les diff{\'e}rents r{\'e}sultats. \emph{Il est rappel{\'e} que la
+  compr{\'e}hension de l'{\'e}nonc{\'e} fait partie de la note, et que les
+  derni{\`e}res questions peuvent {\^e}tre longues.}

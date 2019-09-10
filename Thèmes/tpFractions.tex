@@ -1,0 +1,377 @@
+\titre{Fractions}
+
+
+\section{Introduction}
+
+
+Le but de ce thème est de traduire des réels de l’intervalle \([0,
+1]\) en fractions à une précision donnée près. On va travailler sur 5
+fichiers :
+\begin{itemize}
+\item le fichier \url{src/Fractions/fraction.mk} pour compiler automatiquement
+  les fichiers ;
+\item le fichier \url{src/Fractions/fraction.c} qui contiendra
+  l’implémentation des fractions ;
+\item le fichier \url{include/fraction.h} qui contiendra les en-têtes des
+  fonctions et types définis ;
+\item le fichier \url{src/Fractions/test_fraction.c} qui contiendra les
+  tests sur les fractions ;
+\item le fichier \url{src/Fractions/recherche.c} qui contiendra les sources
+  du programme bin/fraction de recherche de fraction.
+\end{itemize}
+
+
+\section{Compilation}
+
+Pour effectuer les tests, on va réutiliser les fichiers \texttt{tests.h} et la librairie \texttt{entrees}. Assurezvous qu’ils sont bien dans le répertoire \url{~/src/include}. Cela signifie que parmi les options de
+gcc, lors de la compilation, il faut ajouter :
+\begin{center}
+  \tt -I "\url{~/programmation-en-C/src/include}"
+\end{center}
+De plus, pour voir plus facilement le résultat des tests, il faut compiler avec :
+\begin{center}
+  \tt -DUSECOLORS
+\end{center}
+Ensuite, quand on en sera à la version finale, on enlèvera les tests en compilant avec l’option :
+\begin{center}
+  \tt -Dproduction
+\end{center}
+Enfin, pour utiliser la fonction \(\text{\tt fabsl} : \text{\tt
+  double} \rightarrow \text{\tt double}\) qui calcule la valeur
+absolue d’un double et est définie dans la bibliothèque
+\texttt{<math.h>}, il faut compiler avec l’option : 
+\begin{center}
+  \tt -lm
+\end{center}
+ On paramétrise
+le fichier  \texttt{fraction.mk} avec des variables en le commençant par les lignes
+suivantes : 
+\begin{lstlisting}[language=make]
+GCC=gcc 
+LIBS=-lm -lentrees 
+INCLUDE=-I "~/programmation-en-C/src/include" 
+FLAGS=-DUSECOLORS 
+\end{lstlisting}
+
+On peut utiliser ces variables dans les règles. Par exemple :
+\begin{lstlisting}[language=make]
+test_fraction : test_fraction.c
+       fraction.c $(GCC) $(FLAGS) -o $@ $@.c $(INCLUDE) $(LIBS) 
+\end{lstlisting}
+
+
+\paragraph{Test du Makefile.} On peut préciser ce qui va être fait en
+marquant le but d’une règle. Par exemple :
+\begin{lstlisting}[language=bash]
+  make -f fraction.mk test_fraction
+\end{lstlisting}
+
+\section{Fichier \texttt{fraction.c}}
+
+\exo{Base sur les structures}
+
+\question Déclarer une structure \texttt{fraction\_s} qui contient
+deux entiers, un numérateur \(p\) et un dénominateur \(q\)
+
+\begin{solution}
+  \begin{lstlisting}[language=C]
+struct fraction_s {
+  int p ;
+  int  q ;
+} ;
+  \end{lstlisting}
+\end{solution}
+
+\question Déclarer un nouveau type fraction qui est le type des structures \texttt{fraction\_s}.
+\begin{solution}
+  \begin{lstlisting}[language=C]
+typedef struct fraction_s fraction ;
+\end{lstlisting}
+\end{solution}
+
+\question Écrire une fonction \texttt{nouvelle\_fraction} qui prend en
+entrée deux entiers, et qui renvoie une fraction avec ces entiers
+comme, respectivement, le numérateur et le dénominateur.  
+
+\begin{solution}
+  \begin{lstlisting}[language=C]
+fraction nouvelle\_fraction ( int p , int q )
+{
+  fraction r ;
+  r.p = p ;
+  r.q = q ;
+  return r ;
+}
+\end{lstlisting}
+\end{solution}
+
+\question Écrire deux fonctions \texttt{numerateur} et
+\texttt{denominateur} qui renvoient respectivement le numerateur et le
+dénominateur de la fraction passée en entrée.
+
+\begin{solution}
+  \begin{lstlisting}[language=C]
+int
+numerateur ( fraction f )
+{
+return f.p ;
+}
+int
+denominateur ( fraction f )
+{
+return f.q ;
+}
+\end{lstlisting}
+\end{solution}
+
+\paragraph{Note de bonne programmation.} Dans la suite, utilisez
+uniquement les fonctions \texttt{nouvelle\_fraction}, \texttt{numerateur}, et
+\texttt{denominateur}.
+
+\exo{Opérations simples sur les fractions}
+
+\question Écrire une fonction \texttt{fractioncmp} qui prend en entrée
+deux fraction \(f_1\) et \(f_2\) et rend un entier du même signe que
+\(f_1 - f_2\) (pour l’opération habituelle de soustraction) et \(0\)
+si les deux fractions sont égales.
+
+\begin{solution}
+  \begin{lstlisting}[language=C]
+int fractioncmp ( fraction a , fraction b )
+{
+  return numerateur ( a ) ∗ denominateur ( b ) 
+  - numerateur ( b ) ∗ denominateur ( a ) ;
+}
+\end{lstlisting}
+\end{solution}
+
+
+\question {\ 'E}crire une fonction \texttt{print\_fraction} qui affiche une
+fraction.
+\begin{solution}
+  \begin{lstlisting}[language=C]
+void print_fraction ( fraction f )
+{
+  printf ( "  %d\n----------\n   %d\n" , numerateur ( f ) , denominateur ( f ) ) ;
+}
+\end{lstlisting}
+\end{solution}
+
+
+\question Écrire une fonction \texttt{addition\_cancre} qui fait
+l’addition des cancres de 2 fractions :
+\[
+  \frac pq \oplus \frac{p'}{q'} = \frac{p+p'}{q+q'}
+\]
+
+On note qu’il s’agit aussi de l’addition des professeurs, puisque
+\[
+  \frac 58 \oplus \frac{8}{12} = \frac{13}{20}
+\]
+
+\begin{solution}
+  \begin{lstlisting}[language=C]
+fraction
+addition_cancre ( fraction f1 , fraction f2 )
+{
+return nouvelle_fraction ( numerateur ( f1 ) + numerateur ( f2 ) ,
+denominateur ( f1 ) + denominateur ( f2 ) ) ;
+}
+\end{lstlisting}
+\end{solution}
+
+\question Écrire une fonction \texttt{eval\_fraction} qui renvoie le
+nombre (de type double) qui est la valeur de la fraction passée en
+argument.
+\begin{solution}
+  \begin{lstlisting}[language=C]
+double eval_fraction ( fraction f ) 
+{ 
+  return ( (  double ) numerateur ( f ) ) / denominateur ( f ) ; 
+}
+\end{lstlisting}
+\end{solution}
+
+\exo{Recherche par dichotomie d’une fraction}
+
+L’addition des cancres permet de trouver par dichotomie la forme réduite d’une fraction
+approchant un nombre positif. La justification mathématique est donnée par le lemme suivant:
+\begin{trivlist}
+\item \textbf{Lemme 1.} \em
+Si \(\frac ab < \frac pq < \frac cd\) et \(ad-bc = -1\) alors:
+\[
+  \left\lbrace
+    \begin{array}{rcl}
+      p&\ge&a+c\\
+      q&\ge&b+d\\
+    \end{array}
+  \right.
+\]
+\end{trivlist}
+
+Donc si on cherche un rationnel entre deux autres nombres qu’on aura calculé, soit il est
+égal à leur somme des cancres, soit il est entre leur somme des cancres et l’un des deux, et ses
+numérateurs et dénominateurs sont plus grand que ceux de la somme des cancres.
+
+
+\question En déduire une fonction \texttt{ftofraction} qui prend en
+entrée un double et rend une fraction irréductible égale à ce double à
+une précision absolue \(\varepsilon\) près.  
+\paragraph{Aide.} Il peut commencer par considérer uniquement
+le cas d’un nombre entre \(0\) et \(1\)  et faire une recherche
+dichotomique en partant de \(0 = \frac 01\) et \(1 = \frac 11\). On peut généraliser ensuite aux nombres positifs en posant \(+\infty=\frac 10\).  
+\paragraph{Aide pour le C.} Pour
+calculer la valeur absolue, utilisez la fonction \texttt{fabsl} définie dans
+\texttt{math.h}.  
+
+\begin{solution}
+  \begin{lstlisting}[language=C]
+fraction ftofraction ( double x , double epsilon ) 
+{ 
+  double e ;
+
+  fraction min = nouvelle_fraction ( 0 , 1 ) , //zero
+  max = nouvelle_fraction(1 , 0 ) ; //+infini
+  fraction courant ;
+
+  do {
+    courant = addition_cancre ( min , max ) ;
+    e = eval ( courant ) ; 
+   if ( e < x )
+    min = courant ;
+    else
+    max = courant ;
+  } while ( fabsl ( e − x ) > epsilon ) ;
+  return courant ;
+}
+\end{lstlisting}
+\end{solution}
+
+
+
+\section{Écriture d’un programme}
+
+On veut maintenant écrire un programme complet qui va effectuer la
+mise sous forme de fraction d’un décimal. Lors de
+l’appel---\textit{i.e.}, au début de la fonction main---le programme
+commence par regarder combien il a d’arguments :
+\begin{itemize}
+\item s’il en a 0, il demande (en utilisant \texttt{LireDecimal}) à
+  l’utilisateur un nombre à chercher et une précision ;
+\item s’il en a 1, on suppose que c’est le nombre à chercher, et on
+  utilise la précision par défaut de \(0.0000001\) ;
+\item s’il en a 3, le premier doit être la chaîne de caractères
+  \texttt{"-p"}, le second la précision, et le troisième est le nombre
+  à chercher.
+\end{itemize}
+
+\exo{Utilisation des arguments}
+
+Implémentez ce programme dans un fichier recherche.c.
+\begin{solution}
+  \begin{lstlisting}[language=C]
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include "fraction.h"
+#include "entrees.h"
+void
+demande_utilisateur ( double ∗ x , double ∗ epsilon )
+{
+  printf ( " Entrez un nombre à traduire en fraction:\n " ) ;
+  lire_decimal_long ( x ) ;
+  printf ( " Entrez ␣ l'erreur admissible epsilon :\n " ) ;
+  do {
+    lire_decimal_long ( epsilon ) ;
+  }  while ( ∗ epsilon < 0 ) ;
+}
+
+int
+main ( int argc , char ∗ argv [ ] )
+{
+  double x , epsilon ;
+  switch ( argc )
+  {
+    case 1 :
+    demande_utilisateur ( &x , &epsilon ) ;
+    break ;
+    case 2 :
+    x = atof ( argv [ 1 ] ) ;
+    epsilon = 0.0000001 ;
+    break ;
+    case 4 :
+    i f ( strcmp ( argv [ 1 ] , "−p " ) == 0 )
+    {
+      x = atof ( argv [ 3 ] ) ;
+      epsilon = atof ( argv [ 2 ] ) ;
+    }
+    else
+    goto erreur_argument ;
+    break ;
+    default :
+    goto erreur_argument ;
+  }
+  print_fraction ( ftofraction ( x , epsilon ) ) ;
+  return 0 ;
+  erreur_argument :
+  printf ( " Utilisation: %s [[ --p <precision>] <x >]\n " , argv [ 0 ] ) ;
+  return 1 ;
+}
+
+\end{lstlisting}
+\end{solution}
+
+\section{Programmation modulaire}
+
+Le fichier fraction.h a un défaut, qui est minime pour nous, mais qui
+est handicapant pour les gros programmes: les programmeurs qui
+l’utilisent peuvent créer de nouvelles structures en dehors des
+fonctions qu’on a défini car ils ont accès au format de la structure.
+
+La technique permettant d’éviter cela consiste à déclarer le type
+\texttt{fraction} non plus comme une structure fraction, mais comme un pointeur
+vers une telle structure. Si les fichiers ont été écrits correctement,
+ce changement est très rapide.
+
+\exo{Changement de type des fractions}
+
+\question Changez le type fraction en un type qui pointe sur des structures dans \texttt{fraction.h}
+et \texttt{fraction.c}.
+
+\begin{solution}
+  \begin{lstlisting}[language=C]
+typedef struct fraction_s * fraction ;
+  \end{lstlisting}
+\end{solution}
+
+\question Changez les fonctions \texttt{nouvelle\_fraction},
+\texttt{numerateur}, et \texttt{denominateur} du fichier
+\texttt{fraction.c} pour les adapter au nouveau type.
+
+\question Recompilez \texttt{test\_fraction} et \texttt{recherche}.
+
+\question Enlever la déclaration de la structure \texttt{fraction\_s}
+du fichier \texttt{fraction.h}. Recompilez \texttt{test\_fraction} et
+\texttt{recherche}.
+
+\begin{solution}
+  \begin{lstlisting}[language=make]
+GCC=gcc
+LIBS=-lm ../lib/cours.o
+INCLUDE=-I "../include/ "
+FLAGS=-DUSECOLORS
+
+fraction.o : fraction.c
+    $(GCC) $(FLAGS) −c $< $(INCLUDE)
+
+test_fraction : test_fraction.c fraction.c
+    $(GCC) $(FLAGS) −o $@ $@. c $(INCLUDE) $(LIBS)
+
+fraction : recherche.c fraction.o
+    $(GCC) $(FLAGS) −o $@ recherche.c $(INCLUDE) $(LIBS) fraction.o
+
+recherche : recherche.c fraction.o
+    $(GCC) $(FLAGS) −o $@ recherche.c $(INCLUDE) $(LIBS) fraction.o
+    
+  \end{lstlisting}
+\end{solution}

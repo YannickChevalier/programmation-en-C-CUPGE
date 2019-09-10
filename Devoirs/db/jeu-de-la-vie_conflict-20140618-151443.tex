@@ -1,0 +1,102 @@
+
+
+
+\exo{Jeu de la vie (8 points)}
+
+Le \emph{jeu de la vie} est un jeu informatique qui se joue dans un
+tableau {\`a} deux dimensions $n\times m$. Chaque case de ce tableau,
+appel{\'e}e \emph{cellule}, est soit vivante, soit morte. Chaque cellule a
+8 \emph{voisines} (dans les 8 directions nord, nord-ouest, ouest,
+sud-ouest, sud, sud-est, est, nord-est). Les cellules au-del{\`a} des
+bords sont toutes consid{\'e}r{\'e}es comme mortes. Un \emph{{\'e}tat} est un
+tableau dans lequel chaque cellule est soit vivante, soit morte.
+
+On passe de l'{\'e}tat courant {\`a} l'{\'e}tat suivant en examinant, pour
+chaque cellule du tableau, le nombre $k$ de voisines en
+vie\,:
+\begin{itemize}
+\item s'il y en a 3, et que la cellule est morte, elle devient vivante\,;
+\item s'il y en a 2 ou 3, et que la cellule est vivante, elle le reste\,;
+\item Dans tous les autres cas, la cellule meurt.
+\end{itemize}
+
+
+\question (1 pt) D{\'e}clarez un type repr{\'e}sentant l'{\'e}tat des
+cellules.
+
+\question (1 pt) D{\'e}clarez un type repr{\'e}sentant les tableaux dans
+lesquels se jouent le jeu de la vie.
+
+\question (2 pts) {\'E}crivez une fonction prenant en entr{\'e}e deux entiers $n$
+et $m$, et rendant un tableau pour le jeu de la vie dans lequel toutes
+les cellules sont mortes.
+
+\question (1 pt) {\'E}crire une fonction donnant le nombre de voisines
+vivantes d'une cellule dans un tableau à partir du tableau et des coordonnées
+de cette cellule.
+
+
+\question (3 pts) {\'E}crire une fonction prenant en entr{\'e}e un tableau
+(ainsi qu'{\'e}ventuellement d'autres arguments) repr{\'e}sentant un {\'e}tat
+courant, et rendant un tableau contenant l'{\'e}tat suivant.
+
+\paragraph{Exemple.} Dans la suite d'{\'e}tats suivante, une cellule morte
+est vide, une vivante est repr{\'e}sent{\'e}e par un V.
+\def\morte{\phantom{V}} \def\vivante{V}
+\begin{center}
+\begin{tabular}[c]{|c|c|c|c|c|}
+    \hline 
+    \morte{}&\morte{}&\morte{}&\morte{}&\morte{}\\
+    \hline 
+    \morte{}&\vivante{}&\morte{}&\morte{}&\morte{}\\
+    \hline 
+    \morte{}&\vivante{}&\vivante{}&\vivante{}&\morte{}\\
+    \hline 
+    \morte{}&\morte{}&\morte{}&\vivante{}&\morte{}\\
+    \hline 
+    \morte{}&\morte{}&\morte{}&\morte{}&\morte{}\\
+    \hline 
+  \end{tabular} $\Rightarrow$ \begin{tabular}{|c|c|c|c|c|}
+    \hline 
+    \morte{}&\morte{}&\morte{}&\morte{}&\morte{}\\
+    \hline 
+    \morte{}&\vivante{}&\morte{}&\morte{}&\morte{}\\
+    \hline 
+    \morte{}&\vivante{}&\morte{}&\vivante{}&\morte{}\\
+    \hline 
+    \morte{}&\morte{}&\morte{}&\vivante{}&\morte{}\\
+    \hline 
+    \morte{}&\morte{}&\morte{}&\morte{}&\morte{}\\
+    \hline 
+  \end{tabular}
+$\Rightarrow$
+\begin{tabular}{|c|c|c|c|c|}
+    \hline 
+    \morte{}&\morte{}&\morte{}&\morte{}&\morte{}\\
+    \hline 
+    \morte{}&\morte{}&\vivante{}&\morte{}&\morte{}\\
+    \hline 
+    \morte{}&\morte{}&\morte{}&\morte{}&\morte{}\\
+    \hline 
+    \morte{}&\morte{}&\vivante{}&\morte{}&\morte{}\\
+    \hline 
+    \morte{}&\morte{}&\morte{}&\morte{}&\morte{}\\
+    \hline 
+  \end{tabular}
+$\Rightarrow$
+\begin{tabular}{|c|c|c|c|c|}
+    \hline 
+    \morte{}&\morte{}&\morte{}&\morte{}&\morte{}\\
+    \hline 
+    \morte{}&\morte{}&\morte{}&\morte{}&\morte{}\\
+    \hline 
+    \morte{}&\morte{}&\morte{}&\morte{}&\morte{}\\
+    \hline 
+    \morte{}&\morte{}&\morte{}&\morte{}&\morte{}\\
+    \hline 
+    \morte{}&\morte{}&\morte{}&\morte{}&\morte{}\\
+    \hline 
+  \end{tabular}
+
+\end{center}
+

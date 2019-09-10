@@ -1,0 +1,69 @@
+\exo{Tableaux dynamiques}
+
+On veut cr{\'e}er une structure permettant d'adapter la taille d'un
+tableau au nombre d'{\'e}l{\'e}ments qu'il contient. En th{\'e}orie, une mani{\`e}re
+efficace d'adapter la taille est, pour un tableau de $n$ {\'e}l{\'e}ments
+pouvant en contenir $N$:
+\begin{quote}
+  \begin{itemize}\itemsep=-3pt
+  \item Si $n = N$, \textit{i.e.}, le tableau est plein, changer le
+    tableau en un tableau de taille $2\times N$ ;
+  \item Si $n\le N$, \textit{i.e.}, le tableau est aux $\nicefrac 34$
+    vide et si $N>10$, changer le tableau en un tableau de taille
+    $\nicefrac N 2$.
+  \end{itemize}
+\end{quote}
+
+
+\question (1 pt) {\'E}crire une fonction qui prend en entr{\'e}e un entier
+positif $n$ et qui rend la plus petite puissance de $2$ qui est plus
+grande que $n$: $f(n) = \min \lbrace N \,\vert\, N=2^k \text{ et } N\ge n\rbrace$
+
+\question (1 pt) D{\'e}clarer le type \ctype{td} des pointeurs vers une
+structure \ctype{td\_s} qui contient:
+\begin{quote}
+  \begin{itemize}\setlength\itemsep {-3pt}
+  \item un nombre maximal d'{\'e}l{\'e}ments;
+  \item le nombre courant d'{\'e}l{\'e}ments;
+  \item un tableau \cvar{val} d'{\'e}l{\'e}ments.
+  \end{itemize}
+\end{quote}
+
+\question (2 pts) {\'E}crire une fonction rendant un tableau dynamique
+pouvant contenir $N$ {\'e}l{\'e}ments mais n'en contenant aucun. Le nombre $N$
+est pass{\'e} en argument.
+
+\question (2 pts) {\'E}crire une fonction qui prend en entr{\'e}e deux
+tableaux dynamiques tels que le premier peut contenir plus d'{\'e}l{\'e}ments
+que n'en poss{\`e}de le second, et qui recopie tous les {\'e}l{\'e}ments du second
+tableau dans le premier. Cette fonction rend le nombre d'{\'e}l{\'e}ments
+copi{\'e}s.
+
+
+\question (2 pts) {\'E}crire deux fonctions:
+\begin{itemize}
+\item une qui ins{\`e}re un {\'e}l{\'e}ment {\`a} la fin d'un tableau dynamique pass{\'e}
+  en argument;
+\item une qui supprime le dernier {\'e}l{\'e}ment d'un tableau dynamique pass{\'e}
+  en argument.
+\end{itemize}
+Si $N$ d{\'e}signe le nombre d'{\'e}l{\'e}ments que peut contenir le tableau
+dynamique, et $n$ le nombre d'{\'e}l{\'e}ments contenus apr{\`e}s l'insertion ou
+la suppression, on recopiera le tableau dans un tableau pouvant
+contenir $\nicefrac N2$ {\'e}l{\'e}ments si $n\le \nicefrac N4$, ou $2\times
+N$ si $n=N$
+
+
+\question (1 pt) Donnez une mani{\`e}re de repr{\'e}senter un tableau
+dynamique dans un fichier. \emph{Cette question est une pr{\'e}paration
+  aux deux questions suivantes.}
+
+\question (1.5 pts) {\'E}crire une fonction prenant un tableau dynamique
+et un argument de type \ctype{FILE *} correspondant {\`a} un fichier
+ouvert en {\'e}criture, et stockant ce tableau dynamique suivant le format
+d{\'e}fini {\`a} la question pr{\'e}c{\'e}dente. 
+
+\question (1.5 pts) {\'E}crire une fonction prenant un argument de type
+\ctype{FILE *} correspondant {\`a} un fichier ouvert en lecture, et lisant
+un tableau dynamique qui y est stock{\'e} suivant le format d{\'e}fini {\`a} la
+question pr{\'e}c{\'e}dente. Cette fonction renvoie ce tableau dynamique.

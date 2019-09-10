@@ -1,0 +1,169 @@
+\documentclass[french,11pt]{book}
+\def\cetteannee{2012--2013}
+
+\newcommand\ups{1}
+\def\uhp{0}
+\def\plg{0}
+\def\esial{0}
+
+\input{commun.tex}
+\input{caracteres}
+\input{enseignement}
+\mdfsetup{skipabove=\topskip,skipbelow=\topskip}
+\usepackage{ifvtex}
+\usepackage{ifpdf}
+\usepackage{eurosym}
+\usepackage{comment}
+\usepackage{color}
+\newif\ifsolution
+\AtBeginDocument{%
+\ifsolution
+\specialcomment{solution}{%
+	\begin{mdframed}[backgroundcolor=lightgray]
+        \noindent
+        \underline{\bf Solution:}\par
+}{%
+      \end{mdframed}
+}
+\else
+\excludecomment{solution}
+\fi
+}
+
+\renewcommand{\topfraction}{1} % max fraction of floats at top
+\renewcommand{\bottomfraction}{1} % max fraction of floats at bottom
+% Parameters for TEXT pages (not float pages):
+\setcounter{topnumber}{4} \setcounter{bottomnumber}{4}
+\setcounter{totalnumber}{8} % 2 may work better
+\setcounter{dbltopnumber}{4} % for 2-column pages
+\renewcommand{\dbltopfraction}{1} % fit big float above 2-col. text
+\renewcommand{\textfraction}{0} % allow minimal text w. figs
+% Parameters for FLOAT pages (not text pages):
+\renewcommand{\floatpagefraction}{1} % require fuller float pages
+% N.B.: floatpagefraction MUST be less than topfraction !!
+\renewcommand{\dblfloatpagefraction}{1} % require fuller float pages
+% remember to use [htp] or [htpb] for placement
+
+\ifvtexpdf\pdftrue\fi
+
+\ifpdf
+\usepackage{graphicx}            % for including graphics
+\usepackage{geometry}
+\usepackage{hyperref}
+\hypersetup{pdftitle={Enseignements},
+  pdfsubject={Enseignements d'informatique},
+  pdfauthor={Yannick Chevalier <ychevali@irit.fr>},
+  pdfkeywords={pdftex, acrobat}, 
+%  pdfpagemode={FullScreen},
+  linkcolor={red},
+}
+\else
+\usepackage[dvips]{graphicx}
+\usepackage{pstcol}
+\usepackage{color}
+\usepackage{pst-node,pst-plot}
+\DeclareGraphicsExtensions{.jpg,.jpeg,.eps,.pdf,.png,.mps,.ps}
+\fi
+
+\usepackage{vmargin}
+\setpapersize{A4}
+% \setmargins{leftmargin}{topmargin}{textwidth}{textheight}{headheight}{headsep}
+%{footheight}{footskip}
+\setmargins{1.5cm}{2.5cm}{18cm}{23.2cm}{1cm}{1.5cm}{1cm}{1cm}
+
+
+\usepackage{algorithm} % environnement algorithme
+%\usepackage{exemple} % environnement pour les exemples
+\makeatletter
+\renewcommand{\ALG@name}{Programme}
+\renewcommand{\listalgorithmname}{Liste des \ALG@name s}
+\makeatother
+
+
+% \usepackage{hevea}
+\usepackage{beton}
+\usepackage[french]{varioref}
+\def\td#1#2#3{\title{Travaux Dirig\'es #1}\author{#2}\date{#3}\maketitle}
+\def\tp#1#2#3{\title{Travaux Pratiques #1}\author{#2}\date{#3}\maketitle}
+\def\devoir#1#2#3{\title{#1}\author{#2}\date{#3}\maketitle}
+
+
+
+\newcommand{\stpitd}[1]{%
+\td{#1}{Deug STPI 1}{ann{\'e}e \cetteannee}}
+\newcommand{\stpitp}[1]{%
+\tp{#1}{Deug STPI 1}{ann{\'e}e \cetteannee}}
+
+\newcommand{\maittd}[1]{%
+\td{#1}{Ma{\^\i} trise d'Informatique Fondamentale}{ann{\'e}e \cetteannee}}
+\newcommand{\maittp}[1]{%
+\tp{#1}{Ma{\^\i} trise d'Informatique Fondamentale}{ann{\'e}e \cetteannee}}
+
+\newcommand{\esialtd}[1]{%
+\td{#1}{ESIAL 2 -- ASPD}{ann{\'e}e \cetteannee}}
+\newcommand{\esialtp}[1]{%
+\tp{#1}{ESIAL 2 -- ASPD}{ann{\'e}e \cetteannee}}
+
+\newcommand{\mmesitd}[1]{%
+\td{#1}{L3 MMESI}{ann{\'e}e \cetteannee}}
+\newcommand{\mmesitp}[1]{%
+\tp{#1}{L3 MMESI}{ann{\'e}e \cetteannee}}
+\newcommand{\mmesiqcm}[1]{%
+\qcm{#1}{L3 MMESI}{ann{\'e}e \cetteannee}}
+\newcommand{\mmesidevoir}[1]{%
+\devoir{#1}{L3 MMESI}{ann{\'e}e \cetteannee}}
+
+\newcommand{\pcptd}[1]{%
+\td{#1}{L2 PCP}{ann{\'e}e \cetteannee}}
+\newcommand{\pcptp}[1]{%
+\tp{#1}{L2 PCP}{ann{\'e}e \cetteannee}}
+\newcommand{\pcpqcm}[1]{%
+\qcm{#1}{L2 PCP}{ann{\'e}e \cetteannee}}
+\newcommand{\pcpdevoir}[1]{%
+\devoir{#1}{L2 PCP}{ann{\'e}e \cetteannee}}
+
+\newcommand{\tadformation}{L3 Informatique}
+\newcommand{\tadtd}[1]{%
+\td{#1}{\tadformation}{ann{\'e}e \cetteannee}}
+\newcommand{\tadtp}[1]{%
+\tp{#1}{\tadformation}{ann{\'e}e \cetteannee}}
+\newcommand{\tadqcm}[1]{%
+\qcm{#1}{\tadformation}{ann{\'e}e \cetteannee}}
+\newcommand{\taddevoir}[1]{%
+\devoir{#1}{\tadformation}{ann{\'e}e \cetteannee}}
+
+
+
+
+
+
+
+\newcommand{\mref}[1]{\ref{#1}~\vpageref{#1}}
+
+
+\newenvironment{flist}[1][--]{\begin{list}{#1}{\setlength{\itemsep}{-3pt}\setlength{\topsep}{0pt}\setlength{\partopsep}{0pt}\setlength{\leftmargin}{.5cm}}}{\end {list}}
+
+\newenvironment{consigne}{\bf}{}
+
+
+
+\newcounter{Partiecount}
+\newcounter{Questioncount}[Partiecount]
+\def\Partie#1{%
+
+\vspace{1ex}
+
+
+\underline{\large\stepcounter{Partiecount}\Alph{Partiecount}) 
+\bf\large #1}
+
+\vspace{1ex}
+
+}
+
+\def\Question#1#2{%
+\relax%
+\stepcounter{Questioncount}\arabic{Questioncount}) 
+\large\textit{(#2)} {#1}
+\vspace{1ex}}
+

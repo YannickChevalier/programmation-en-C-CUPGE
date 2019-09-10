@@ -1,0 +1,370 @@
+\titre{Matrices}
+
+\begin{quotation}
+  \sl Le but de ce TP est d'explorer les tableaux dynamiques en 2 dimensions.
+\end{quotation}
+
+\exo{Matrices statiques}
+
+On commence par utiliser des matrices dont les tailles sont
+fixées. Définissez deux constantes \texttt{NB\_LIGNES} et
+\texttt{NB\_COLONNES} valant \(2\).
+
+\begin{solution}
+  \begin{lstlisting}[language=C]
+#define NB_LIGNES 2
+#define NB_COLONNES 2
+  \end{lstlisting}
+\end{solution}
+
+\question Définissez le type \texttt{matrice} comme étant le type des tableaux 
+de \texttt{float} ayant \texttt{NB\_LIGNES} lignes et
+\texttt{NB\_COLONNES} colonnes.
+
+\begin{solution}
+  \begin{lstlisting}[language=C]
+typedef float matrice[NB_LIGNES][NB_COLONNES] ;
+  \end{lstlisting}
+\end{solution}
+
+\question Écrivez (et testez dans la fonction \texttt{main}) une
+fonction qui affiche une matrice passée en argument. 
+
+
+\begin{solution}
+  \begin{lstlisting}[language=C]
+void affiche_matrice ( matrice M )
+{
+  int i , j ;
+  for ( i = 0 ; i < NB_LIGNES; i++ )
+  {
+    printf ( "(\t%f\t" , M[i][0] ) ;
+    for ( j = 1 ; j < NB_COLONNES ; j++ )
+      printf ( "%f\t" , M[i][j] ) ;
+    printf ( ")\n'' ;
+  }
+  printf ( "\n" ) ;
+}
+  \end{lstlisting}
+\end{solution}
+
+\question Écrivez (et testez dans la fonction \texttt{main}) une
+fonction qui demande à l'utilisateur les coefficients d'une matrice
+passée en argument. Comme on utilise la librairie
+\texttt{libentrees.a} et les macros de test, créez aussi le
+\texttt{Makefile} suivant:
+
+\begin{lstlisting}[language=make]
+exo1: exo1.c
+       gcc -Wall -o exo1 exo1.c -I ../../include -L ../../lib -lentrees
+\end{lstlisting}
+
+\begin{solution}
+  \begin{lstlisting}[language=C]
+void lit_matrice ( matrice M )
+{
+  int i , j ;
+  for ( i = 0 ; i < NB_LIGNES; i++ )
+  {
+    printf ( "Coefficients de la ligne %d:\n" , i + 1 ) ;
+    for ( j = 0 ; j < NB_COLONNES ; j++ )
+    {
+      printf ( "M[%d][%d] = " , i + 1 , j + 1 ) ;
+      LireDecimal ( M[i]+j ) ;
+    }
+  }
+}
+  \end{lstlisting}
+\end{solution}
+
+\question Dans la fonction \texttt{main}, lisez 2 matrices \(m_1\) et
+\(m_2\) données par l'utilisateur et affichez-les.
+
+\question Créez une fonction \texttt{somme\_matrices}, et calculez la
+somme \(m_3\) de \(m_1+m_2\), et affichez le résultat.
+
+\begin{solution}
+  \begin{lstlisting}[language=C]
+void somme_matrices ( matrice res , matrice a , matrice b )
+{
+  int i , j ;
+  for ( i = 0 ; i < NB_LIGNES ; i++ )
+    for ( j = 0 ; j < NB_COLONNES ; j++ )
+      res[i][j] = a[i][j] + b[i][j] ;
+}
+  \end{lstlisting}
+\end{solution}
+
+
+\question Créez une fonction \texttt{produit\_matrices}, calculez le produit \(m_3\) de \(m_1\times m_2\), et
+affichez le résultat.
+
+\begin{solution}
+  \begin{lstlisting}[language=C]
+void produit_matrices ( matrice res , matrice a , matrice b )
+{
+  int i , j ;
+  for ( i = 0 ; i < NB_LIGNES ; i++ )
+    for ( j = 0 ; j < NB_COLONNES ; j++ )
+    {
+      res[i][j] = 0 ;
+      for ( k = 0 ; k < NB_LIGNES ; k++ )
+        res[i][j] += a[i][k] * b[k][j] ;
+    }
+}
+  \end{lstlisting}
+\end{solution}
+
+\exo{Matrices de taille variable}
+
+
+\usetikzlibrary{positioning,matrix, arrows.meta}
+
+Avoir des matrices qui ont toutes une taille fixée n'est pas très
+utile. On va utiliser des structures et l'allocation dynamique avec
+\texttt{malloc} pour avoir des matrices avec un nombre variable de
+lignes et de colonnes.
+
+Avant de commencer, dans l'exercice précédent, si on analyse la
+définition d'une matrice \texttt{M}, on constate que:
+\begin{itemize}
+\item \texttt{M[0]} est un tableau de 2 \texttt{float} ;
+\item \texttt{M[1]} est un tableau de 2 \texttt{float} ;
+\item la valeur de \texttt{M[0]} est égale à la valeur de \texttt{M}
+  (l'adresse du début de la matrice), et est l'adresse de la case
+  \texttt{M[0][0]} ;
+\item la valeur de \texttt{M[1]} (l'adresse de début du second
+  tableau) est aussi la valeur de l'adresse de \texttt{M[1][0]};
+\item d'après l'arithmétique des pointeurs, on a, pour toute case \(x\) de type \(t\):
+  \begin{eqnarray}
+    \& * x &=& x\\
+    ( \text{\tt int} ) ( \& x + 1 ) &=& ( ( \text{int} ) \& x ) + \text{\tt sizeof} ( t )\\
+  \end{eqnarray}
+Donc:
+\begin{center}
+  \begin{tabular}{c|cc}
+        case & type & taille \\
+    \midrule
+    M[0][0] & float & sizeof ( float ) \\
+    M[0] & float [2] & 2 * sizeof ( float )\\
+    M & float[2][2] & 2*( 2 * sizeof ( float ) ) \\
+  \end{tabular}
+\end{center}
+Et donc:
+\[
+  \begin{array}{rcl}
+( \text{ int } ) ( \& M + 1 ) & =&  ( ( \text{ int } ) \& M ) + 4 \text{ \tt * sizeof ( float ) } \\
+    \multicolumn 3r{\text{La matrice juste après la fin de }M}\\
+( \text{ int } ) ( M + 1 ) & =&  ( ( \text{ int } ) \& \underbrace{*M}_{M[0]} ) + 2 \text{ \tt * sizeof ( float ) } \\
+    \multicolumn 3r{\text{Le tableau de 2 cases juste après la fin de} M[0]}\\
+( \text{ int } ) ( M[0] + 1 ) & =&  ( ( \text{ int } ) \& \underbrace{*M[0]}_{M[0][0]} ) + \text{ \tt sizeof ( float ) } \\
+    \multicolumn 3r {\text{La case float juste après }M[0][0]}\\
+  \end{array}
+\]
+\end{itemize}
+Soit, sur un schéma:
+\begin{center}
+  \begin{tabular}{|c|c|c|c|}
+    \hline
+    M[0][0]&M[0][1]&M[1][0]&M[1][1]\\
+    \hline
+    \multicolumn{2}{c}{\upbracefill} &  \multicolumn{2}{c}{\upbracefill}\\
+     \multicolumn{2}{c}{M[0]} &  \multicolumn{2}{c}{M[1]} \\
+     \multicolumn{4}{c}{\upbracefill} \\
+     \multicolumn{4}{c}{M} \\    
+  \end{tabular}
+\end{center}
+
+L'utilisation des crochets marche un peu par miracle, grâce à
+l'arithmétique des pointeurs, car le programme sait toujours (grâce au
+type \texttt{matrice}) quelle est la taille des tableaux. On va
+utiliser des \textbf{pointeurs}, c'est-à-dire des variables contenant
+des adresses, pour \textit{simuler} ce fonctionnement. On veut
+continuer à avoir:
+\begin{itemize}
+\item \(M[i]\) est l'adresse de la ligne \(i\);
+\item \(M[i][j]\) est l'élément \(j\) de la ligne \(i\) de la matrice. 
+\end{itemize}
+Comme on ne peut plus compter sur la taille des lignes dans
+l'arithmétique des pointeurs, on va:
+\begin{itemize}
+\item Dire que \(M\) est un tableau contenant des adresses de lignes;
+  \begin{center}
+    Les éléments de \(M\) sont de type \texttt{float *}, et le type de
+    \(M\), comme adresse de la première case du tableau, est
+    \texttt{float **}.
+  \end{center}
+\item Chaque ligne contient des \texttt{float}s
+  \begin{center}
+    Les éléments d'une ligne \(M[i]\) sont de type \texttt{float}, et
+    le type de \(M[i]\), comme adresse de la première case de la
+    ligne, est \texttt{float *}.
+  \end{center}
+\end{itemize}
+
+Enfin, comme le nombre de lignes et de colonnes n'est plus le même
+pour toutes les matrices, on va utiliser une structure contenant à la
+fois les éléments de la matrice et son nombre de lignes et de colonnes:
+\begin{lstlisting}[language=C]
+
+struct matrice_s {
+  int nb_lignes ;
+  int nb_colonnes ;
+  float ** m ;
+} ;
+\end{lstlisting}
+
+\question Créez un fichier \texttt{../../include/matrices.h} contenant:
+\begin{itemize}
+\item la déclaration d'un type \texttt{matrice} et de la structure
+  \texttt{matrice\_s} comme ci-dessus;
+\item les déclarations de deux fonctions, \texttt{lire\_matrice} et
+  \texttt{afficher\_matrice}.
+\end{itemize}
+
+\vspace*{1em}
+Pour chaque des questions suivantes, écrivez chaque fonction dans un seul fichier.
+
+
+\question Écrivez une fonction \texttt{creer\_matrice} qui prend en
+entrée un nombre de lignes et un nombre de colonnes et renvoi
+l'adresse d'une \textbf{structure} matrice\_s ayant le bon nombre de
+lignes et de colonnes.
+
+
+\begin{solution}
+  \begin{lstlisting}[language=C]
+#include <malloc.h>
+
+matrice creer_matrice ( int nb_lignes , int nb_colonnes )
+{
+  int i ;
+  matrice res ;
+  res = malloc ( sizeof ( struct matrice_s ) ) ;
+  res->nb_lignes = nb_lignes ;
+  res->nb_colonnes = nb_colonnes ;
+  res ->m = ( float ** ) malloc ( res->nb_lignes * sizeof ( float * ) ) ;
+  for ( i = 0 ; i < res->nb_lignes ; i ++ )
+    res->m[i] = ( float * ) malloc ( res->nb_colonnes * sizeof ( float ) ) ;
+  return res ;
+}
+  \end{lstlisting}
+\end{solution}
+
+\question Comme dans l'exercice précédent, écrivez les fonctions \texttt{lire\_matrice} et
+  \texttt{afficher\_matrice}.
+
+\begin{solution}
+  \begin{lstlisting}[language=C]
+#include "entrees.h"
+#include "matrices.h"
+
+void lire_matrice ( matrice a  )
+{
+  int i , j ;
+  for ( i = 0 ; i < a->nb_lignes; i++ )
+  {
+    printf ( "Coefficients de la ligne %d:\n" , i + 1 ) ;
+    for ( j = 0 ; j < a->nb_colonnes ; j++ )
+    {
+      printf ( "M[%d][%d] = " , i + 1 , j + 1 ) ;
+      LireDecimal ( ( M->m[i] ) +j ) ;
+    }
+  }
+}
+
+
+void affiche_matrice ( matrice M )
+{
+  int i , j ;
+  for ( i = 0 ; i < M->nb_lignes; i++ )
+  {
+    printf ( "(\t%f\t" , M->m[i][0] ) ;
+    for ( j = 1 ; j < M->nb_colonnes ; j++ )
+      printf ( "%f\t" , M->m[i][j] ) ;
+    printf ( ")\n'' ;
+  }
+  printf ( "\n" ) ;
+}
+  \end{lstlisting}
+\end{solution}
+\question Ajoutez la règle suivante au fichier \texttt{Makefile}:
+
+\begin{lstlisting}[language=make]
+
+creer_matrice.o: ../../include/matrices.h creer_matrice.c
+       gcc -Wall -c -o creer_matrice.o creer_matrice.c -I ../../include
+
+lire_matrice.o: ../../include/matrices.h lire_matrice.c
+       gcc -Wall -c -o lire_matrice.o lire_matrice.c -I ../../include
+
+ afficher_matrice.o: ../../include/matrices.h afficher_matrice.c
+       gcc -Wall -c -o afficher_matrice.o afficher_matrice.c -I ../../include
+
+../../lib/libmatrices.a: creer_matrice.o  lire_matrice.o afficher_matrice.o
+       ar rcs $@ $<
+\end{lstlisting}
+
+\paragraph{Explications:} dans une règle, la variable \texttt{\$@} est
+le but de la règles (qui est avant les deux points, donc
+\texttt{../../lib/libmatrices.a} ici), et la variable \texttt{\$<}
+contient tout de qui est après les deux points, donc
+\texttt{creer\_matrice.o lire\_matrice.o afficher\_matrice.o} ici. 
+
+\question Écrivez dans un fichier \texttt{test\_matrice.c} une
+fonction \texttt{main} qui va tester les fonctions de la librairie
+\texttt{libmatrices.a}. Écrivez dans le fichier \texttt{Makefile} une
+règle permettant de compiler ce programme. \textbf{Attention:} vous
+aurez aussi besoin de la libraire sur les entrées (pour la fonction
+\texttt{lire\_matrice}. Vérifiez que tout marche bien avant de continuer.
+
+
+\question Étendez la libraire des matrices avec deux fonctions faisant
+la somme et le produit de matrices. \textbf{Ces fonctions doivent
+  tester s'il est possible de faire ces opérations} en regardant les
+nombres de lignes et de colonnes de leurs argument. Leur premier
+argument est l'adresse d'une matrice (l'adresse de l'adresse d'une
+structure) qu'elles devront créer avec la bonne taille. N'oubliez pas
+de mettre à jour le fichier \texttt{Makefile} et de tester ces
+fonctions !
+
+\begin{solution}
+  \begin{lstlisting}[language=C]
+#include "matrices.h"
+int somme_matrices ( matrice * res , matrice a , matrice b )
+{
+  int i , j ;
+  if ( ( a->nb_lignes != b->nb_lignes ) || \
+       ( a->nb_colonnes != b->nb_colonnes ) )
+  {
+    *res = NULL ;
+    return 1 ;
+  }
+  *res = creer_matrice ( a->nb_lignes , a->nb_colonnes ) ;
+  for ( i = 0 ; i < a->nb_lignes; i++ )
+    for ( j = 0 ; j < b->nb_colonnes ; j++ )
+      (*res)->m[i][j] = a->m[i][j] + b->m [i][j] ;
+  return 0 ;
+}
+
+
+int produit_matrices ( matrice * res , matrice a , matrice b )
+{
+  int i , j , k ;
+  if ( ( a->nb_colonnes != b->nb_lignes ) )
+  {
+    *res = NULL ;
+    return 1 ;
+  }
+  *res = creer_matrice ( a->nb_lignes , b->nb_colonnes ) ;
+  for ( i = 0 ; i < a->nb_lignes; i++ )
+    for ( j = 0 ; j < b->nb_colonnes ; j++ )
+    {
+      (*res)->m[i][j] = 0 ;
+      for ( k = 0 ; k < a->nb_colonnes ; k++ )
+        (*res)->m[i][j] += a->m[i][j] * b->m [i][j] ;
+    }
+  return 0 ;
+}
+  \end{lstlisting}
+\end{solution}

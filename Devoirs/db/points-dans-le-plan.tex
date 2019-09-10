@@ -1,0 +1,41 @@
+\exo{Points dans le plan}
+
+Le but de cet exercice est d'impl{\'e}menter des fonctions permettant de
+travailler avec des points dans un plan (un espace de dimension 2).
+Cette premi{\`e}re s{\'e}rie de questions porte sur les op{\'e}rations de base sur
+les points.
+
+\question (1 pt) D{\'e}clarez une structure \ctype{Point\_s}, ainsi que le
+type \ctype{Point} des pointeurs vers ces structures.
+
+
+\question (1 pt) {\'E}crivez une fonction \cfun{point} cr{\'e}ant une nouvelle
+valeur de type \ctype{Point} {\`a} partir de ses arguments.
+
+\question (0,5 pt) {\'E}crivez une fonction \cfun{distance} calculant la
+distance habituelle entre deux points. Pr{\'e}cisez la biblioth{\`e}que {\`a}
+inclure, et les options de compilation n{\'e}cessaires.
+
+
+\question (1 pt) {\'E}crivez deux fonction \cfun{ord\_compare} et
+\cfun{abs\_compare} comparant deux points suivant respectivement leur
+ordonn{\'e}e et leur abscisse. Ces fonctions rendent un entier n{\'e}gatif,
+nul, ou positif si le premier point a une ordonn{\'e}e (resp. une
+abscisse) inf{\'e}rieure, {\'e}gale, ou sup{\'e}rieure {\`a} celle du second.
+
+
+On va travailler maintenant sur les tableaux de points.
+
+\question (0,5 pt) D{\'e}clarer un type \ctype{Points} pour les tableaux de points.
+
+
+\question (3 pts) {\'E}crire deux fonctions \cfun{lire\_points} et
+\cfun{ecrire\_points} permettant respectivement de lire et d'{\'e}crire un
+tableau de points dans un fichier (repr{\'e}sent{\'e} par une valeur de type
+\ctype{FILE *} pass{\'e}e en argument). Il est demand{\'e} que la fonction de
+lecture puisse lire un fichier {\'e}crit par la fonction d'{\'e}criture.
+
+\question (4 pts) {\'E}crire deux fonctions permettant de trier un tableau
+de points en fonction respectivement de leur abscisse et de leur
+ordonn{\'e}e. Il est conseill{\'e}, mais non requis, d'{\'e}crire des fonctions
+interm{\'e}diaires.

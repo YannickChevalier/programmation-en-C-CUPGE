@@ -1,0 +1,6 @@
+*.pdf
+*~
+*.log
+*.cut
+*.aux
+comment.cut

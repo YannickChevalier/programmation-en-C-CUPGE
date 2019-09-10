@@ -1,0 +1,41 @@
+\exo{Matrices (7 pts)}
+
+Le but de cet exercice est d'{\'e}valuer les contributions individuelles
+au projet. 
+
+\question (1 pt) On d{\'e}finit une \emph{matrice enti{\`e}re} par: 
+\begin{itemize}
+\item un nombre de lignes et de colonnes ;
+\item un tableau de lignes, chaque ligne {\'e}tant un tableau d'entiers.
+\end{itemize}
+D{\'e}finir le type \texttt{matrice} des pointeurs vers des structures C
+repr{\'e}sentant des matrices enti{\`e}res.
+
+\question (1 pt) {\'E}crire une fonction \textbf{matrice\_nulle} qui prend
+en entr{\'e}e un nombre de lignes et de colonnes, et renvoie une matrice
+dont tous les coefficients sont {\`a} $0$.
+
+\question (2 pts) {\'E}crire une fonction qui renvoie le produit de 2
+matrices, ou \texttt{NULL} si le produit n'est pas d{\'e}fini.
+
+\question (1 pt) {\'E}crire une fonction \textbf{taille\_int} qui calcule le
+nombre minimal de symboles {\`a} utiliser (y compris le \texttt{'-'} pour
+les nombres n{\'e}gatifs) pour {\'e}crire un entier en base 10.
+
+\question (1 pt) {\'E}crire une fonction \textbf{taille\_mat} qui renvoie
+le maximum des tailles des entiers des coefficients d'une matrice
+pass{\'e}e en argument.
+
+\question (1 pt) Le \emph{mineur} $M_{i,j}$ d'une matrice carr{\'e}e $M$
+de taille $n\times n$ est la matrice carr{\'e}e de taille $(n-1)\times
+(n-1)$ construite {\`a} partir de $M$ en enlevant la $i${\`e}me ligne et la
+$j${\`e}me colonne. En num{\'e}rotant les lignes et les colonnes {\`a} partir de
+$0$, le \emph{d{\'e}terminant} de $M$ est not{\'e} $\vert M\vert$ et vaut:
+$$
+\vert M\vert = \Sigma_{j=0}^{n-1} (-1)^j \vert M_{0,j}\vert
+$$
+Donnez un ordre de grandeur, en fonction de $n$, pour le nombre de
+calculs {\`a} effectuer dans une fonction calculant un d{\'e}terminant en
+utilisant cette formule. \textit{Il n'y a pas de code C {\`a} {\'e}crire pour
+  cette question !}
+

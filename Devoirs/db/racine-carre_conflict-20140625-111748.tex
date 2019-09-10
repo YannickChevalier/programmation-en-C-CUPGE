@@ -1,0 +1,32 @@
+\exo{Calcul d'une racine carr{\'e}e (3 pts)}
+
+\utilisation{rattrapage}{mmesi}{2014}
+\utilisation{partiel}{pcp}{2016}
+
+On peut calculer la racine carr{\'e}e d'un nombre positif $d$ en calculant
+la limite d'une suite r{\'e}cursive:
+$$
+\left\lbrace
+\begin{array}{rcl}
+u_0 &=& 1 \\
+u_{n+1}&=& \frac 12 \cdot ( u_n + \frac d {u_n} )\\
+\end{array}
+\right.
+$$
+Pour la suite des questions, il peut {\^e}tre utile de d{\'e}finir d'autres
+fonctions que celles demand{\'e}es.
+
+\question (1 pts) {\'E}crire une fonction \cfun{racine17} qui
+retourne la racine carr{\'e}e de $17$ {\`a} $10^{-3}$ pr{\`e}s. On
+admettra que cette pr{\'e}cision est atteinte lorsque deux {\'e}l{\'e}ments
+cons{\'e}cutifs de la suite r{\'e}cursive sont distants de moins de $10^{-3}$.
+
+\question (1 pt) {\'E}crire une fonction \cfun{racine} qui calcule la racine
+  carr{\'e}e d'un nombre de type \ctype{double} {\`a} $\varepsilon$
+  pr{\`e}s.
+
+\question (1 pt) {\'E}crire une fonction qui demande un nombre de type
+\ctype{double} {\`a} l'utilisateur et affiche la racine carr{\'e}e de
+ce nombre (on supposera que les entr{\'e}es de l'utilisateur forment
+du premier coup un nombre de type \ctype{double} strictement positif.)
+
