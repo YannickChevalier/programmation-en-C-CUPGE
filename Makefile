@@ -92,7 +92,7 @@ Thèmes/tp-solutions-%.pdf: Thèmes/tp%.tex Thèmes/tp.tex
 
 
 public_enonces:: change_branch/enseignants
-	\rm Thèmes/tp-enonces*.pdf
+	-\rm Thèmes/tp-enonces*.pdf
 
 public_enonces:: commit
 
