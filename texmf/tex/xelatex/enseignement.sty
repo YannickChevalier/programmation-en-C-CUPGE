@@ -13,17 +13,17 @@
 %
 % Exercices, questions
 %
-\newcounter{num}
-\newcounter{quest}[num]
+\newcounter{exercicenum}
+\newcounter{quest}[exercicenum]
 
 \newcommand{\exo}[1]{\vspace{1.5em}
-\stepcounter{num}\vspace{1.eM}\hspace{-2em}%
-\underline{\bf \Roman{num} Exercice : \it  #1}\\%
+\stepcounter{exercicenum}\vspace{1.eM}\hspace{-2em}%
+\underline{\bf \Roman{exercicenum} Exercice : \it  #1}\\%
 \nopagebreak}
 
 \newcommand{\prob}[1]{vspace{1.5em}
-\stepcounter{num}\vspace{1.eM}\hspace{-2em}%
-\underline{\bf \Roman{num} Probl{\`e}me : \it  #1}\\}
+\stepcounter{exercicenum}\vspace{1.eM}\hspace{-2em}%
+\underline{\bf \Roman{exercicenum} Probl{\`e}me : \it  #1}\\}
 
 \newcommand{\question}{\vspace{1em}
 

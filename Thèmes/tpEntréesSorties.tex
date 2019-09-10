@@ -1,0 +1,644 @@
+\titre{\tio}
+
+
+\begin{center}
+  \parbox{0.9\textwidth}{%
+    \sl Dans ce thème, nous verrons comment un programme écrit en C
+    interagit avec son environnement, que ce soit un terminal (la
+    fenêtre dans laquelle il est exécuté) ou des fichiers.
+  }
+\end{center}
+
+\exo{Premier programme}
+% 1
+On va travailler sur les types, donc dans le répertoire \url{~/workspace/programmation-en-C-CUPGE/src/Entrées-Sorties/}.
+
+\question Vérifiez que vous êtes bien sur la branche
+\texttt{master}, et si ce n'est pas le cas, allez sur cette branche.
+
+\begin{solution}
+  \begin{lstlisting}[language=bash]
+    git branch
+    git checkout etudiant
+  \end{lstlisting}
+\end{solution}
+
+\question Créez le fichier exercice1.c dans le répertoire \expandafter\url{~/workspace/programmation-en-C-CUPGE/src/Entrées-Sorties/} et
+ouvrez-le.
+
+\begin{fminipage}{\textwidth}
+  ATTENTION !!! Il ne faut jamais faire du copier-coller d'un fichier pdf vers un
+  fichier texte: même si les caractères affichés se ressemblent, ils
+  sont différents.
+\end{fminipage}
+
+
+\question Tapez le code suivant dans le fichier:
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+
+int main ( int argc , char * argv[] )
+{
+  return 0;
+}
+\end{lstlisting}
+
+\question Sauvegardez le fichier (avec Ctrl-S). 
+
+\begin{center}
+  \sl On va maintenant compiler et exécuter ce programme.
+\end{center}
+
+\question Changer de répertoire pour aller dans \url{~/workspace/src/Entrées-Sorties}.
+\begin{solution}
+  \begin{lstlisting}[language=bash]
+    cd ~/workspace/src/Entrées-Sorties
+  \end{lstlisting}
+\end{solution}
+
+\question Compiler le programme avec la commande :
+\begin{solution}
+  \begin{lstlisting}[language=bash]
+    gcc -o exercice1 exercice1.c
+    /* ou bien gcc -o exercice1.exe exercice1.c */
+  \end{lstlisting}
+\end{solution}
+
+\question Exécutez le programme. Que se passe-t'il ?
+\begin{solution}
+  \begin{lstlisting}[language=bash]
+    ./exercice%\arabic{exercicenum}%
+  \end{lstlisting}
+  Il ne se passe rien.
+\end{solution}
+
+\question Ajoutez la ligne suivante juste au dessus de \texttt{return 0}:
+\begin{lstlisting}[language=C]
+  printf ( "Bonjour." ) ;
+\end{lstlisting}
+et compilez et exécutez le programme.
+
+\begin{center}
+  \fbox{~\parbox{0.9\textwidth}{\texttt{printf} est une \emph{fonction} 
+  qui permet à un programme d'envoyer des données au terminal dans lequel il est exécuté.}~}
+\end{center}
+
+\question Ajoutez \verb+\n+ après Bonjour, compilez et exécutez le programme.
+
+\begin{center}
+  \fbox{~\parbox{0.9\textwidth}{\texttt{\textbackslash n} est un caractère qui demande au terminal de passer à la ligne suivante.}~}
+\end{center}
+
+\exo{Affichage d'un entier.}
+% 2
+
+Le 'f' de \texttt{printf} signifie \emph{mettre en
+  \texttt{f}orme}. Cette fonction est un peu spéciale car
+contrairement aux fonctions normales en C, elle peut prendre un nombre
+variable d'arguments, mais il en faut au moins 1. 
+
+Le premier argument est une \emph{chaîne de formattage} qui sert à
+mettre en forme les données qui sont contenues dans les autres
+arguments, dans l'ordre de lecture. Pour celà, la chaîne de formattage
+contient des \emph{directives d'affichage}. La première directive sera
+utilisée pour afficher la première donnée après la chaîne de
+formattage, la seconde directive sera utilisée pour afficher la
+seconde donnée après la chaîne de formattage, etc.
+
+\paragraph{Directives d'affichage.} Une directive commence toujours
+par \%. Il y en a des dizaines, donc on va juste en regarder quelques unes:
+\begin{itemize}
+\item \texttt{\%d}: permet d'afficher un entier en base \texttt{d}ix;
+\item \texttt{\%c}: permet d'afficher une lettre (un caractère) à partir de son encodage en machine;
+\item \texttt{\%f}: permet d'afficher un nombre à virgule;
+\item \texttt{\%s}: permet d'afficher une chaîne de caractères;
+\end{itemize}
+Pour l'exercice 2, on commence par copier le contenu du programme
+\texttt{exercice1.c} dans un nouveau fichier \texttt{exercice2.c}.
+
+
+\question Modifiez le premier programme pour afficher sur 10 lignes
+chaque caractère de '0' à '9' suivie de la valeur entière de l'encodage machine du caractère.
+\begin{solution}
+  \begin{lstlisting}[language=C]
+    #include <stdio.h>
+
+    int main ( int argc , char * argv[] ) 
+    {
+      print ( "%c -> %d \n" , '0' , '0' ) ;
+      print ( "%c -> %d \n" , '1' , '1' ) ;
+      print ( "%c -> %d \n" , '2' , '2' ) ;
+      print ( "%c -> %d \n" , '3' , '3' ) ;
+      print ( "%c -> %d \n" , '4' , '4' ) ;
+      print ( "%c -> %d \n" , '5' , '5' ) ;
+      print ( "%c -> %d \n" , '6' , '6' ) ;
+      print ( "%c -> %d \n" , '7' , '7' ) ;
+      print ( "%c -> %d \n" , '8' , '8' ) ;
+      print ( "%c -> %d \n" , '9' , '9' ) ;
+      return 0 ; 
+    }
+  \end{lstlisting}
+\end{solution}
+Que remarque-t'on ?
+
+\begin{solution}
+  les codes se suivent dans le même ordre que les chiffres.
+\end{solution}
+
+\question Faites de même pour les lettres \texttt{'a'} et \texttt{'z'}, et affichez leur
+différence \texttt{'z'} - \texttt{'a'}. Idem pour les majuscules.
+
+\exo{Classes de caractères}
+\prerequis\ttype 1
+%3
+Comme les caractères de même nature (lettres minuscules, chiffres, etc.)
+se suivent, on va écrire un programme qui va lire un caractère, et va
+afficher sa nature (lorsqu'on la connaît). Par exemple, 
+l'encodage du caractère '5' est bien compris entre l'encodage du caractère '0'
+et l'encodage du caractère '9'.
+
+\begin{solution}
+  \begin{lstlisting}[language=C]
+#include <stdio.h>
+
+int main ( int argc , char * arv[] ) 
+{ 
+  int x ; 
+  x = getchar ( ) ;
+  if ( ( '0' <= x ) && ( x <= '9' ) ) 
+  { 
+    printf ( "%c est un chiffre.\n" , x ) ;
+  } 
+  if ( ( 'a' <= x ) && ( x <= 'z' ) ) 
+  { 
+    printf ( "%c est une lettre minuscule.\n" , x ) ;
+  } 
+  if ( ( 'A' <= x ) && ( x <= 'Z' ) ) 
+  { 
+    printf ( "%c est une lettre majuscule.\n" , x ) ;
+  } 
+  return 0 ; 
+}
+  \end{lstlisting}
+\end{solution}
+
+
+\exo{Chaînes de caractères}
+% 4
+\prerequis \ttype 3
+Contrairement à Python, C fait la différence entre un caractère seul
+et une suite de caractères. Les valeurs de type caractère
+(\texttt{char}) s'écrivent entre des apostrophes, comme \texttt{'a'},
+\texttt{'3'}, \texttt{'\textbackslash n'}. Les \emph{chaînes de
+  caractères} sont juste des tableaux de caractères. Pour indiquer la
+fin de la chaîne, on met dans le tableau l'entier \(0\), qu'on peut
+aussi écrire \texttt{'\textbackslash 0'}. Il s'agit d'une convention
+qui est utilisée pour pouvoir traîter plus facilement les chaînes de
+caractères :
+\begin{itemize}
+\item Il n'y a pas de type spécifique : une chaîne de caractères est
+  définie par l'adresse du premier caractère, donc on utilise \texttt{char *};
+\item Pour afficher une chaîne de caractères avec \texttt{printf}, on
+  utilise la directive d'affichage \texttt{\%s}:
+  \begin{exemple}
+    Les deux morceaux suivants de programme font la même chose:
+    \begin{lstlisting}[language=C]
+      printf ( "Bonjour.\n" ) ;
+    \end{lstlisting}
+    \begin{lstlisting}[language=C]
+      char * hello = "Bonjour" ; /* Création de la chaîne de caractères */
+      printf ( "%s.\n" , hello ) ;
+    \end{lstlisting}
+  \end{exemple}
+\end{itemize}
+
+\question Écrivez dans le fichier
+\texttt{exercice\arabic{exercicenum}.c} un programme qui affiche les 3
+premiers éléments du tableau de chaînes de caractères passé en paramètre du main \texttt{argv}. 
+Compilez et exécutez ce programme avec \emph{et sans} arguments sur la ligne de commande.
+Exemple ci-dessous avec 4 arguments (nombre récupéré grâce à argc) qui sont 
+4 chaînes de caractères qui sont le nom de l'exécutable 
+suivi de 3 arguments sans signification particulière :
+  \begin{lstlisting}[language=bash,escapechar=\%]
+  exercice%\arabic{exercicenum}% toto 12 argument3
+  \end{lstlisting}
+
+Que remarque-t'on ?
+
+\begin{solution}
+  On utilise le programme suivant:
+  \begin{lstlisting}[language=C]
+#include <stdio.h>
+
+int main ( int argc , char * argv[] )
+{
+    char * hello = "Bonjour" ;
+    printf ( "%s.\n" , hello ) ;
+    printf ( "Bonjour.\n") ;
+    printf ( "argument 0: %s\n" , argv[0] ) ;
+    printf ( "argument 1: %s\n" , argv[1] ) ;
+    printf ( "argument 2: %s\n" , argv[2] ) ;
+    printf ( "argument 3: %s\n" , argv[3] ) ;
+    printf ( "argument 4: %s\n" , argv[4] ) ;
+    printf ( "argument 5: %s\n" , argv[5] ) ;
+    printf ( "argument 6: %s\n" , argv[6] ) ;
+    return 0 ;
+}
+  \end{lstlisting}
+  Une fois que les arguments sont terminés, il y a une case qui vaut
+  \texttt{(null)} (c'est l'adresse 0), suivie de cases qui ont une
+  valeur de la forme \texttt{NOM=chaine}
+\end{solution}
+
+\question Dans le terminal, tapez la commande:
+\begin{lstlisting}[language=bash]
+  echo $LANG
+\end{lstlisting}
+%$
+Que remarquez vous ?
+
+\begin{solution}
+  Plein de choses !
+  \begin{itemize}
+  \item La mémoire du programme contient aussi les valeurs des
+    \emph{variables d'environnement} qui sont définies dans le
+    terminal où le programme a été exécuté.
+  \item En fait, la mémoire contient deux tableaux l'un à côté de l'autre:
+    \begin{itemize}
+    \item Dans le premier, il y a l'adresse des arguments du programme;
+    \item Dans le second, il y a la valeur des variables d'environnement;
+    \item La fin de ces tableaux est marquée avec l'adresse 0 (comme
+      la fin d'une chaîne de caractères est marquée par l'entier 0);
+    \item \textbf{Très mauvaise nouvelle}: en C, il n'y a aucun
+      mécanisme qui oblige à rester dans un tableau. Quand on parcourt
+      les cases tableau, si on ne fait pas attention, on fini par
+      tomber sur des cases dans la mémoire qui peuvent être définies
+      (ou pas), et qui contiennent d'autres données au bon vouloir du
+      compilateur. 
+    \end{itemize}
+  \end{itemize}
+
+\end{solution}
+
+\question On va maintenant tenter de voir ce qu'il y a plus
+loin. Affichez la case 80 du tableau \texttt{argv}.
+
+\begin{solution}
+  Lors des tests, celà suffit pour avoir un \emph{segmentation
+    fault}. Donc si accède à une case qui n'est pas dans le tableau, on peut 
+ avoir soit:
+  \begin{itemize}
+  \item un résultat qui vient d'ailleurs (de gcc, par exemple);
+  \item une erreur qui arrête le programme. \emph{Segmentation fault}
+    signifie qu'on veut accéder à une adresse dans la mémoire qui
+    n'est pas définie.
+  \end{itemize}
+\end{solution}
+
+\exo{Lecture d'entrées}
+
+Même s'il est possible de lire tout ce que tape l'utilisateur avec la
+fonction \texttt{getchar} pour ensuite traduire ce qui est marqué, on
+utilise en général la fonction \texttt{scanf} qui permet de lire des
+entrées structurées en utilisant des directives.
+
+\question Écrivez le programme suivant:
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+
+int
+main ( int argc , char * argv[] )
+{
+  printf ( "Écrivez: Bonjour, monde !\n" ) ;
+  scanf ( "Bonjour, monde !" ) ;
+  printf ( "Je vous ai compris!\n" ) ;
+  return 0 ;
+}
+\end{lstlisting}
+Et essayez de vérifier que \texttt{scanf} a bien lu ce que vous tapez.
+
+\begin{solution}
+  Pas de différence notable entre le cas où on tape ce qui est
+  demandé, et celui où on tape n'importe quoi.
+\end{solution}
+
+\question Pour faire la différence entre une lecture réussie et une
+lecture qui a échoué, lisez et affichez tous les caractères que
+\texttt{scanf} n'a pas réussi à lire jusqu'au caractère de fin de
+ligne (\texttt{'\textbackslash n'}) en utilisant la fonction
+\texttt{getchar}.
+
+\begin{solution}
+  \begin{lstlisting}[language=C]
+ #include <stdio.h>
+
+int
+main ( int argc , char * argv[] )
+{
+  int c ;
+  printf ( "Écrivez: Bonjour, monde !\n" ) ;
+  scanf ( "Bonjour, monde !" ) ;
+  c = getchar () ;
+  while ( c != '\n' )
+  {
+    printf ( "%c" , c ) ;
+    c = getchar ( ) ;
+  }
+  return 0 ;
+}   
+  \end{lstlisting}
+  Si l'utilisateur a correctement écrit, on n'affiche rien, sinon, le
+  programme affiche les caractères à partir du moment où ça ne marche
+  plus. Notez aussi que les blancs peuvent être ajoutés ou enlevés là
+  où il y en a dans la chaîne de formattage.
+\end{solution}
+
+\question L'intérêt de \texttt{scanf} est de pouvoir lire des données
+avec les types existants. Au contraire de \texttt{printf}, il ne faut
+pas donner en argument une \textbf{valeur} mais l'adresse à laquelle
+il faudra stocker la valeur qui a été lue. Modifiez le programme
+précédent pour lire une chaîne de la forme "Bonjour, je suis XXX", où
+XXX est un entier. Le programme devra répondre par "Bonjour, XXX".
+
+\begin{solution}
+  \begin{lstlisting}[language=C]
+ #include <stdio.h>
+
+int
+main ( int argc , char * argv[] )
+{
+  int i ;
+  int c ;
+  scanf ( "Bonjour, je suis %d" , & i ) ;
+  c = getchar () ;
+  while ( c != '\n' )
+  {
+    printf ( "%c" , c ) ;
+    c = getchar ( ) ;
+  }
+  printf ( "Bonjour, %d.\n" , i ) ;
+  return 0 ;
+}   
+  \end{lstlisting}
+  Si l'utilisateur a correctement écrit, on n'affiche rien, sinon, le
+  programme affiche les caractères à partir du moment où ça ne marche
+  plus. Notez aussi que les blancs peuvent être ajoutés ou enlevés là
+  où il y en a dans la chaîne de formattage.
+\end{solution}
+
+\exo{ROT13 et code de César}
+
+Le ROT13 est un algorithme très simple de chiffrement de texte.  Il
+s'agit de remplacer chaque lettre du texte par son
+13\textsuperscript{ème} successeur dans l'alphabet.  Pour les lettres
+dans la deuxième partie de l'alphabet, on considère que l'alphabet est
+cyclique.  Ainsi la lettre\texttt{ 'a'} est remplacée par la lettre
+\texttt{'n'} et la lettre\texttt{ 'z'} par la lettre \texttt{'m'}.
+
+\question Implémenter un programme qui applique ROT13 au texte tapé
+par l'utilisateur. Pour lire toute une ligne on utilisera le code
+suivant :
+\begin{lstlisting}
+char * ligne;
+char   c;
+scanf("%m[^\n]%c", &ligne, &c);
+// ... Utilisation de ligne ...
+free(ligne)
+\end{lstlisting}
+\paragraph{Note:} la fonction \texttt{scanf} va mettre dans
+\texttt{ligne} l'adresse de la première case d'un ``tableau'' qui
+restera défini même quand la fonction \texttt{scanf} aura terminé. On
+détruit ce tableau avec la fonction \texttt{free}.
+
+Le programme doit modifier chaque lettre (minuscule ou majuscule) mais
+laisser les caractères accentués tels quels. Par exemple la chaine
+"Ceci est le code de César." doit devenir "Prpv rfg yr pbqr qr
+Péfne.".
+
+Le chiffrement ROT13 est en fait un cas particulier du code de César,
+qui pour un certain $n$ remplace chaque lettre par son $n$\textsuperscript{ème} successeur.
+
+\question Modifiez le programme précédent pour obtenir un programme
+encodant le texte tapé par l'utilisateur dans le code de César, le
+paramètre $n$ étant donné en premier argument du programme.
+
+\exo{Librairie d'entrées/sorties}
+%6
+
+Les exercices précédents ont montré que faire quelque chose
+d'extrèment simple, comme lire un entier, était en fait très long à
+écrire proprement. On va maintenant écrire une librairie qui va permettre
+de lire proprement les types d'entrées les plus fréquents.
+
+\question Écrire une fonction \texttt{lire\_fin\_ligne} qui lit tous
+les caractères jusqu'à la fin de la ligne (jusqu'au caractère
+\texttt{'\textbackslash n'}, donc). Cette fonction renvoie le nombre
+de caractères lus qui ne sont pas des espaces (pour lesquels la
+fonction \texttt{isspace} définie dans \texttt{ctype.h} renvoie vrai).
+
+
+
+\begin{solution}
+  \begin{lstlisting}[language=C]
+#include <ctype.h>
+#include <stdio.h>
+
+int lire_fin_ligne ( ) 
+{
+  int count = 0 ;
+  int caractere ;
+  while ( ( caractere = getchar ( ) ) != EOF )
+  {
+    if ( caractere == '\n' )
+      break ;
+    if ( isspace ( caractere ) )
+      continue ;
+    count++ ;
+  }
+  return count ;
+}
+  \end{lstlisting}
+\end{solution}
+
+\question Écrire une fonction \texttt{lire\_entier} qui prend en
+entrée l'adresse d'un entier, et tente de lire jusqu'à ce qu'elle
+réussisse un entier. Pour que la lecture réussisse, il faut qu'il n'y
+ait que l'entier et des caractères blancs sur la ligne.
+
+\begin{solution}
+  \begin{lstlisting}[language=C]
+
+void lire_entier ( int * n) 
+{
+  int lu = 0 ;
+  int caractere ;
+  do
+  {
+    lu = scanf ( "%d" , n ) ;
+    nb = lire_fin_ligne ( ) ;
+  } while ( ( lu != 1 ) || ( nb > 0 ) ) ;
+}
+  \end{lstlisting}
+\end{solution}
+
+\question Écrire une fonction \texttt{lire\_decimal} qui prend en
+entrée l'adresse d'un décimal, et tente de lire jusqu'à ce qu'elle
+réussisse un entier. Pour que la lecture réussisse, il faut qu'il n'y
+ait que le nombre décimal et des caractères blancs sur la ligne.
+
+\begin{solution}
+  \begin{lstlisting}[language=C]
+
+void lire_decimal ( float * n) 
+{
+  int lu = 0 ;
+  int caractere ;
+  do
+  {
+    lu = scanf ( "%f" , n ) ;
+    nb = lire_fin_ligne ( ) ;
+  } while ( ( lu != 1 ) || ( nb > 0 ) ) ;
+}
+  \end{lstlisting}
+  Note pour plus tard: La fonction \texttt{lire\_decimal} ressemble
+  tellement à la fonction \texttt{lire\_entier} qu'on a très envie de ne l'écrire 
+  qu'une seule fois.
+\end{solution}
+
+\question Créez un fichier \url{include/entrees.h} qui contient les
+déclarations de ces trois fonctions, et compilez le fichier
+\texttt{entrees.c} (on ne peut pas l'exécuter, il n'y a pas de
+fonction \texttt{main}).
+
+\begin{solution}
+  \begin{lstlisting}[language=C]
+int lire_fin_ligne ( ) ;
+lire_entier ( int * ) ;  
+lire_decimal ( float * ) ;     
+  \end{lstlisting}
+\end{solution}
+\question Séparez le fichier \texttt{entrees.c} en trois fichiers, un
+pour chaque fonction. Assurez-vous que chaque fichier peut être
+correctement compilé.
+
+\begin{solution}
+  Il faut inclure le fichier \texttt{entrees.h} dans chacun des
+  fichiers \texttt{.c}.
+  \begin{lstlisting}[language=bash]
+    gcc -c lire_fin_ligne.c  -I ../../include
+    gcc -c lire_entier.c  -I ../../include
+    gcc -c lire_decimal.c  -I ../../include
+  \end{lstlisting}
+\end{solution}
+
+\question Créez une librairie \url{lib/libentrees.a} à partir des 3
+fichiers que vous venez d'obtenir par compilation.
+
+\begin{solution}
+  \begin{lstlisting}[language=bash]
+    ar rcs ../../lib/libentrees.a lire_fin_ligne.o lire_entier.o lire_decimal.o
+  \end{lstlisting}
+\end{solution}
+
+\question On va automatiser la création et la mise à jour de la
+bibliothèque, car sinon on perd beaucoup de temps à taper des
+commandes. Pour préparer l'automatisation, il faut d'abord noter (sur
+une feuille de papier):
+\begin{enumerate}
+\item quel est le fichier final qu'on veut obtenir;
+\item récursivement, en partant de ce but, et pour chaque fichier à obtenir
+  \begin{enumerate}
+  \item si le fichier est créé par une commande, noter la commande, et
+    ajouter les fichiers qu'utilise cette commande pour produire le
+    fichier voulu;
+  \item sinon, notez quels fichiers ce fichier utilise (par exemple,
+    quels fichiers \texttt{.h}).
+  \end{enumerate}
+\end{enumerate}
+
+\begin{solution}
+  \begin{enumerate}
+  \item fichier à produire: \texttt{lib/libentrees.h}
+    \begin{enumerate}
+    \item commande:
+      \begin{lstlisting}[language=bash]
+        ar rcs ../../lib/libentrees.a lire_fin_ligne.o lire_entier.o lire_decimal.o
+      \end{lstlisting}
+    \item fichiers utilisés: \url{lire_fin_ligne.o}
+      \url{lire_entier.o} \url{lire_decimal.o};
+    \end{enumerate} 
+  \item fichiers à produire: \url{lire_fin_ligne.o} \url{lire_entier.o}
+    \url{lire_decimal.o}
+    \begin{enumerate}
+    \item commande (pour chaque fichier):
+      \begin{lstlisting}[language=bash]
+        gcc -c lire_fin_ligne.c -I ../../include
+      \end{lstlisting}
+    \item fichiers utilisés: \url{lire_fin_ligne.c}, \url{lire_entier.c},
+      \url{lire_decimal.c}.
+    \end{enumerate} 
+  \item fichiers à produire: \url{lire_fin_ligne.c} \url{lire_entier.c}
+    \url{lire_decimal.c}
+    \begin{enumerate}
+    \item pas de commande;
+    \item fichiers utilisés: \url{entrees.h} pour chacun des 3 fichiers \texttt{.c}
+    \end{enumerate} 
+  \end{enumerate}
+\end{solution}
+
+\question On va créer un fichier \texttt{entrees.mk} qui va
+automatiser la création et la mise à jour de la bibliothèque à partir
+de ces informations. Ce fichier contient des règles, une par fichier à
+produire. La forme de chaque règle est:
+\begin{lstlisting}[language=make]
+fichier à produire : fichiers utilisés
+       commande, si nécessaire
+\end{lstlisting}
+La seule contrainte est que la première règle doit produire le fichier final.
+
+\begin{solution}
+  \begin{lstlisting} [language=make]
+../../lib/libentrees.a: lire_fin_ligne.o lire_entier.o lire_decimal.o
+       ar rcs ../../lib/libentrees.a lire_fin_ligne.o lire_entier.o lire_decimal.o
+
+lire_fin_ligne.c: ../../include/entrees.h   
+lire_entier.c: ../../include/entrees.h   
+lire_decimal.c: ../../include/entrees.h
+
+lire_fin_ligne.o: lire_fin_ligne.c
+        gcc -c lire_fin_ligne.c -I ../../include
+
+lire_entier.o: lire_entier.c
+        gcc -c lire_entier.c -I ../../include
+
+lire_decimal.o: lire_decimal.c
+        gcc -c lire_decimal.c -I ../../include
+  \end{lstlisting}
+\end{solution}
+
+\question Recompilez la librairie en utilisant:
+\begin{lstlisting}[language=bash]
+  make -f entrees.mk
+\end{lstlisting}
+
+\begin{solution}
+  S'il ne fait rien, tout est normal. Modifiez un des fichiers
+  \texttt{.c} pour l'obliger à recompiler.
+\end{solution}
+
+\question Écrire une fonction \texttt{lit\_format} qui prend en entrée
+une chaîne de caractère (de formattage) et une adresse (de type
+\texttt{void *}). Modifiez la librairie (et le fichier
+\texttt{entrees.h}, et le fichier \texttt{entrees.mk}) pour ajouter le
+code de cette fonction. Modifiez les fonctions \texttt{lire\_entier}
+et \texttt{lire\_decimal} pour qu'elles ne fassent qu'utiliser la
+fonction \texttt{lire\_format}.
+
+\question Ajoutez une nouvelle fonction \texttt{lire\_entier\_positif}
+qui appelle la fonction \texttt{lire\_entier} tant que l'entier lu
+n'est pas positif (strictement).
+
+\question Créez un programme qui lit \emph{n} nombres décimaux et
+affiche leur somme en utilisant la bibliothèque. Créez un fichier
+\emph{somme.mk} permettant d'automatiser la compilation de ce
+programme.

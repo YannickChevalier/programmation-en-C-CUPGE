@@ -1,0 +1,44 @@
+\exo{Makefile (2 points)}
+
+\utilisation{partiel}{pcp}{2016}
+
+On considère le contenu de Makefile suivant:
+\lstset{language=[gnu] make}
+\lstset{basicstyle=\footnotesize}
+\lstset{frame=lrtb,xleftmargin=\fboxsep,xrightmargin=-\fboxsep}
+\begin{lstlisting}
+MODULE:=arbre
+all: doc test
+
+%.tex: %.w
+	cweavex +a +w +i"../include" $(<)
+
+%.h: .w
+	ctanglex +i"../include" $(<)
+
+%.c: %.w
+	ctanglex +i"../include" $(<)
+
+%.o: %.c 
+	gcc -Wall -c $(<) -I "../include"
+
+test_$(MODULE).c: $(MODULE).w
+	ctanglex +i"../include" $(<)
+
+test_$(MODULE): test_$(MODULE).c $(MODULE).o
+	gcc -Wall -o $(@)  test_$(MODULE).c $(MODULE).o  -I "../include"
+
+%.pdf: %.tex
+	pdftex $(<)
+
+doc: $(MODULE).pdf
+
+test: ./test_$(MODULE)
+	$(<)
+\end{lstlisting}
+
+\question Indiquez, quand on demande à faire la cible \texttt{all},
+quelles sont les règles qui sont appliquées. Si une règle contient des variables,
+indiquez aussi la valeur de ces variables au moment de chaque application de la
+règle. Pour faciliter la réponse, les règles sont numérotées de 1 (\texttt{all}\(\ldots\)) à 10 (\texttt{test}\(\ldots\)).
+

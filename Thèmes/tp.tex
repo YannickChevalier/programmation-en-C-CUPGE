@@ -1,0 +1,86 @@
+% -*-coding: utf-8 -*-
+\RequirePackage{ifthen}
+\def\formationname{L2 CUPGE}
+\def\modulename{D\'eveloppement C}
+
+
+\ifthenelse{\equal{\versionname}{solutions}}{%
+  \RequirePackage[utf8,listings,solutions]{course}%
+}{%
+  \ifthenelse{\equal{\versionname}{solutionsprof}}{%
+  	\RequirePackage[utf8,listings,solutionsprof]{course}%
+  }{%
+  	\RequirePackage[utf8,listings]{course}%
+  }
+}
+
+
+
+
+\expandafter\csname \modulename\endcsname
+
+\newcommand{\shellcommand}[1]{\ensuremath{\rangle} & #1 \\}
+\newcommand{\shellresult}[1]{\multicolumn 2l {#1} \\}
+\usepackage{listings}
+\newenvironment{pshell}{\vspace{1em}\begin{center}\begin{tabular}{ll}
+\hline
+\multicolumn{2}{c}{\makebox[330pt][c]{\hfill}}\\}%
+{\multicolumn{2}{l}{\makebox[330pt][c]{\hfill}}\\ %
+\hline\end{tabular}\end{center}\vspace{1em}}
+
+\def\tilda{\char`\~}
+\def\aslash{\char`\\}
+\def\pourcent{\char`\%}
+\def\cstring#1{\texttt{"#1"}}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{positioning}
+\usetikzlibrary{shadows}
+
+\usepackage{lscape}
+\usepackage{booktabs}
+
+
+\def\cfun#1{\textbf{#1}}
+\def\ttype{Variables, Constantes, et Types en C}
+\def\tio{Entrées/Sorties}
+\def\ttableaux{Tableaux}
+\def\tgit{Gestion de Projet}
+\def\prerequis#1#2{\noindent\textbf{Pré-requis: Thème #1, exercice #2.}\par}
+
+\usepackage{xparse}
+
+\newsavebox{\fminipagebox}
+\NewDocumentEnvironment{fminipage}{m O{\fboxsep}}
+ {\par\kern#2\noindent\begin{lrbox}{\fminipagebox}
+  \begin{minipage}{#1}\ignorespaces}
+ {\end{minipage}\end{lrbox}%
+  \makebox[#1]{%
+    \kern\dimexpr-\fboxsep-\fboxrule\relax
+    \fbox{\usebox{\fminipagebox}}%
+    \kern\dimexpr-\fboxsep-\fboxrule\relax
+  }\par\kern#2
+ }
+\newcounter{exemplecompteur}
+\newenvironment{exemple}{%
+\begin{center}
+\begin{fminipage}{0.9\textwidth}
+\begin{trivlist}
+\item \refstepcounter{exemplecompteur}\textbf{Exemple \arabic{exemplecompteur}:} 
+}{%
+\end{trivlist}
+\end{fminipage}
+\end{center}
+}
+
+
+\begin{document}
+
+\expandafter\tp{\numero}
+
+\expandafter\input{./tp\numero}
+
+\end{document}

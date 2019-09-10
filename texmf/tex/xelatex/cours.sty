@@ -9,7 +9,7 @@
 \input{commun.tex}
 \input{caracteres}
 \input{enseignement}
-
+\mdfsetup{skipabove=\topskip,skipbelow=\topskip}
 \usepackage{ifvtex}
 \usepackage{ifpdf}
 \usepackage{eurosym}
@@ -18,7 +18,13 @@
 \newif\ifsolution
 \AtBeginDocument{%
 \ifsolution
-\includecomment{solution}
+\specialcomment{solution}{%
+	\begin{mdframed}[backgroundcolor=lightgray]
+        \noindent
+        \underline{\bf Solution:}\par
+}{%
+      \end{mdframed}
+}
 \else
 \excludecomment{solution}
 \fi

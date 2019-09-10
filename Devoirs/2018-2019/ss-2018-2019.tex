@@ -1,0 +1,159 @@
+
+\def\modulename{pcp}
+\RequirePackage[utf8]{course}
+\pcp
+\newif\ifsolution
+\solutionfalse
+\usepackage{listings}
+
+\lstset{language=C}
+
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{units}
+\usepackage{Cdefs}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+
+\tikzset{
+  treenode/.style = {align=center, inner sep=0pt, text centered,
+    font=\sffamily},
+  arn_n/.style = {treenode, circle, white, font=\sffamily\bfseries, draw=black,
+    fill=black, text width=1.5em},% arbre rouge noir, noeud noir
+  arn_r/.style = {treenode, circle, red, draw=red, 
+    text width=1.5em, very thick},% arbre rouge noir, noeud rouge
+  arn_x/.style = {treenode, rectangle, draw=black,
+    minimum width=0.5em, minimum height=0.5em}% arbre rouge noir, nil
+}
+
+\def\consigne#1{\null\begin{center}\parbox{13cm}{\large #1}\end{center}\relax}
+
+\def\Question#1#2{\question{}\textbf{(#2)} #1}
+\ifsolution
+\includecomment{solution}
+\else
+\excludecomment{solution}
+\fi
+
+\begin{document}
+\secondesession
+
+\consigne{{\bf Dur{\'e}e: 1h30. Aucun document n'est autorisé.}}
+
+\begin{quotation}
+  \em 
+  \begin{itemize}
+  \item Il n'est pas nécessaire de mettre les fichiers \texttt{.h} à inclure;
+  \item Dans les énoncés, \texttt{tableau} signifie juste l'adresse du
+    début d'une partie de la mémoire contenant un tableau.
+  \end{itemize}
+\end{quotation}
+
+
+\vspace*{1em}
+
+\exo{Conversions (4 pts)}
+
+\question (2 pts) Convertir \(44\) en base \(2\) et en base \(16\).
+
+\question (2 pts) Convertir exactement \(44, 125\) en base \(2\) et
+en base \(16\).
+
+\exo{Élections (10 points)}
+
+On veut pouvoir modéliser les résultats des élections pour un
+parlement. Pour ces élections, il y a plusieurs états, plusieurs
+partis, et chaque état désigne un nombre de députés pour chaque
+parti. Le résultat d'une telle élection est modélisé par une structure
+contenant:
+\begin{itemize}
+\item un nombre \(n\) d'états;
+\item un nombre \(p\) de partis;
+\item un tableau \(t\) à deux dimensions de taille \(n\times p\)
+  contenant des entiers, qui contient le nombre de députés par état et
+  par parti.
+  \begin{center}
+    \em Par exemple \(t[2][1]\) est le nombre de députés dans l'état
+    d'indice \(2\) du parti d'indice \(1\).
+  \end{center}
+\end{itemize}
+
+\question (1 pt) Faire un schéma décrivant le contenu de la mémoire 
+lorsqu'il y a 3 états et 2 partis.
+
+\question (1 pt) Déclarez une structure \texttt{Scrutin\_s} qui peut
+représenter le résultat d'une élection, et le type \texttt{Scrutin} des adresses de
+ces structures.
+
+\question (0,5 pts) Pour une conception modulaire, indiquez dans quels
+fichiers (\texttt{.h} ou \texttt{.c}) vous mettriez les déclarations
+de la question précédente.
+
+\question (1 pt) Écrivez une fonction \texttt{nb\_etats} qui prend
+en argument une valeur de type \texttt{Scrutin} et qui renvoie le
+nombre d'états.
+
+\vspace*{1ex} {\bf Dans la suite, utilisez toujours la fonction
+  \texttt{nb\_etats} au lieu d'utiliser directement la valeur stockée
+  dans la structure.}
+
+\question (1,5 pts) Écrivez une fonction \texttt{nouveau\_scrutin} qui
+prend en argument le nombre \(n\) d'états et le nombre \(p\) de
+partis, et qui renvoie une valeur de type \texttt{Scrutin}.
+
+\question (2 pts) Écrivez une fonction \texttt{affiche\_scrutin} qui
+prend en argument une valeur de type \texttt{Scrutin} et qui l'affiche.
+
+\question (1,5 pts) Écrivez une fonction \texttt{entree\_resultat} qui
+prend en argument une valeur de type \texttt{Scrutin}, un entier \(k\)
+et un tableau d'entiers, et qui copie le contenu de ce tableau dans la
+ligne correspondant à l'état d'indice \(k\). Cette fonction renvoie
+\(0\) si \(k\) est l'indice d'un état, et renvoie \(1\) sinon.
+
+\question (1,5 pts) Écrivez une fonction prenant en argument une
+valeur de type \texttt{Scrutin}, un numéro \(l\) de parti, et
+l'adresse \(a\) d'un entier.  Cette fonction renvoie \(1\) si l'entier
+n'est pas le numéro d'un parti. Sinon, elle stocke à l'adresse \(a\)
+le nombre total d'élus de ce parti et renvoie \(0\).
+
+
+\exo{Union (6 pts)}
+
+\textit{Cet exercice est la suite du précédent, mais est indépendant.}
+
+On veut maintenant modéliser les types \texttt{Etat} et \texttt{Union}
+de la manière suivante:
+\begin{itemize}
+\item un Etat est l'adresse d'une structure contenant un nom (une
+  chaîne de caractères) et le nombre de députés de cet état;
+\item une \texttt{Union}\footnote{la majuscule est importante pour ne
+    pas la confondre avec le type \texttt{union}} est l'adresse d'une
+  structure contenant un nombre \(n\) états, et un tableau de \(n\)
+  valeurs de type \texttt{Etat}.
+\end{itemize}
+
+\question (1 pt) Faire un schéma de la mémoire pour une Union ayant 2
+états, "sud" et "ouest", avec 10 députés chacun.
+
+\question (1 pt) Quel est le type d'une chaîne de caractères ? D'un
+tableau contenant des chaînes de caractères ?
+
+\question (1 pt) Écrivez une fonction qui en argument un nom et un
+nombre de député, qui crée et met à jour une structure correspondante,
+et qui renvoie l'adresse de la structure créée.
+
+\question (1 pt) Écrivez une fonction qui en argument un nombre
+d'états, un tableau de noms d'états, un tableau de nombres de député,
+qui crée et met à jour une structure modélisant l'union de ces états,
+et renvoie son adresse.
+
+\question (2 pts) Expliquez comment vous pouvez modifier vos réponses
+à l'exercice précédent pour qu'une structure \texttt{Scrutin\_s}
+contienne l'adresse d'une Union au lieu du nombre \(n\) d'états.
+
+
+
+
+
+\end{document}
+

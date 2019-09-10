@@ -1,0 +1,55 @@
+\exo{Championnat}
+
+Le but de cet exercice est de mod{\'e}liser des championnats, c'est-{\`a}-dire
+des matchs aller-retour entre des {\'e}quipes de telle sorte que chaque
+{\'e}quipe rencontre deux fois chaque autre {\'e}quipe, une fois {\`a} domicile,
+une fois {\`a} l'ext{\'e}rieur.
+
+
+\question (1pt) {\'E}crire une fonction qui demande un nom d'{\'e}quipe (une
+cha{\^\i}ne de caract{\`e}res) {\`a} l'utilisateur et renvoie cette cha{\^\i}ne de
+caract{\`e}res. La cha{\^\i}ne de caract{\`e}res dans laquelle la fonction doit
+stocker le nom de l'{\'e}quipe est pass{\'e}e en argument.
+
+\question (2pts) On veut avoir une structure \ctype{championnat} qui
+contient le nombre (un entier) et les noms des {\'e}quipes (des cha{\^\i}nes de
+caract{\`e}res), et la longueur maximale (un entier) du nom d'une
+{\'e}quipe. Donnez la d{\'e}claration de la structure \ctype{championnat}.
+
+Une \emph{rencontre} est mod{\'e}lis{\'e}e par 4 entiers \cvar{equipe1},
+\cvar{equipe2}, \cvar{score1}, \cvar{score2} qui repr{\'e}sentent:
+\begin{itemize}
+\item l'indice de l'{\'e}quipe 1 dans le tableau du championnat;
+\item l'indice de l'{\'e}quipe 2 dans le tableau du championnat;
+\item le score de l'{\'e}quipe 1 dans le match;
+\item le score de l'{\'e}quipe 2 dans le match;
+\end{itemize}
+Les scores sont {\`a} $-1$ tant que le match n'est pas jou{\'e}.
+
+\question (1pt) Donnez la d{\'e}claration de la structure
+\ctype{rencontre} en fonction de ces donn{\'e}es.
+
+\question (3pts) {\'E}crire une fonction qui demande {\`a} l'utilisateur:
+\begin{itemize}
+\item un nombre d'{\'e}quipes;
+\item la taille maximale du nom d'une {\'e}quipe;
+\item puis les noms de toutes les {\'e}quipes du championnant un par un;
+\end{itemize}
+et qui renvoie un \ctype{championnat} repr{\'e}sentant ces informations.
+
+\question (2pts) {\'E}crire une fonction qui prend en entr{\'e}e une variable
+de type \ctype{championnat} et une variable de type \ctype{rencontre} et
+qui affiche le r{\'e}sultat de la rencontre dans le format:
+\begin{center}
+  \texttt{<nom \'Equipe1> <score1> -- <score2> <nom \'Equipe2>}
+\end{center}
+Par exemple:
+\begin{center}
+  \texttt{Stade Toulousain 18 -- 15 RC Toulon}
+\end{center}
+
+\question (3pts) {\'E}crire une fonction qui prend en entr{\'e}e un
+championnat, et rend un tableau de rencontres entre les {\'e}quipes de ce
+championnat dans lequel deux {\'e}quipes diff{\'e}rentes se rencontrent
+exactement 2 fois. Les scores des rencontres seront initialis{\'e}s {\`a} $-1$.
+

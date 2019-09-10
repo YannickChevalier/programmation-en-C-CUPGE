@@ -1,0 +1,37 @@
+\exo{Codage (4 points)}
+
+
+\question Traduire les entiers 13 et -13 sur 5 bits en complément à deux.
+
+\begin{solution}
+  \begin{enumerate}
+  \item On a \(2^5=32\), donc on peut coder les entiers de \(-16\) à
+    \(+15\), et donc \(-13\) et \(13\);
+  \item En complément à deux sur \(n\) bits, les entiers sont codés
+    modulo \(2^n\), donc ici modulo \(32\)
+  \item Comme entiers positifs, il faut donc trouver le codage de
+    \(13\) et \(-13+32=19\).
+  \item \(13=8+4+1=(1101)_2=01101\) sur 5 bits;
+  \item \(19=16+2+1=(10011)_2=10011\) sur 5bits.
+  \end{enumerate}
+
+\end{solution}
+
+
+\question Traduire si possible les entiers \(-8\), \(-7\), \(7\) et \(8\) sur 4
+bits en complément à deux.
+
+\begin{solution}
+  \begin{enumerate}
+  \item On a \(2^4=16\), donc on peut coder les entiers de \(-8\) à
+    \(+7\), et donc seulement \(-8\), \(-7\) et \(7\);
+  \item En complément à deux sur \(n\) bits, les entiers sont codés
+    modulo \(2^n\), donc ici modulo \(16\)
+  \item Comme entiers positifs, il faut donc trouver le codage de
+    \(7\) et \(-8+16=8\) et \(-7+16 = 9\).
+  \item \(7=4+2+1=(111)_2=0111\) sur 4 bits;
+  \item \(8=8=(1000)_2=1000\) sur 4 bits;
+  \item \(8=8+1=(1001)_2=1001\) sur 4 bits;
+  \end{enumerate}
+
+\end{solution}

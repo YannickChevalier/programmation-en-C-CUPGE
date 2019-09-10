@@ -1,0 +1,44 @@
+\exo{Points}
+
+On donne une structure \texttt{Point\_s} qui contient des points de
+$I\!R^3$:
+\begin{Ccode}
+  \ctab \cstruct Point\_s \lb
+  \ctab \cfloat x ;
+  \ctab \cfloat y ;
+  \ctab \cfloat z ;
+  \ctab \rb ;
+\end{Ccode}
+
+
+\question (1 pt) D{\'e}finir le type \ctype{Point} des pointeurs vers une
+structure \ctype{\cstruct Point\_s}.
+
+\question (1 pt) {\'E}crire une fonction qui prend en entr{\'e}e un fichier
+$f$ (de type \ctype{FILE *}) et un point $P$, et qui {\'e}crit sur une
+ligne les trois coordonn{\'e}es de ce point avec 3 chiffres apr{\`e}s la
+virgule. Par exemple, comme r{\'e}sultat de l'{\'e}criture de 2 points, on
+peut avoir le fichier:
+\begin{center}
+  \begin{tabular}{lll}
+    1.000 & 2.000 & 3.000\\
+    2.000 & 4.000 & 6.000\\
+  \end{tabular}
+\end{center}
+
+On d{\'e}finit le type des tableaux de points de la mani{\`e}re suivante:
+\begin{Ccode}
+  \ctab{} \ctypedef \cstruct \ctype{tab\_s}\lb
+  \ctab \cint taille ;
+  \ctab \ctype{Point} * t ;
+  \ctab \rb * \ctype{tab} ;
+\end{Ccode}
+
+\question (3 pts) {\'E}crire une fonction qui prend en entr{\'e}e un nom de
+fichier (de type $\ctype{\cchar *}$ et un tableau de points (de type
+\ctype{tab}) et qui {\'e}crit les points du tableau dans le fichier ({\`a}
+ouvrir puis {\`a} refermer).
+
+\question (2 pts) De la m{\^e}me mani{\`e}re, {\'e}crire une fonction qui va lire
+un fichier dont le nom est pass{\'e} en argument et rendre le tableau de
+points (de type \ctype{tab}) contenu dans ce fichier.
